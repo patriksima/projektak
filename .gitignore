@@ -1,5 +1,6 @@
 vendor/
 node_modules/
+bower_components/
 
 # Laravel 4 specific
 bootstrap/compiled.php
@@ -13,3 +14,8 @@ bootstrap/cache/
 
 # Rocketeer PHP task runner and deployment package. https://github.com/rocketeers/rocketeer
 .rocketeer/
+
+# public
+public/js/
+public/css/
+public/build/
