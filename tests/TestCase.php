@@ -1,4 +1,5 @@
 <?php
+
 namespace Projektak;
 
 abstract class TestCase extends \Illuminate\Foundation\Testing\TestCase
@@ -8,7 +9,7 @@ abstract class TestCase extends \Illuminate\Foundation\Testing\TestCase
      *
      * @var string
      */
-    protected $baseUrl = 'http://local.projektak.cz';
+    protected $baseUrl = '';
 
     /**
      * Creates the application.
@@ -20,6 +21,8 @@ abstract class TestCase extends \Illuminate\Foundation\Testing\TestCase
         $app = require __DIR__.'/../bootstrap/app.php';
 
         $app->make(\Illuminate\Contracts\Console\Kernel::class)->bootstrap();
+
+        $this->baseUrl = env('APP_URL', 'http://localhost');
 
         return $app;
     }
