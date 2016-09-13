@@ -100,25 +100,20 @@ class TaskController extends Controller
 
     public function apiIndex(Request $request)
     {
-        return Auth::user()
-            ->worker
-            ->tasks()
-            ->with([
-                'durations' => function ($query) {
-                    $query->where('worker_id', '=', Auth::user()->worker->id);
-                },
-                'project' => function ($query) {
-                    $query->with(['client']);
-                },
-                'tasklogs' => function ($query) {
-                    $query->whereNull('end');
-                },
-                'status' => function ($query) {
-                    $query->where('order', '<>', 99);
-                },
-            ])
-            ->groupBy('tasks.id')
-            ->get();
+        $tasks = Task::select('tasks.id', 'tasks.name', 'tasks.estimate', 'tasks.deadline')
+            ->withWorker()
+            ->withActivity()
+            ->withStatus()
+            ->withProject()
+            ->withClient()
+            ->withDuration()
+            ->where('task_worker.worker_id', '=', Auth::user()->worker->id);
+
+        if ($request->task_id) {
+            $tasks->where('tasks.id', '=', $request->task_id);
+        }
+
+        return $tasks->get();
     }
 
     public function apiStart(Request $request)

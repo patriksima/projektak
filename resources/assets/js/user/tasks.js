@@ -85,7 +85,8 @@ const app = new Vue({
             }
             this.$http.post('/user/api/task/start', data).then(
                 function(response) {
-                    this.getTasks();
+                    this.getTasks(id);
+                    this.active = true;
                 },
                 function(response) {
                     console.error(response);
@@ -98,7 +99,8 @@ const app = new Vue({
             }
             this.$http.post('/user/api/task/stop', data).then(
                 function(response) {
-                    this.getTasks();
+                    this.getTasks(id);
+                    this.active = false;
                 },
                 function(response) {
                     console.error(response);
@@ -107,8 +109,11 @@ const app = new Vue({
         }
     },
     methods: {
-        getTasks: function() {
-            this.$http.get('/user/api/tasks').then(
+        getTasks: function(id) {
+            let data = {
+                task_id: id
+            }
+            this.$http.get('/user/api/tasks', data).then(
                 function(response) {
                     this.data = response.json();
                 },
@@ -127,5 +132,9 @@ const app = new Vue({
     ready: function() {
         this.getTasks();
         this.mdlRendering();
+        let self = this;
+        setInterval(function() {
+            self.getTasks();
+        }, 1000);
     }
 });
