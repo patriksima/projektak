@@ -8,18 +8,16 @@ use App\Worker;
 use App\Client;
 use App\Project;
 use App\Worksheet;
-use App\Http\Requests;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class WorksheetController extends Controller
 {
     public function index()
     {
-        $orderBy  = Input::get('orderBy', 'start');
+        $orderBy = Input::get('orderBy', 'start');
         $orderDir = Input::get('orderDir', 'desc');
-        $search   = Input::get('s', '');
+        $search = Input::get('s', '');
 
         $filterStart = Input::get('start', Carbon::parse('first day of this month')->format('Y-m-d'));
         $filterEnd = Input::get('end', Carbon::parse('last day of this month')->format('Y-m-d'));
@@ -157,6 +155,7 @@ class WorksheetController extends Controller
                     $worker = Worker::where('email', '=', $data[1])->first();
                     if (is_null($worker)) {
                         $request->session()->flash('status', 'Worker was not found.');
+
                         return response()->json(['response' => 'fail', 'error' => 'Worker was not found.']);
                     }
                     $worker_id = $worker->id;
@@ -168,30 +167,30 @@ class WorksheetController extends Controller
                 }
 
                 if ($data[9]) {
-                    $start = Carbon::createFromFormat('Y-m-d H:i:s', $data[7] . ' ' . $data[8]);
-                    $end   = Carbon::createFromFormat('Y-m-d H:i:s', $data[9] . ' ' . $data[10]);
+                    $start = Carbon::createFromFormat('Y-m-d H:i:s', $data[7].' '.$data[8]);
+                    $end = Carbon::createFromFormat('Y-m-d H:i:s', $data[9].' '.$data[10]);
                     $duration = $end->diffInMinutes($start) / 60;
                 } else {
-                    $start = Carbon::createFromFormat('Y-m-d H:i:s', $data[7] . ' ' . $data[8]);
-                    $end   = Carbon::createFromFormat('Y-m-d H:i:s', $data[7] . ' ' . $data[8]);
-                    list( $h, $m, $s ) = explode(':', $data[11]);
-                    $duration = ( $h * 60 + $m ) / 60;
+                    $start = Carbon::createFromFormat('Y-m-d H:i:s', $data[7].' '.$data[8]);
+                    $end = Carbon::createFromFormat('Y-m-d H:i:s', $data[7].' '.$data[8]);
+                    list($h, $m, $s) = explode(':', $data[11]);
+                    $duration = ($h * 60 + $m) / 60;
                 }
-                
+
                 try {
                     $worksheet = new Worksheet;
-                    $worksheet->project_id  = null;
-                    $worksheet->client      = $data[2];
-                    $worksheet->project     = $data[3];
-                    $worksheet->task        = ($data[4] == '') ? $data[5] : $data[4];
+                    $worksheet->project_id = null;
+                    $worksheet->client = $data[2];
+                    $worksheet->project = $data[3];
+                    $worksheet->task = ($data[4] == '') ? $data[5] : $data[4];
                     $worksheet->description = $data[5];
-                    $worksheet->start       = $start;
-                    $worksheet->end         = $end;
-                    $worksheet->duration    = $duration;
-                    $worksheet->tags        = $data[12];
-                    $worksheet->amount      = $worker_rate * $duration;
-                    $worksheet->currency    = 'CZK';
-                    $worksheet->billable    = ( 'Yes' == $data[6] ) ? 1 : 0;
+                    $worksheet->start = $start;
+                    $worksheet->end = $end;
+                    $worksheet->duration = $duration;
+                    $worksheet->tags = $data[12];
+                    $worksheet->amount = $worker_rate * $duration;
+                    $worksheet->currency = 'CZK';
+                    $worksheet->billable = ('Yes' == $data[6]) ? 1 : 0;
                     $worksheet->worker()->associate($worker);
                     $worksheet->save();
                     $imported++;
@@ -204,6 +203,7 @@ class WorksheetController extends Controller
             $request->session()->flash('status', 'The '.$imported.' rows were been imported.');
         } catch (\ErrorException $e) {
             $request->session()->flash('status', 'Something wrong: '.$e->getMessage());
+
             return response()->json(['response' => 'fail', 'error' => $e->getMessage()]);
         }
 

@@ -6,19 +6,16 @@ use DB;
 use Carbon\Carbon;
 use App\Task;
 use App\TaskStatus;
-use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Redirect;
 
 class ControlController extends Controller
 {
     public function index()
     {
-        $orderBy  = Input::get('orderBy', 'deadline');
+        $orderBy = Input::get('orderBy', 'deadline');
         $orderDir = Input::get('orderDir', 'desc');
-        $search   = Input::get('s', '');
+        $search = Input::get('s', '');
 
         $tasks = DB::table('tasks')
             ->leftJoin('task_metas as tm1', function ($join) {

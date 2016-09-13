@@ -13,9 +13,10 @@ class SocialAccountService
             ->first();
 
         if ($account) {
-            $account->name   = $providerUser->getName();
+            $account->name = $providerUser->getName();
             $account->avatar = $providerUser->getAvatar();
             $account->save();
+
             return $account->user;
         } else {
             $account = new SocialAccount([

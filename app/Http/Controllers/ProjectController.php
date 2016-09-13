@@ -6,7 +6,6 @@ use DB;
 use App\Client;
 use App\Project;
 use App\ProjectStatus;
-use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
@@ -14,9 +13,9 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        $orderBy  = Input::get('orderBy', 'deadline');
+        $orderBy = Input::get('orderBy', 'deadline');
         $orderDir = Input::get('orderDir', 'desc');
-        $search   = Input::get('s', '');
+        $search = Input::get('s', '');
 
         $projects = Project::with(['client', 'status'])
             ->select('projects.*')
@@ -47,6 +46,7 @@ class ProjectController extends Controller
         } catch (\Illuminate\Database\QueryException $e) {
             $request->session()->flash('status', 'Project cannot be deleted because has some tasks and worksheets.');
         }
+
         return back();
     }
 

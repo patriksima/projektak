@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Helpers;
 
 use Carbon\Carbon;
@@ -11,7 +12,7 @@ class Helper
         $class = '';
 
         if ($deadline != '') {
-            $now      = new Carbon();
+            $now = new Carbon();
             $deadline = new Carbon($deadline);
             if ($deadline < $now) {
                 $class = 'mdl-color--red-100';
@@ -40,8 +41,8 @@ class Helper
         $class = '';
 
         if ($created != '') {
-            $now      = new Carbon();
-            $created  = new Carbon($created);
+            $now = new Carbon();
+            $created = new Carbon($created);
             $interval = $created->diff($now);
             if ($interval->days < 30) {
                 $class = 'mdl-color--red-200';
@@ -62,9 +63,9 @@ class Helper
         $class = '';
 
         if ($deadline != '') {
-            $now      = new Carbon();
+            $now = new Carbon();
             $deadline = new Carbon($deadline);
-            $interval = (int)$now->diff($deadline)->format('%r%a');
+            $interval = (int) $now->diff($deadline)->format('%r%a');
             if ($interval < 0) {
                 $class = 'mdl-color--red-300';
             }
@@ -98,7 +99,7 @@ class Helper
     {
         $class = 'sortable';
 
-        $orderBy  = Input::get('orderBy', 'created_at');
+        $orderBy = Input::get('orderBy', 'created_at');
         $orderDir = Input::get('orderDir', 'desc');
 
         if ($orderBy == $column) {
@@ -108,6 +109,7 @@ class Helper
                 $class .= ' mdl-data-table__header--sorted-descending';
             }
         }
+
         return $class;
     }
 
@@ -115,7 +117,7 @@ class Helper
     {
         $dir = 'desc';
 
-        $orderBy  = Input::get('orderBy', 'created_at');
+        $orderBy = Input::get('orderBy', 'created_at');
         $orderDir = Input::get('orderDir', 'desc');
 
         if ($orderBy == $column) {
