@@ -12,9 +12,9 @@ class ClientController extends Controller
 {
     public function index()
     {
-        $orderBy  = Input::get('orderBy', 'created_at');
+        $orderBy = Input::get('orderBy', 'created_at');
         $orderDir = Input::get('orderDir', 'desc');
-        $search   = Input::get('s', '');
+        $search = Input::get('s', '');
 
         $clients = DB::table('clients')
             ->select('clients.*', 'cm1.meta_value as rate', 'cm2.meta_value as gdrive', 'cm3.meta_value as currency')
@@ -103,6 +103,7 @@ class ClientController extends Controller
     public function destroy(Request $request)
     {
         Client::destroy($request->id);
+
         return back();
     }
 

@@ -25,7 +25,6 @@ class HelperServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('helper', function () {
-        
             return new \App\Helpers\Helper;
         });
     }

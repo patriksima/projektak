@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use App\Http\Requests;
 use App\Client;
 use App\Inbox;
 use App\Task;
@@ -20,9 +19,9 @@ class InboxController extends Controller
 {
     public function index()
     {
-        $orderBy  = Input::get('orderBy', 'created_at');
+        $orderBy = Input::get('orderBy', 'created_at');
         $orderDir = Input::get('orderDir', 'desc');
-        $search   = Input::get('s', '');
+        $search = Input::get('s', '');
 
         $inboxes = Inbox::withClients()
             ->done(0)
@@ -69,6 +68,7 @@ class InboxController extends Controller
     public function destroy(Request $request)
     {
         Inbox::destroy($request->id);
+
         return back();
     }
 
@@ -94,14 +94,14 @@ class InboxController extends Controller
     {
         DB::transaction(function () use ($request) {
             $task = new Task;
-            $task->status_id   = $request->status_id;
-            $task->name        = $request->name;
+            $task->status_id = $request->status_id;
+            $task->name = $request->name;
             $task->description = $request->description;
-            $task->source_int  = $request->source_int;
-            $task->source_ext  = $request->source_ext;
-            $task->deadline    = $request->deadline;
-            $task->estimate    = $request->estimate;
-            $task->checked     = Carbon::now();
+            $task->source_int = $request->source_int;
+            $task->source_ext = $request->source_ext;
+            $task->deadline = $request->deadline;
+            $task->estimate = $request->estimate;
+            $task->checked = Carbon::now();
 
             Project::find($request->project_id)
                 ->tasks()
@@ -111,7 +111,7 @@ class InboxController extends Controller
                 Worker::find($worker_id)->tasks()->attach($task->id);
             }
 
-            Inbox::find($request->id)->update(['done'=>1]);
+            Inbox::find($request->id)->update(['done' => 1]);
         });
 
         return redirect('/inbox');
@@ -119,7 +119,8 @@ class InboxController extends Controller
 
     public function done(Request $request)
     {
-        Inbox::find($request->id)->update(['done'=>1]);
+        Inbox::find($request->id)->update(['done' => 1]);
+
         return back();
     }
 }
