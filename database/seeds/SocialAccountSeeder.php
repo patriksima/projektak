@@ -2,15 +2,14 @@
 
 use Illuminate\Database\Seeder;
 use App\User;
-use App\SocialAccount;
 
 class SocialAccountSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
+      * Run the database seeds.
+      *
+      * @return void
+      */
      public function run()
      {
          // default social for primary user

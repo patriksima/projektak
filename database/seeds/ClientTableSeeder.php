@@ -15,16 +15,16 @@ class ClientTableSeeder extends Seeder
             $u->metas()->save(factory(App\ClientMeta::class, 'rate')->make());
             $u->metas()->save(factory(App\ClientMeta::class, 'currency')->make());
             $u->metas()->save(factory(App\ClientMeta::class, 'gdrive')->make());
-            
-            for ($i=0; $i<5; $i++) {
+
+            for ($i = 0; $i < 5; $i++) {
                 $u->inboxes()->save(factory(App\Inbox::class)->make());
             }
 
-            for ($i=0; $i<5; $i++) {
+            for ($i = 0; $i < 5; $i++) {
                 $project = factory(App\Project::class)->make();
                 $u->projects()->save($project);
 
-                for ($i=0; $i<5; $i++) {
+                for ($i = 0; $i < 5; $i++) {
                     $task = factory(App\Task::class)->make();
                     $project->tasks()->save($task);
                 }

@@ -33,7 +33,6 @@ class Task extends Model
         return $this->hasMany('App\TaskLog');
     }
 
-
     public function durations()
     {
         return $this->hasMany('App\TaskLog')
