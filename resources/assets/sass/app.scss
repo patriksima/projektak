@@ -1,0 +1,331 @@
+@import "compass/css3";
+
+html, body {
+	font-family: 'Roboto', 'Helvetica', sans-serif;
+}
+
+.demo-avatar {
+	width: 48px;
+	height: 48px;
+	border-radius: 24px;
+}
+
+.demo-layout {
+	.demo-header .mdl-textfield {
+		margin-top: 5px;
+	}
+
+	.mdl-layout__header .mdl-layout__drawer-button {
+		color: rgba(0, 0, 0, 0.54);
+	}
+}
+
+.mdl-layout__drawer .avatar {
+	margin-bottom: 16px;
+}
+
+.demo-drawer {
+	border: none;
+
+	.mdl-menu__container {
+		z-index: -1;
+	}
+
+	.demo-navigation {
+		z-index: -2;
+	}
+
+	.mdl-menu .mdl-menu__item {
+		@include flexbox((
+			display: flex,
+			align-items: center
+		));
+	}
+}
+
+.demo-drawer-header {
+	@include box-sizing(border-box);
+	@include flexbox((
+		display: flex,
+		flex-direction: column,
+		justify-content: flex-end
+	));
+	padding: 16px;
+	height: 151px;
+}
+
+.demo-avatar-dropdown {
+	position: relative;
+	@include flexbox((
+		display: flex,
+		flex-direction: row,
+		align-items: center
+	));
+	width: 100%;
+}
+
+.demo-navigation {
+	@include flex-grow(1);
+}
+
+.demo-layout .demo-navigation .mdl-navigation__link {
+	@include flexbox((
+		display: flex !important,
+		flex-direction: row,
+		align-items: center
+	));
+	color: rgba(255, 255, 255, 0.56);
+	font-weight: 500;
+
+	&.current {
+		background-color: #00838f;
+	}
+
+	&:hover {
+		background-color: #00BCD4;
+		color: #37474F;
+	}
+}
+
+.demo-navigation .mdl-navigation__link .material-icons {
+	font-size: 24px;
+	color: rgba(255, 255, 255, 0.56);
+	margin-right: 32px;
+}
+
+.demo-content {
+	//max-width: 1080px;
+}
+
+.demo-charts {
+	@include align-items(center);
+}
+
+.demo-chart {
+	&:nth-child(1) {
+		color: #ACEC00;
+	}
+
+	&:nth-child(2) {
+		color: #00BBD6;
+	}
+
+	&:nth-child(3) {
+		color: #BA65C9;
+	}
+
+	&:nth-child(4) {
+		color: #EF3C79;
+	}
+}
+
+.demo-graphs {
+	padding: 16px 32px;
+	@include flexbox((
+		display: flex,
+		flex-direction: column,
+		align-items: stretch
+	));
+}
+
+/* TODO: Find a proper solution to have the graphs
+ * not float around outside their container in IE10/11.
+ * Using a browserhacks.com solution for now.
+ */
+
+_:-ms-input-placeholder, :root .demo-graphs {
+	min-height: 664px;
+}
+
+_:-ms-input-placeholder, :root .demo-graph {
+	max-height: 300px;
+}
+
+/* TODO end */
+
+.demo-graph {
+	&:nth-child(1) {
+		color: #00b9d8;
+	}
+
+	&:nth-child(2) {
+		color: #d9006e;
+	}
+}
+
+.demo-cards {
+	@include flexbox((
+		align-items: flex-start,
+		align-content: flex-start
+	));
+
+	.demo-separator {
+		height: 32px;
+	}
+
+	.mdl-card__title.mdl-card__title {
+		color: white;
+		font-size: 24px;
+		font-weight: 400;
+	}
+
+	ul {
+		padding: 0;
+	}
+
+	h3 {
+		font-size: 1em;
+	}
+}
+
+.demo-updates .mdl-card__title {
+	min-height: 200px;
+	background-image: url('images/dog.png');
+	background-position: 90% 100%;
+	background-repeat: no-repeat;
+}
+
+.demo-cards .mdl-card__actions a {
+	color: #00BCD4;
+	text-decoration: none;
+}
+
+.demo-options {
+	h3 {
+		margin: 0;
+	}
+
+	.mdl-checkbox__box-outline {
+		border-color: rgba(255, 255, 255, 0.89);
+	}
+
+	ul {
+		margin: 0;
+		list-style-type: none;
+	}
+
+	li {
+		margin: 4px 0;
+	}
+
+	.material-icons {
+		color: rgba(255, 255, 255, 0.89);
+	}
+
+	.mdl-card__actions {
+		height: 64px;
+		@include flexbox((
+			display: flex,
+			align-items: center
+		));
+	}
+}
+
+#inbox__add, #task__add, #client__add, #project__add, #worker__add, #worksheet__import, #idea__add, #setting__add, #label__add, #lead__add,
+#rule__add {
+	position: fixed;
+	display: block;
+	right: 0;
+	bottom: 0;
+	margin-right: 40px;
+	margin-bottom: 40px;
+	z-index: 900;
+}
+
+#worksheet__add {
+	position: fixed;
+	display: block;
+	right: 0;
+	bottom: 0;
+	margin-right: 120px;
+	margin-bottom: 40px;
+	z-index: 900;
+}
+
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}
+
+.grey {
+    color: silver;
+}
+
+.orange {
+    color: orange;
+}
+
+/* Table of content widget */
+.submenu {
+	ul {
+		border-left: solid 3px #C0EbF1;
+		padding-left: 20px;
+		line-height: 28px;
+	}
+	a {
+		font-weight: 400;
+		color: #00BCD4;
+		text-decoration: none;
+	}
+	li {
+		font-size: 16px;
+		list-style: none;
+	}
+}
+
+.mdl-textfield--full-width {
+	textarea {
+		width: 100%;
+	}
+}
+
+.flat {
+	.mdl-textfield, .mdl-selectfield {
+		width: auto;
+	}
+}
+
+.mdl-button--file {
+  input {
+    cursor: pointer;
+    height: 100%;
+    right: 0;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    width: 300px;
+    z-index: 4;
+  }
+}
+
+.mdl-textfield--file {
+  .mdl-textfield__input {
+    box-sizing: border-box;
+    width: calc(100% - 32px);
+  }
+  .mdl-button--file {
+    right: 0;
+  }
+}
+
+.sortable {
+	color:rgba(0,0,0,.26);
+	&:hover {
+		color:rgba(0,0,0,.26);
+	}
+}
+
+.wrappable {
+	white-space: normal;
+}
+
+.mdl-button .mdl-badge[data-badge]:after {
+    top: -2px;
+    right: -2px;
+    font-size: 10px;
+    width: 15px;
+    height: 15px;
+}
