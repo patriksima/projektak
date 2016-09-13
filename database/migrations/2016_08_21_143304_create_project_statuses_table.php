@@ -28,13 +28,13 @@ class CreateProjectStatusesTable extends Migration
                 'order' => 10,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
-            ],[
+            ], [
                 'name'  => 'Neaktivní',
                 'slug'  => 'inactive',
                 'order' => 20,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
-            ]
+            ],
         ]);
     }
 

@@ -15,12 +15,14 @@ class OurGuard extends SessionGuard
                 Log::info('OurGuard::validate(): User is not allowed.');
             }
         }
+
         return parent::user();
     }
 
     public function validate(array $credentials = [])
     {
         Log::info('OurGuard::validate()');
+
         return parent::validate($credentials);
     }
 }

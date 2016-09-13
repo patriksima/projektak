@@ -1,5 +1,5 @@
 <?php
-use App\SocialAccount;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +42,7 @@ $factory->defineAs(App\ClientMeta::class, 'gdrive', function (Faker\Generator $f
 $factory->define(App\Inbox::class, function (Faker\Generator $faker) {
     $created_at = $faker->dateTimeThisYear();
     $updated_at = $faker->dateTimeThisYear($created_at);
+
     return [
         'description' => $faker->text(),
         'source_int' => $faker->url(),
@@ -142,6 +143,7 @@ $factory->defineAs(App\WorkerMeta::class, 'bank', function (Faker\Generator $fak
 
 $factory->define(App\Worksheet::class, function (Faker\Generator $faker) {
     $end = $faker->dateTimeThisYear();
+
     return [
         'client' => $faker->company(),
         'project' => $faker->text($faker->numberBetween(10, 20)),
@@ -214,6 +216,7 @@ $factory->defineAs(App\Role::class, 'guest', function () {
 
 $factory->define(App\TaskLog::class, function (Faker\Generator $faker) {
     $end = $faker->dateTimeThisYear();
+
     return [
         'start' => $faker->dateTimeThisYear($end),
         'end' => $end,

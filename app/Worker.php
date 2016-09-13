@@ -66,8 +66,8 @@ class Worker extends Model
     {
         return $query
             ->leftJoin('worker_metas as wm_bank', function ($join) {
-                $join->on('workers.id', '=', "wm_bank.worker_id")
-                     ->where("wm_bank.meta_key", '=', 'bank');
+                $join->on('workers.id', '=', 'wm_bank.worker_id')
+                     ->where('wm_bank.meta_key', '=', 'bank');
             })
             ->leftJoin('banks', DB::raw('CONCAT(banks.account_num, "/", LPAD(banks.bank_num, 4, "0"))'), '=', 'wm_bank.meta_value')
             ->addSelect(DB::raw('abs(sum(banks.cash)) as costs'));

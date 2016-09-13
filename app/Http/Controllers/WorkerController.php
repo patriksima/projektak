@@ -6,16 +6,15 @@ use DB;
 use Input;
 use App\Worker;
 use App\WorkerMeta;
-use App\Http\Requests;
 use Illuminate\Http\Request;
 
 class WorkerController extends Controller
 {
     public function index()
     {
-        $orderBy  = Input::get('orderBy', 'lastname');
+        $orderBy = Input::get('orderBy', 'lastname');
         $orderDir = Input::get('orderDir', 'asc');
-        $search   = Input::get('s', '');
+        $search = Input::get('s', '');
 
         $workers = Worker::select('workers.*', DB::raw('SUBSTRING_INDEX(SUBSTRING_INDEX(workers.name, " ", 1), " ", -1) as firstname,
                 SUBSTRING_INDEX(SUBSTRING_INDEX(workers.name, " ", 2), " ", -1) as lastname'))

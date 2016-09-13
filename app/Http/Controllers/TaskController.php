@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests;
 use App\Task;
 use App\TaskStatus;
 use App\Worker;
@@ -12,16 +11,15 @@ use App\Client;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 
 class TaskController extends Controller
 {
     public function index()
     {
-        $orderBy  = Input::get('orderBy', 'deadline');
+        $orderBy = Input::get('orderBy', 'deadline');
         $orderDir = Input::get('orderDir', 'asc');
-        $search   = Input::get('s', '');
+        $search = Input::get('s', '');
 
         $tasks = DB::table('tasks')
             ->leftJoin('task_metas as tm1', function ($join) {
@@ -80,14 +78,14 @@ class TaskController extends Controller
     {
         DB::transaction(function () use ($request) {
             $task = new Task;
-            $task->status_id   = $request->status_id;
-            $task->name        = $request->name;
+            $task->status_id = $request->status_id;
+            $task->name = $request->name;
             $task->description = $request->description;
-            $task->source_int  = $request->source_int;
-            $task->source_ext  = $request->source_ext;
-            $task->deadline    = $request->deadline;
-            $task->estimate    = $request->estimate;
-            $task->checked     = Carbon::now();
+            $task->source_int = $request->source_int;
+            $task->source_ext = $request->source_ext;
+            $task->deadline = $request->deadline;
+            $task->estimate = $request->estimate;
+            $task->checked = Carbon::now();
 
             Project::find($request->project_id)
                 ->tasks()
@@ -105,14 +103,14 @@ class TaskController extends Controller
     {
         DB::transaction(function () use ($request) {
             $task = Task::find($request->id);
-            $task->status_id   = $request->status_id;
-            $task->name        = $request->name;
+            $task->status_id = $request->status_id;
+            $task->name = $request->name;
             $task->description = $request->description;
-            $task->source_int  = $request->source_int;
-            $task->source_ext  = $request->source_ext;
-            $task->deadline    = $request->deadline;
-            $task->estimate    = $request->estimate;
-            $task->checked     = Carbon::now();
+            $task->source_int = $request->source_int;
+            $task->source_ext = $request->source_ext;
+            $task->deadline = $request->deadline;
+            $task->estimate = $request->estimate;
+            $task->checked = Carbon::now();
             $task->workers()->detach();
             $task->save();
 
@@ -127,6 +125,7 @@ class TaskController extends Controller
     public function destroy(Request $request)
     {
         Task::destroy($request->id);
+
         return back();
     }
 

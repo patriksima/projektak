@@ -36,7 +36,7 @@ class WorkerTableSeeder extends Seeder
 
             // time logs
             foreach ($task_ids as $task_id) {
-                for ($i=0; $i<10; $i++) {
+                for ($i = 0; $i < 10; $i++) {
                     $tasklog = factory(App\TaskLog::class)->make();
                     $tasklog->task()->associate(App\Task::find($task_id));
                     $worker->tasklogs()->save($tasklog);
@@ -44,7 +44,7 @@ class WorkerTableSeeder extends Seeder
             }
 
             // worksheets
-            for ($i=0; $i<10; $i++) {
+            for ($i = 0; $i < 10; $i++) {
                 $worksheet = factory(App\Worksheet::class)->make();
                 $worksheet->project()->associate(App\Project::orderBy(DB::raw('RAND()'))->first());
                 $worker->worksheets()->save($worksheet);
