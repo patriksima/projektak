@@ -34,7 +34,7 @@ install:
   - travis_retry npm install
 
 script:
-  - php artisan migrate --force
+  - php artisan migrate --force --seed
   - gulp
   - gulp phpcs
   - vendor/bin/phpunit
