@@ -1,6 +1,7 @@
 # Projektak
 
 [![Build Status](https://travis-ci.org/wrongware/projektak.svg?branch=master)](https://travis-ci.org/wrongware/projektak)
+[![StyleCI](https://styleci.io/repos/68014140/shield)](https://styleci.io/repos/68014140)
 
 "Projektak" (working title)
 is a web application for managing a micro web/IT agency.
