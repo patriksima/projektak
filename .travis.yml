@@ -21,12 +21,18 @@ before_install:
   - gem install compass
 
 before_script:
+  - mkdir -p storage/framework/{cache,views,sessions}
   - cp .env.travis .env
   - mysql -e 'create database laravel;'
   - export DB_DATABASE=laravel
   - export DB_USERNAME=travis
   - export DB_PASSWORD=
   - php artisan key:generate
+  - php artisan cache:clear
+  - php artisan config:clear
+  - php artisan view:clear
+  - php artisan clear-compiled
+
 
 install:
   - travis_retry composer self-update
