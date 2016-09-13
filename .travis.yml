@@ -11,8 +11,14 @@ sudo: false
 services:
   - mysql
 
+cache:
+    directories:
+        - node_modules
+
 before_install:
   - nvm install 5.1
+  - gem update --system
+  - gem install compass
 
 before_script:
   - cp .env.travis .env
@@ -27,7 +33,8 @@ install:
   - travis_retry composer install --no-interaction --no-suggest
   - travis_retry npm install
 
-script:  
+script:
   - php artisan migrate --force
   - gulp
+  - gulp phpcs
   - vendor/bin/phpunit
