@@ -1,4 +1,5 @@
 <?php
+use App\SocialAccount;
 
 /*
 |--------------------------------------------------------------------------
@@ -216,5 +217,14 @@ $factory->define(App\TaskLog::class, function (Faker\Generator $faker) {
     return [
         'start' => $faker->dateTimeThisYear($end),
         'end' => $end,
+    ];
+});
+
+$factory->defineAs(App\SocialAccount::class, 'primary', function () {
+    return [
+        'provider_user_id' => '595706863941058',
+        'provider' => 'facebook',
+        'name' => 'Patrik Šíma',
+        'avatar' => 'https://graph.facebook.com/v2.6/595706863941058/picture?type=normal',
     ];
 });
