@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/wrongware/projektak.svg?branch=master)](https://travis-ci.org/wrongware/projektak)
 [![StyleCI](https://styleci.io/repos/68014140/shield)](https://styleci.io/repos/68014140)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
 "Projektak" (working title)
 is a web application for managing a micro web/IT agency.
