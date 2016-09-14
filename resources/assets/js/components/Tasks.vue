@@ -1,5 +1,5 @@
 <template>
-    <table class="mdl-data-table mdl-js-data-table">
+    <table v-if="active" class="mdl-data-table mdl-js-data-table" transition="fade">
         <thead>
             <tr>
                 <th class="mdl-data-table__cell--non-numeric" colspan="8">Active task</th>
@@ -15,11 +15,11 @@
                 <td>{{ entry.duration }}</td>
                 <td class="mdl-data-table__cell--non-numeric">{{ entry.status }}</td>
                 <td class="mdl-data-table__cell--non-numeric">
-                    <a class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored" @click="timerStop(entry.id)" href="#id={{ entry.id }}&amp;stop"><i class="material-icons">stop</i></a>
+                    <mdl-button @click="timerStop(entry.id)" icon="stop"></mdl-button>
                 </td>
             </tr>
         </tbody>
-    </table>
+    </table><br>
 
     <table class="mdl-data-table mdl-js-data-table">
         <thead>
@@ -37,30 +37,158 @@
                 <td>{{ entry.duration }}</td>
                 <td class="mdl-data-table__cell--non-numeric">{{ entry.status }}</td>
                 <td class="mdl-data-table__cell--non-numeric">
-                    <a v-if="entry.active" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored" @click="timerStop(entry.id)" href="#id={{ entry.id }}&amp;stop"><i class="material-icons">stop</i></a>
-                    <a v-else class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored" @click="timerStart(entry.id)" href="#id={{ entry.id }}&amp;start"><i class="material-icons">play_arrow</i></a>
+                    <mdl-button v-if="entry.ratio <= 100" @click="timerStart(entry.id)" icon="play_arrow"></mdl-button>
+                    <mdl-button v-if="entry.ratio > 75" @click="requestDialog(entry.id)" icon="restore"></mdl-button>
                 </td>
             </tr>
         </tbody>
     </table>
+    <mdl-dialog id="request" v-ref:request :task="request.task"><mdl-dialog>
 </template>
 
 <script>
+Vue.component('mdl-dialog', require('../components/Dialog.vue'));
+Vue.component('mdl-button', require('../components/Button.vue'));
+
 export default {
-    props: [
-        'columns',
-        'data'
-    ],
-    methods: {
-        sort: function (key) {
-            this.$dispatch('sort', key);
-        },
-        timerStop: function (id) {
-            this.$dispatch('timer-stop', id);
-        },
-        timerStart: function (id) {
-            this.$dispatch('timer-start', id);
+    data: function() {
+        return {
+            active: 0,
+            request: {
+                task: ''
+            },
+            columns: [
+                {
+                    slug: 'deadline',
+                    name: 'Deadline',
+                    class: 'mdl-data-table__cell--non-numeric',
+                    orderby: 'deadline',
+                    orderdir: 'desc'
+                },
+                {
+                    slug: 'name',
+                    name: 'Task',
+                    class: 'mdl-data-table__cell--non-numeric',
+                    orderby: 'name',
+                    orderdir: 'desc'
+                },
+                {
+                    slug: 'client',
+                    name: 'Client',
+                    class: 'mdl-data-table__cell--non-numeric',
+                    orderby: 'client',
+                    orderdir: 'desc'
+                },
+                {
+                    slug: 'project',
+                    name: 'Project',
+                    class: 'mdl-data-table__cell--non-numeric',
+                    orderby: 'project',
+                    orderdir: 'desc'
+                },
+                {
+                    slug: 'estimate',
+                    name: 'Estimate',
+                    class: '',
+                    orderby: 'estimate',
+                    orderdir: 'desc'
+                },
+                {
+                    slug: 'duration',
+                    name: 'Duration',
+                    class: '',
+                    orderby: 'duration',
+                    orderdir: 'desc'
+                },
+                {
+                    slug: 'status',
+                    name: 'Status',
+                    class: 'mdl-data-table__cell--non-numeric',
+                    orderby: 'status',
+                    orderdir: 'desc'
+                },
+                {
+                    slug: 'action',
+                    name: 'Action',
+                    class: 'mdl-data-table__cell--non-numeric',
+                    orderby: '',
+                    orderdir: ''
+                }
+            ],
+            data: [
+            ]
         }
+    },
+    methods: {
+        requestDialog(id) {
+            this.request.task = 'Example task name';
+            this.$refs.request.open()
+        },
+        timerStart: function(id) {
+            let data = {
+                task_id: id
+            }
+            this.$http.post('/user/api/task/start', data).then(
+                function(response) {
+                    this.getTasks(id);
+                },
+                function(response) {
+                    console.error(response);
+                }
+            );
+        },
+        timerStop: function(id) {
+            let data = {
+                task_id: id
+            }
+            this.$http.post('/user/api/task/stop', data).then(
+                function(response) {
+                    this.getTasks(id);
+                },
+                function(response) {
+                    console.error(response);
+                }
+            );
+        },
+        getTasks: function(id) {
+            let data = {
+                task_id: id
+            }
+            this.$http.get('/user/api/tasks', data).then(
+                function(response) {
+                    this.data = response.json();
+                },
+                function(response) {
+                    console.error(response);
+                }
+            );
+        },
+        mdlRendering: function() {
+            setInterval(function() {
+            	componentHandler.upgradeDom();
+            	componentHandler.upgradeAllRegistered();
+          	}, 100);
+        }
+    },
+    watch: {
+        data: function (newVal, oldVal) {
+            // watch active task
+            for (let i=0; i<newVal.length; i++) {
+                if (newVal[i].active) {
+                    this.active = true;
+                    return;
+                }
+            }
+            this.active = false;
+        }
+    },
+    ready: function() {
+        this.getTasks();
+        this.mdlRendering();
+        let self = this;
+        setInterval(function() {
+            self.getTasks();
+        }, 5000);
     }
 };
 </script>

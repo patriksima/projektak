@@ -50,6 +50,7 @@ class Task extends Model
     {
         return $query->leftJoin('task_logs as tl2', 'tl2.task_id', '=', 'tasks.id')
             ->addSelect(DB::raw('ROUND(SUM(TIMESTAMPDIFF(MINUTE, tl2.`start`, IFNULL(tl2.`end`, CURRENT_TIMESTAMP)))/60, 2) as duration'))
+            ->addSelect(DB::raw('ROUND(SUM(TIMESTAMPDIFF(MINUTE, tl2.`start`, IFNULL(tl2.`end`, CURRENT_TIMESTAMP)))/60/estimate*100, 2) as ratio'))
             ->groupBy('tasks.id');
     }
 
