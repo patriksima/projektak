@@ -37,15 +37,14 @@ class Task extends Model
     public function scopeWithActivity($query)
     {
         return $query->leftJoin('task_logs as tl1', function ($join) {
-                $join->on('tl1.task_id', '=', 'tasks.id')
+            $join->on('tl1.task_id', '=', 'tasks.id')
                     ->whereNull('tl1.end');
-            })
-            ->addSelect(DB::raw('IF(tl1.id is not null and tl1.end is null, 1, 0) as active'));
+        })
+        ->addSelect(DB::raw('IF(tl1.id is not null and tl1.end is null, 1, 0) as active'));
     }
 
     /**
-     * Return real task duration
-     *
+     * Return real task duration.
      */
     public function scopeWithDuration($query)
     {

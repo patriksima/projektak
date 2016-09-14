@@ -36,7 +36,7 @@ class WorkerTableSeeder extends Seeder
 
             // time logs
             foreach ($task_ids as $task_id) {
-                for ($i = 0; $i < 10; $i++) {
+                for ($i = 0; $i < 5; $i++) {
                     $tasklog = factory(App\TaskLog::class)->make();
                     $tasklog->task()->associate(App\Task::find($task_id));
                     $worker->tasklogs()->save($tasklog);
