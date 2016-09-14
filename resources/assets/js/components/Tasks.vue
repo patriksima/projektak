@@ -12,10 +12,11 @@
                 <td class="mdl-data-table__cell--non-numeric">{{ entry.client }}</td>
                 <td class="mdl-data-table__cell--non-numeric">{{ entry.project }}</td>
                 <td>{{ entry.estimate }}</td>
-                <td>{{ entry.duration }}</td>
+                <td :class="(entry.ratio > 100) ? 'mdl-color-text--red' : ''">{{ entry.duration }}</td>
                 <td class="mdl-data-table__cell--non-numeric">{{ entry.status }}</td>
                 <td class="mdl-data-table__cell--non-numeric">
                     <mdl-button @click="timerStop(entry.id)" icon="stop"></mdl-button>
+                    <mdl-button v-if="entry.ratio > 75" @click="requestDialog(entry.id)" icon="restore"></mdl-button>
                 </td>
             </tr>
         </tbody>
@@ -39,6 +40,7 @@
                 <td class="mdl-data-table__cell--non-numeric">
                     <mdl-button v-if="entry.ratio <= 100" @click="timerStart(entry.id)" icon="play_arrow"></mdl-button>
                     <mdl-button v-if="entry.ratio > 75" @click="requestDialog(entry.id)" icon="restore"></mdl-button>
+                    <mdl-button @click="done(entry.id)" icon="check"></mdl-button>
                 </td>
             </tr>
         </tbody>
@@ -120,6 +122,21 @@ export default {
         }
     },
     methods: {
+        done(id) {
+            if (confirm('Are you sure?')) {
+                let data = {
+                    task_id: id
+                }
+                this.$http.post('/user/api/task/done', data).then(
+                    function(response) {
+                        this.getTasks();
+                    },
+                    function(response) {
+                        console.error(response);
+                    }
+                );
+            }
+        },
         requestDialog(id) {
             this.request.task = 'Example task name';
             this.$refs.request.open()

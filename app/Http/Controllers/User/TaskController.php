@@ -135,4 +135,12 @@ class TaskController extends Controller
             ->whereNull('end')
             ->update(['end' => DB::raw('NOW()')]);
     }
+
+    public function apiDone(Request $request)
+    {
+        Task::find($request->task_id)
+            ->status()
+            ->associate(TaskStatus::whereOrder(99)->first())
+            ->save();
+    }
 }

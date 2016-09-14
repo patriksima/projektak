@@ -25,6 +25,7 @@ Route::group(['middleware' => ['web', 'auth', 'role:worker'], 'prefix' => 'user'
         Route::group(['prefix' => 'task'], function () {
             Route::post('/start', 'User\TaskController@apiStart');
             Route::post('/stop', 'User\TaskController@apiStop');
+            Route::post('/done', 'User\TaskController@apiDone');
         });
         Route::group(['prefix' => 'tasks'], function () {
             Route::get('/', 'User\TaskController@apiIndex');
