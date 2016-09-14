@@ -58,7 +58,7 @@ class Task extends Model
     {
         return $query->leftJoin('task_statuses', 'task_statuses.id', '=', 'tasks.status_id')
              ->addSelect('task_statuses.name as status')
-             ->where('task_statuses.order', '<>', 99);
+             ->where('task_statuses.slug', '<>', 'done');
     }
 
     public function scopeWithProject($query)

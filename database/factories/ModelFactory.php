@@ -67,7 +67,7 @@ $factory->define(App\Project::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Task::class, function (Faker\Generator $faker) {
     return [
-        'status_id' => $faker->numberBetween(1, 9),
+        'status_id' => $faker->numberBetween(1, 10),
         'name' => $faker->text($faker->numberBetween(10, 20)),
         'description' => $faker->text(),
         'source_int' => $faker->url(),

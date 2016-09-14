@@ -20,11 +20,11 @@ class ClientTableSeeder extends Seeder
                 $u->inboxes()->save(factory(App\Inbox::class)->make());
             }
 
-            for ($i = 0; $i < 5; $i++) {
+            for ($i = 0; $i < 3; $i++) {
                 $project = factory(App\Project::class)->make();
                 $u->projects()->save($project);
 
-                for ($i = 0; $i < 5; $i++) {
+                for ($i = 0; $i < 10; $i++) {
                     $task = factory(App\Task::class)->make();
                     $project->tasks()->save($task);
                 }

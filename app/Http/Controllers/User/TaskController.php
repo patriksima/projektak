@@ -107,7 +107,8 @@ class TaskController extends Controller
             ->withProject()
             ->withClient()
             ->withDuration()
-            ->where('task_worker.worker_id', '=', Auth::user()->worker->id);
+            ->where('task_worker.worker_id', '=', Auth::user()->worker->id)
+            ->where('task_statuses.type', '=', 'worker');
 
         if ($request->task_id) {
             $tasks->where('tasks.id', '=', $request->task_id);
@@ -138,9 +139,14 @@ class TaskController extends Controller
 
     public function apiDone(Request $request)
     {
+        // push to project manager for approval
+        $status = TaskStatus::whereType('project')
+            ->whereSlug('approve')
+            ->first();
+
         Task::find($request->task_id)
             ->status()
-            ->associate(TaskStatus::whereOrder(99)->first())
+            ->associate($status)
             ->save();
     }
 }

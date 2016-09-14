@@ -35,7 +35,7 @@
                 <td class="mdl-data-table__cell--non-numeric">{{ entry.client }}</td>
                 <td class="mdl-data-table__cell--non-numeric">{{ entry.project }}</td>
                 <td>{{ entry.estimate }}</td>
-                <td>{{ entry.duration }}</td>
+                <td :class="(entry.ratio > 100) ? 'mdl-color-text--red' : ''">{{ entry.duration }}</td>
                 <td class="mdl-data-table__cell--non-numeric">{{ entry.status }}</td>
                 <td class="mdl-data-table__cell--non-numeric">
                     <mdl-button v-if="entry.ratio <= 100" @click="timerStart(entry.id)" icon="play_arrow"></mdl-button>
