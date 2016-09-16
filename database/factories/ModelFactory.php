@@ -1,4 +1,5 @@
 <?php
+use Carbon\Carbon;
 
 
 /*
@@ -66,7 +67,7 @@ $factory->define(App\Project::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Task::class, function (Faker\Generator $faker) {
     return [
-        'status_id' => $faker->numberBetween(1, 9),
+        'status_id' => $faker->numberBetween(1, 10),
         'name' => $faker->text($faker->numberBetween(10, 20)),
         'description' => $faker->text(),
         'source_int' => $faker->url(),
@@ -216,9 +217,9 @@ $factory->defineAs(App\Role::class, 'guest', function () {
 
 $factory->define(App\TaskLog::class, function (Faker\Generator $faker) {
     $end = $faker->dateTimeThisYear();
-
+    $start = Carbon::instance($end)->subMinutes(rand(1, 250));
     return [
-        'start' => $faker->dateTimeThisYear($end),
+        'start' => $start,
         'end' => $end,
     ];
 });

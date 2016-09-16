@@ -19,6 +19,11 @@ class Worker extends Model
         return $this->hasMany('App\TaskLog');
     }
 
+    public function requests()
+    {
+        return $this->hasMany('App\TaskRequest');
+    }
+
     public function worksheets()
     {
         return $this->hasMany('App\Worksheet');
