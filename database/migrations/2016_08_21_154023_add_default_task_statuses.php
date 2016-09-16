@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Carbon\Carbon;
 
 class AddDefaultTaskStatuses extends Migration
 {

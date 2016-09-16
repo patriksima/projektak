@@ -9,7 +9,6 @@ use App\TaskStatus;
 use App\TaskRequest;
 use App\Worker;
 use App\Project;
-use App\Client;
 use DB;
 use Auth;
 use Carbon\Carbon;
