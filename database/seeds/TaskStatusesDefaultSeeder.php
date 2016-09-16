@@ -29,6 +29,7 @@ class TaskStatusesDefaultSeeder extends Seeder
             'project' => [
                 'prepare' => 'Prepare',
                 'approve' => 'Approve',
+                'request' => 'Time Request',
                 'test' => 'Test',
             ],
         ];

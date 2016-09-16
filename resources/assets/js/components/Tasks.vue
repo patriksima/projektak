@@ -45,19 +45,26 @@
             </tr>
         </tbody>
     </table>
-    <mdl-dialog id="request" v-ref:request :task="request.task"><mdl-dialog>
+    <mdl-dialog id="requestDlg" v-ref:requestDlg :data.sync="requestData"><mdl-dialog>
 </template>
 
 <script>
-Vue.component('mdl-dialog', require('../components/Dialog.vue'));
-Vue.component('mdl-button', require('../components/Button.vue'));
+import MdlDialog from '../components/Dialog.vue';
+import MdlButton from '../components/Button.vue';
 
 export default {
+    components: {
+        MdlDialog,
+        MdlButton
+    },
     data: function() {
         return {
             active: 0,
-            request: {
-                task: ''
+            requestData: {
+                id: 0,
+                name: '',
+                estimate: 1.0,
+                reason: ''
             },
             columns: [
                 {
@@ -121,6 +128,22 @@ export default {
             ]
         }
     },
+    events: {
+        'request': function() {
+            this.$http.post('/user/api/task/request', this.requestData).then(
+                function(response) {
+                    this.getTasks(this.requestData.id);
+                    this.requestData.id = 0;
+                    this.requestData.name = '';
+                    this.requestData.estimate = 1.0;
+                    this.requestData.reason = '';
+                },
+                function(response) {
+                    console.error(response);
+                }
+            )
+        }
+    },
     methods: {
         done(id) {
             if (confirm('Are you sure?')) {
@@ -138,8 +161,14 @@ export default {
             }
         },
         requestDialog(id) {
-            this.request.task = 'Example task name';
-            this.$refs.request.open()
+            this.requestData.id = id;
+            for (let i=0; i<this.data.length; i++) {
+                if (this.data[i].id == id) {
+                    this.requestData.name = this.data[i].name;
+                    break;
+                }
+            }
+            this.$refs.requestdlg.open()
         },
         timerStart: function(id) {
             let data = {
@@ -176,6 +205,9 @@ export default {
                     this.data = response.json();
                 },
                 function(response) {
+                    if (response.status == 401) {
+                        location.href = '/login';
+                    }
                     console.error(response);
                 }
             );

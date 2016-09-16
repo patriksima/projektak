@@ -3,14 +3,14 @@
     	<h4 class="mdl-dialog__title">Request</h4>
     	<div class="mdl-dialog__content">
             <p>
-                I need more time for task<br>{{ task }}.
+                I need more time for task<br>{{ data.name }}.
             </p>
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<input class="mdl-textfield__input" type="number" name="estimate" value="1.0" step="0.01" required />
+				<input class="mdl-textfield__input" type="number" name="estimate" v-model="data.estimate" step="0.01" required />
 				<label class="mdl-textfield__label">Time</label>
 		    </div>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<input class="mdl-textfield__input" type="text" name="reason" value="" />
+				<input class="mdl-textfield__input" type="text" name="reason" v-model="data.reason" />
 				<label class="mdl-textfield__label">Reason</label>
 		    </div>
     	</div>
@@ -28,8 +28,8 @@ export default {
             type: String,
             required: true
         },
-        task: {
-            type: String
+        data:{
+            type: Object
         }
     },
     data () {
@@ -57,7 +57,7 @@ export default {
         },
         request () {
           this.show = false
-          this.$emit('request')
+          this.$dispatch('request')
         }
     }
 };

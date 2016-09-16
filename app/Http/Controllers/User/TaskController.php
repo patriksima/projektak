@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Task;
 use App\TaskLog;
 use App\TaskStatus;
+use App\TaskRequest;
 use App\Worker;
 use App\Project;
 use App\Client;
@@ -145,6 +146,26 @@ class TaskController extends Controller
             ->first();
 
         Task::find($request->task_id)
+            ->status()
+            ->associate($status)
+            ->save();
+    }
+
+    public function apiRequest(Request $request)
+    {
+        $taskrequest = new TaskRequest;
+        $taskrequest->estimate = $request->estimate;
+        $taskrequest->reason = $request->reason;
+        $taskrequest->worker()->associate(Auth::user()->worker);
+        $taskrequest->task()->associate(Task::find($request->id));
+        $taskrequest->save();
+
+        // push to project manager for approval
+        $status = TaskStatus::whereType('project')
+            ->whereSlug('request')
+            ->first();
+
+        Task::find($request->id)
             ->status()
             ->associate($status)
             ->save();

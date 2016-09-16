@@ -34,6 +34,11 @@ class Task extends Model
         return $this->hasMany('App\TaskLog');
     }
 
+    public function requests()
+    {
+        return $this->hasMany('App\TaskRequest');
+    }
+
     public function scopeWithActivity($query)
     {
         return $query->leftJoin('task_logs as tl1', function ($join) {
