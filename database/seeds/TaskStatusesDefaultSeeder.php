@@ -22,15 +22,15 @@ class TaskStatusesDefaultSeeder extends Seeder
                 'complaint' => 'Client Complaint',
             ],
             'worker' => [
-                'analyze' => 'Analyze',
-                'realize' => 'Realize',
-                'test' => 'Test',
+                'analyze' => 'Worker Analyze',
+                'realize' => 'Worker Realize',
+                'test' => 'Worker Test',
             ],
             'project' => [
-                'prepare' => 'Prepare',
-                'approve' => 'Approve',
+                'prepare' => 'Manager Prepare',
+                'approve' => 'Manager Approve',
                 'request' => 'Time Request',
-                'test' => 'Test',
+                'test' => 'Manager Test',
             ],
         ];
 
