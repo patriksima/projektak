@@ -12,11 +12,57 @@ use DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
+use App\Libraries\Lexer;
+use App\Libraries\Parser;
 
 class TaskController extends Controller
 {
-    public function index()
+    protected function parseSearch(Request $request)
     {
+        $lexer = new Lexer('key:value');
+        $parser = new Parser($lexer);
+        dump('key:value > '.var_export($parser->parse(),true));
+
+        $lexer = new Lexer('key:value and key:value');
+        $parser = new Parser($lexer);
+        dump('key:value and key:value > '.var_export($parser->parse(),true));
+
+        $lexer = new Lexer('(key:value)');
+        $parser = new Parser($lexer);
+        dump('(key:value) > '.var_export($parser->parse(),true));
+
+        $lexer = new Lexer('(key:value) and (key:value)');
+        $parser = new Parser($lexer);
+        dump('(key:value) and (key:value) > '.var_export($parser->parse(),true));
+
+        $lexer = new Lexer('(key:value or key:value) and key:value');
+        $parser = new Parser($lexer);
+        dump('(key:value or key:value) and key:value > '.var_export($parser->parse(),true));
+
+        $lexer = new Lexer('(key:value or key:value) and (key:value)');
+        $parser = new Parser($lexer);
+        dump('(key:value or key:value) and (key:value) > '.var_export($parser->parse(),true));
+
+        $lexer = new Lexer('(key:value oxr key:value) and (key:value)');
+        $parser = new Parser($lexer);
+        dump('(key:value oxr key:value) and (key:value) > '.var_export($parser->parse(),true));
+//dd('konec');
+        $lexer = new Lexer('(key:value or key: value) and (key:value)');
+        $parser = new Parser($lexer);
+        dump('(key:value or key: value) and (key:value) > '.var_export($parser->parse(),true));
+
+        $lexer = new Lexer('(key:value or key:value) and key:value)');
+        $parser = new Parser($lexer);
+        dump('(key:value or key:value) and key:value) > '.var_export($parser->parse(),true));
+        dd('konec');
+
+        // Compiler
+    }
+
+    public function index(Request $request)
+    {
+        $this->parseSearch($request);
+
         $orderBy = Input::get('orderBy', 'deadline');
         $orderDir = Input::get('orderDir', 'asc');
         $search = Input::get('s', '');
