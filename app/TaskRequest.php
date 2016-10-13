@@ -17,4 +17,13 @@ class TaskRequest extends Model
     {
         return $this->belongsTo('App\Worker');
     }
+
+    public function approve()
+    {
+        $this->task->increment('estimate', $this->estimate);
+
+        $this->task->update(['status_id' => 6]);
+
+        $this->delete();
+    }
 }
