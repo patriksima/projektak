@@ -1,7 +1,7 @@
 {
   "css/app.css": "css/app-467eaf19d6.css",
   "css/mdl-selectfield.min.css": "css/mdl-selectfield-b1a737c147.min.css",
-  "css/mdl-stepper.min.css": "css/mdl-stepper-03d8294007.min.css",
+  "css/mdl-stepper.min.css": "css/mdl-stepper-1b8846a6d3.min.css",
   "images/android-desktop.png": "images/android-desktop-30707acf49.png",
   "images/dog.png": "images/dog-f0cc7f67ed.png",
   "images/favicon.png": "images/favicon-680eaca6af.png",
@@ -13,10 +13,10 @@
   "js/control.js": "js/control-f8a3eab460.js",
   "js/inbox.js": "js/inbox-4e8cc8020a.js",
   "js/mdl-selectfield.min.js": "js/mdl-selectfield-3a1eb7dddd.min.js",
-  "js/mdl-stepper.min.js": "js/mdl-stepper-6e1ba82519.min.js",
+  "js/mdl-stepper.min.js": "js/mdl-stepper-060ae5223a.min.js",
   "js/projects.js": "js/projects-e818199aa1.js",
   "js/tasks.js": "js/tasks-20a0222902.js",
-  "js/user/tasks.js": "js/user/tasks-a787c2db0a.js",
+  "js/user/tasks.js": "js/user/tasks-25d9025e3c.js",
   "js/workers.js": "js/workers-bbf09abf38.js",
   "js/worksheets.js": "js/worksheets-a2c47b0ac1.js"
 }
