@@ -37,6 +37,7 @@
               <span class="mdl-layout-title">Projekťák</span>
             </div>
         </header>
+
         <main class="mdl-layout__content">
           <div id="app-status-bar" class="mdl-js-snackbar mdl-snackbar mdl-color--orange-400">
             <div class="mdl-snackbar__text mdl-color-text--grey-900"></div>

@@ -41,3 +41,16 @@ script:
   - php artisan migrate --force --seed
   - gulp
   - vendor/bin/phpunit
+
+deploy:
+  - provider: script
+    skip_cleanup: true
+    script: rsync -r -e "ssh -p 2222 -o 'StrictHostKeyChecking no'" --delete-after $TRAVIS_BUILD_DIR/. vu3015@ares.wrongware.cz:root/subdomains/projektak
+    on:
+      branch: master
+      
+  - provider: script
+    skip_cleanup: true
+    script: php artisan migrate
+    on:
+      branch: master
