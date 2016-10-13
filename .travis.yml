@@ -41,3 +41,15 @@ script:
   - php artisan migrate --force --seed
   - gulp
   - vendor/bin/phpunit
+
+deploy:
+  - provider: script
+    skip_cleanup: true
+    script: deploy.sh
+    on:
+      branch: develop
+  - provider: script
+    skip_cleanup: true
+    script: php artisan migrate
+    on:
+      branch: develop
