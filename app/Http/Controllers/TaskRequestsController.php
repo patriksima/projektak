@@ -21,7 +21,7 @@ class TaskRequestsController extends Controller
     /**
      * Handles approval of give task request
      *
-     * @param  \App\TaskRequest
+     * @param  \App\TaskRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function approve(TaskRequest $request)
