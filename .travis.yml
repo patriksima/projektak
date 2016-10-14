@@ -23,6 +23,7 @@ before_install:
   - export DB_DATABASE=laravel
   - export DB_USERNAME=travis
   - export DB_PASSWORD=
+  - php artisan migrate --force --seed
 
 before_script:
   - php artisan key:generate
@@ -38,7 +39,6 @@ install:
   - travis_retry npm install
 
 script:
-  - php artisan migrate --force --seed
   - gulp
   - vendor/bin/phpunit
 
