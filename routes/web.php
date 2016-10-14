@@ -15,7 +15,6 @@ Auth::loginUsingId(1);
 
 // Social Auth
 Route::group(['middleware' => 'web'], function () {
-
     Route::auth();
 
     Route::get('auth/{provider}', 'SocialAuthController@redirect');

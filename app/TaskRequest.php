@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class TaskRequest extends Model
 {
     /**
-     * Fillable fields
+     * Fillable fields.
      *
      * @var array
      */
     protected $fillable = ['estimate', 'reason'];
 
     /**
-     * Specifies the belongs to relationship
+     * Specifies the belongs to relationship.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -24,7 +24,7 @@ class TaskRequest extends Model
     }
 
     /**
-     * Specifies the belongs to relationship
+     * Specifies the belongs to relationship.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -35,7 +35,7 @@ class TaskRequest extends Model
 
     /**
      * Approves given task request by incrementing the estimated time and
-     * setting the status id to 6
+     * setting the status id to 6.
      *
      * @return void
      */
