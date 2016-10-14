@@ -64,18 +64,6 @@
 /******/ 	return __webpack_require__(__webpack_require__.s = 12);
 /******/ })
 /************************************************************************/
-<<<<<<< HEAD
-/******/ ({
-
-/***/ 12:
-/***/ function(module, exports) {
-
-eval("throw new Error(\"Module build failed: Error: ENOENT: no such file or directory, open '/home/kouks/Code/projects/projektak/resources/assets/js/chat.js'\\n    at Error (native)\");//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMTIuanMiLCJzb3VyY2VzIjpbXSwibWFwcGluZ3MiOiIiLCJzb3VyY2VSb290IjoiIn0=");
-
-/***/ }
-
-/******/ });
-=======
 /******/ ([
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
@@ -161,4 +149,3 @@ eval("'use strict';\n\n/**\n * First we will load all of this project's JavaScri
 
 /***/ }
 /******/ ]);
->>>>>>> 87637b61d9015221bc36b60bfa097a7044670a00
