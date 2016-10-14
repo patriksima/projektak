@@ -84,6 +84,7 @@
               <a class="mdl-navigation__link" href="{{ url('/projects') }}"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">assignment</i>Projects</a>
               <a class="mdl-navigation__link" href="{{ url('/workers') }}"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">wc</i>Workers</a>
               <a class="mdl-navigation__link" href="{{ url('/worksheets') }}"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">date_range</i>Worksheets</a>
+              <a class="mdl-navigation__link" href="{{ url('/task-requests') }}"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">trending_up</i>Task Requests</a>
               {{--
               <a class="mdl-navigation__link" href="{{ url('/finance') }}"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">euro_symbol</i>Finance</a>
               <a class="mdl-navigation__link" href="{{ url('/banks') }}"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">account_balance</i>Banks</a>

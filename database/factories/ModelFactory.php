@@ -233,3 +233,12 @@ $factory->defineAs(App\SocialAccount::class, 'primary', function () {
         'avatar' => 'https://graph.facebook.com/v2.6/595706863941058/picture?type=normal',
     ];
 });
+
+$factory->define(App\TaskRequest::class, function (Faker\Generator $faker) {
+    return [
+        'worker_id' => 1,
+        'task_id' => 1,
+        'estimate' => rand(1, 5),
+        'reason' => $faker->sentence,
+    ];
+});

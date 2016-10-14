@@ -21,10 +21,7 @@ before_install:
 before_script:
   - mkdir -p storage/framework/{cache,views,sessions}
   - cp .env.travis .env
-  - mysql -e 'create database laravel;'
-  - export DB_DATABASE=laravel
-  - export DB_USERNAME=travis
-  - export DB_PASSWORD=
+  - mysql -e 'create database laravel;' -uroot
   - php artisan key:generate
   - php artisan cache:clear
   - php artisan config:clear
