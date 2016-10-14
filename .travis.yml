@@ -17,10 +17,10 @@ before_install:
   - nvm install 5.1
   - gem update --system
   - gem install compass
+  - cp .env.travis .env
 
 before_script:
   - mkdir -p storage/framework/{cache,views,sessions}
-  - cp .env.travis .env
   - mysql -e 'create database laravel;'
   - export DB_DATABASE=laravel
   - export DB_USERNAME=travis
