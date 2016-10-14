@@ -27,8 +27,6 @@ class CreateLeadTable extends Migration
             $table->text('gdrive')->nullable()->default(null);
             $table->enum('dealstatus', ['unknown', 'win', 'lose'])->nullable()->default('unknown');
             $table->timestamps();
-
-            $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -39,10 +37,6 @@ class CreateLeadTable extends Migration
      */
     public function down()
     {
-        Schema::table('leads', function (Blueprint $table) {
-            $table->dropForeign(['client_id']);
-        });
-
         Schema::drop('leads');
     }
 }

@@ -17,10 +17,6 @@ class CreateLeadStatusTable extends Migration
             $table->string('name', 45);
             $table->timestamps();
         });
-
-        Schema::table('leads', function (Blueprint $table) {
-            $table->foreign('status_id')->references('id')->on('lead_statuses')->onDelete('no action')->onUpdate('no action');
-        });
     }
 
     /**
@@ -30,10 +26,6 @@ class CreateLeadStatusTable extends Migration
      */
     public function down()
     {
-        Schema::table('leads', function (Blueprint $table) {
-            $table->dropForeign(['status_id']);
-        });
-
         Schema::drop('lead_statuses');
     }
 }

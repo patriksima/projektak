@@ -15,8 +15,6 @@ class CreateLabelHasRuleTable extends Migration
         Schema::create('label_has_rules', function (Blueprint $table) {
             $table->bigInteger('label_id')->unsigned();
             $table->bigInteger('rule_id')->unsigned();
-
-            $table->foreign('label_id')->references('id')->on('labels')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -27,10 +25,6 @@ class CreateLabelHasRuleTable extends Migration
      */
     public function down()
     {
-        Schema::table('label_has_rules', function (Blueprint $table) {
-            $table->dropForeign(['label_id']);
-        });
-
         Schema::drop('label_has_rules');
     }
 }

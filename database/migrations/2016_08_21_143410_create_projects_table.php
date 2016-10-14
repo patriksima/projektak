@@ -21,14 +21,6 @@ class CreateProjectsTable extends Migration
             $table->text('note')->nullable();
             $table->date('deadline')->nullable();
             $table->timestamps();
-            $table->foreign('client_id')
-                  ->references('id')->on('clients')
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
-            $table->foreign('status_id')
-                  ->references('id')->on('project_statuses')
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
         });
     }
 

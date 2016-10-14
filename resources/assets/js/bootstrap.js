@@ -2,12 +2,21 @@
 window._ = require('lodash');
 
 /**
+ * Laravel tokens
+ */
+
+window.Laravel = {
+  csrfToken: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+  apiToken: document.querySelector('meta[name="api-token"]').getAttribute('content'),
+};
+
+/**
  * Vue is a modern JavaScript library for building interactive web interfaces
  * using reactive data binding and reusable components. Vue's API is clean
  * and simple, leaving you to focus on building your next great project.
  */
 
-window.Vue = require('vue');
+window.Vue = require('vue/dist/vue.js');
 require('vue-resource');
 
 /**
@@ -17,7 +26,8 @@ require('vue-resource');
  */
 
 Vue.http.interceptors.push((request, next) => {
-    request.headers['X-CSRF-TOKEN'] = Laravel.csrfToken;
+    request.headers.set('Authorization', 'Bearer ' + Laravel.apiToken);
+    request.headers.set('X-CSRF-TOKEN', Laravel.csrfToken);
 
     next();
 });
@@ -28,9 +38,10 @@ Vue.http.interceptors.push((request, next) => {
  * allows your team to easily build robust real-time web applications.
  */
 
-// import Echo from "laravel-echo"
+import Echo from "laravel-echo"
 
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: 'your-pusher-key'
-// });
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: 'a284740bbe35385a328c',
+    cluster: 'eu'
+});

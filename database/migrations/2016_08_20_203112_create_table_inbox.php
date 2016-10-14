@@ -20,10 +20,6 @@ class CreateTableInbox extends Migration
             $table->text('source_ext');
             $table->boolean('done', 0);
             $table->timestamps();
-            $table->foreign('client_id')
-                  ->references('id')->on('clients')
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
         });
     }
 

@@ -13,7 +13,8 @@ export default {
             required: true
         }
     },
-    ready () {
+
+    mounted() {
         componentHandler.upgradeElement(this.$el)
     }
 };
