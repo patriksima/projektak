@@ -21,7 +21,7 @@ before_install:
 before_script:
   - mkdir -p storage/framework/{cache,views,sessions}
   - cp .env.travis .env
-  - mysql -e 'create database laravel;'
+  - mysql -e 'create database laravel;' -uroot
   - export DB_DATABASE=laravel
   - export DB_USERNAME=travis
   - export DB_PASSWORD=
@@ -38,7 +38,6 @@ install:
   - travis_retry npm install
 
 script:
-  - php artisan optimize
   - php artisan migrate --force --seed
   - gulp
   - vendor/bin/phpunit
