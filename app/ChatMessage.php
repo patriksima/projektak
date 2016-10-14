@@ -25,7 +25,7 @@ class ChatMessage extends Model
     }
 
     /**
-     * Stores the message on the database
+     * Stores the message on the database.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return self

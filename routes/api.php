@@ -17,7 +17,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
 
-Route::group(['prefix' => 'chat'], function() {
+Route::group(['prefix' => 'chat'], function () {
     Route::get('{channel}', 'ChatMessagesController@index');
     Route::post('', 'ChatMessagesController@store');
 });
