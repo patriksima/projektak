@@ -17,7 +17,6 @@ class CreateLeadReasonTable extends Migration
             $table->string('name', 45);
             $table->timestamps();
         });
-
     }
 
     /**
