@@ -8,7 +8,11 @@ use Illuminate\Http\Request;
 
 class ChatMessagesController extends Controller
 {
-
+    /**
+     * Class constructor.
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->middleware('auth:api');
