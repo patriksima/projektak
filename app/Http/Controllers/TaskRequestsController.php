@@ -7,7 +7,7 @@ use App\TaskRequest;
 class TaskRequestsController extends Controller
 {
     /**
-     * Handles listing of the resource
+     * Handles listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -19,7 +19,7 @@ class TaskRequestsController extends Controller
     }
 
     /**
-     * Handles approval of given task request
+     * Handles approval of given task request.
      *
      * @param  \App\TaskRequest  $request
      * @return \Illuminate\Http\Response
