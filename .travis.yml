@@ -22,12 +22,6 @@ before_script:
   - mkdir -p storage/framework/{cache,views,sessions}
   - cp .env.travis .env
   - mysql -e 'create database laravel;' -uroot
-  - php artisan key:generate
-  - php artisan cache:clear
-  - php artisan config:clear
-  - php artisan view:clear
-  - php artisan clear-compiled
-
 
 install:
   - travis_retry composer self-update
@@ -36,6 +30,11 @@ install:
 
 script:
   - php artisan migrate --force --seed
+  - php artisan key:generate
+  - php artisan cache:clear
+  - php artisan config:clear
+  - php artisan view:clear
+  - php artisan clear-compiled
   - gulp
   - vendor/bin/phpunit
 
