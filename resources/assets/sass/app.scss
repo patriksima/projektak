@@ -329,3 +329,35 @@ _:-ms-input-placeholder, :root .demo-graph {
     width: 15px;
     height: 15px;
 }
+
+.chat {
+    position: fixed;
+    bottom: 0;
+    right: 50px;
+    min-height: 0px;
+}
+
+.chat-messages {
+    height: 250px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-name {
+    padding: 0 7px 0 10px;
+    margin-left: -11px;
+    font-size: 15px;
+    width: auto;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.chat-title {
+    background-color: #37474f;
+    color: white;
+}
+
+.pull-right {
+    float: right;
+}

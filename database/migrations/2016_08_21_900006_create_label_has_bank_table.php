@@ -15,9 +15,6 @@ class CreateLabelHasBankTable extends Migration
         Schema::create('label_has_banks', function (Blueprint $table) {
             $table->bigInteger('label_id')->unsigned();
             $table->bigInteger('bank_id')->unsigned();
-
-            $table->foreign('bank_id')->references('id')->on('banks')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('label_id')->references('id')->on('labels')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

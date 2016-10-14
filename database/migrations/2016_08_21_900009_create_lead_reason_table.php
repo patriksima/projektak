@@ -17,10 +17,6 @@ class CreateLeadReasonTable extends Migration
             $table->string('name', 45);
             $table->timestamps();
         });
-
-        Schema::table('leads', function (Blueprint $table) {
-            $table->foreign('reason_id')->references('id')->on('lead_reasons')->onDelete('set null')->onUpdate('cascade');
-        });
     }
 
     /**
@@ -30,10 +26,6 @@ class CreateLeadReasonTable extends Migration
      */
     public function down()
     {
-        Schema::table('leads', function (Blueprint $table) {
-            $table->dropForeign(['reason_id']);
-        });
-
         Schema::drop('lead_reasons');
     }
 }

@@ -18,10 +18,6 @@ class CreateRuleTable extends Migration
             $table->text('sql');
             $table->timestamps();
         });
-
-        Schema::table('label_has_rules', function (Blueprint $table) {
-            $table->foreign('rule_id')->references('id')->on('rules')->onDelete('cascade')->onUpdate('cascade');
-        });
     }
 
     /**
@@ -31,10 +27,6 @@ class CreateRuleTable extends Migration
      */
     public function down()
     {
-        Schema::table('label_has_rules', function (Blueprint $table) {
-            $table->dropForeign(['rule_id']);
-        });
-
         Schema::drop('rules');
     }
 }

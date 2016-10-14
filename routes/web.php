@@ -42,6 +42,7 @@ Route::group(['middleware' => ['web', 'auth', 'role:admin|manager']], function (
 
     Route::group(['prefix' => 'tasks'], function () {
         Route::get('', 'TaskController@index');
+        Route::get('{task}', 'TaskController@show');
         Route::post('', 'TaskController@store');
         Route::post('update/{id}', 'TaskController@update');
         Route::get('delete/{id}', 'TaskController@destroy');
