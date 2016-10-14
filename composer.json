@@ -10,7 +10,8 @@
         "laravel/socialite": "^2.0",
         "squizlabs/php_codesniffer": "^2.6",
         "doctrine/dbal": "^2.5",
-        "barryvdh/laravel-debugbar": "^2.2"
+        "barryvdh/laravel-debugbar": "^2.2",
+        "pusher/pusher-php-server": "^2.6"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

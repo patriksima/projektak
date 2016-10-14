@@ -18,10 +18,6 @@ class CreateTableClientMeta extends Migration
             $table->string('meta_key', 45);
             $table->text('meta_value');
             $table->timestamps();
-            $table->foreign('client_id')
-                  ->references('id')->on('clients')
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
         });
     }
 

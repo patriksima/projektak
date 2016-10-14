@@ -1,5 +1,5 @@
 {
-  "css/app.css": "css/app-467eaf19d6.css",
+  "css/app.css": "css/app-23ea569b97.css",
   "css/mdl-selectfield.min.css": "css/mdl-selectfield-b1a737c147.min.css",
   "css/mdl-stepper.min.css": "css/mdl-stepper-1b8846a6d3.min.css",
   "images/android-desktop.png": "images/android-desktop-30707acf49.png",
@@ -9,7 +9,11 @@
   "images/user.jpg": "images/user-e06de5083b.jpg",
   "js/all.js": "js/all-d8266f4e39.js",
   "js/all.js.map": "js/all-369e3c1399.js.map",
+<<<<<<< HEAD
   "js/chat.js": "js/chat-3ed42158e3.js",
+=======
+  "js/chat.js": "js/chat-ff7d5e4429.js",
+>>>>>>> 87637b61d9015221bc36b60bfa097a7044670a00
   "js/clients.js": "js/clients-1a2115670e.js",
   "js/control.js": "js/control-f8a3eab460.js",
   "js/inbox.js": "js/inbox-4e8cc8020a.js",
@@ -17,7 +21,7 @@
   "js/mdl-stepper.min.js": "js/mdl-stepper-060ae5223a.min.js",
   "js/projects.js": "js/projects-e818199aa1.js",
   "js/tasks.js": "js/tasks-20a0222902.js",
-  "js/user/tasks.js": "js/user/tasks-25d9025e3c.js",
+  "js/user/tasks.js": "js/user/tasks-11c51b491b.js",
   "js/workers.js": "js/workers-bbf09abf38.js",
   "js/worksheets.js": "js/worksheets-a2c47b0ac1.js"
 }

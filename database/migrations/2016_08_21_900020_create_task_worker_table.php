@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTaskMetaTable extends Migration
+class CreateTaskWorkerTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,9 @@ class CreateTaskMetaTable extends Migration
      */
     public function up()
     {
-        Schema::create('task_metas', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create('task_worker', function (Blueprint $table) {
+            $table->bigInteger('worker_id')->unsigned();
             $table->bigInteger('task_id')->unsigned();
-            $table->string('meta_key', 45);
-            $table->text('meta_value');
-            $table->timestamps();
         });
     }
 
@@ -28,6 +25,6 @@ class CreateTaskMetaTable extends Migration
      */
     public function down()
     {
-        Schema::drop('task_metas');
+        Schema::drop('task_worker');
     }
 }
