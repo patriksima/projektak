@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddNameAvatarSocialAccountsTable extends Migration
+class CreateChatMessagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class AddNameAvatarSocialAccountsTable extends Migration
      */
     public function up()
     {
-        Schema::table('social_accounts', function (Blueprint $table) {
-            $table->string('name');
-            $table->string('avatar');
+        Schema::create('chat_messages', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('sender_id');
+            $table->string('channel', 50);
+            $table->text('body');
+            $table->timestamps();
         });
     }
 
@@ -26,8 +29,6 @@ class AddNameAvatarSocialAccountsTable extends Migration
      */
     public function down()
     {
-        Schema::table('social_accounts', function (Blueprint $table) {
-            $table->dropColumn(['name', 'avatar']);
-        });
+        Schema::dropIfExists('chat_messages');
     }
 }

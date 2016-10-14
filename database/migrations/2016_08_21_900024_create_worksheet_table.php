@@ -27,11 +27,8 @@ class CreateWorksheetTable extends Migration
             $table->decimal('amount', 10, 2);
             $table->char('currency', 3);
             $table->boolean('billable');
-            $table->binary('hash', 16);
+            $table->char('hash', 32)->unique();
             $table->timestamps();
-
-            $table->foreign('project_id')->references('id')->on('projects')->onDelete('no action')->onUpdate('no action');
-            $table->foreign('worker_id')->references('id')->on('workers')->onDelete('no action')->onUpdate('no action');
         });
     }
 
@@ -42,11 +39,6 @@ class CreateWorksheetTable extends Migration
      */
     public function down()
     {
-        Schema::table('worksheets', function (Blueprint $table) {
-            $table->dropForeign(['project_id']);
-            $table->dropForeign(['worker_id']);
-        });
-
         Schema::drop('worksheets');
     }
 }

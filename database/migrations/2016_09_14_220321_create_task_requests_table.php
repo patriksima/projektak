@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class TaskRequestsTable extends Migration
+class CreateTaskRequestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -20,9 +20,6 @@ class TaskRequestsTable extends Migration
             $table->decimal('estimate', 5, 2)->unsigned();
             $table->string('reason');
             $table->timestamps();
-
-            $table->foreign('worker_id')->references('id')->on('workers')->onDelete('restrict')->onUpdate('cascade');
-            $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -33,6 +30,6 @@ class TaskRequestsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('task_requests');
+        Schema::drop('task_requests');
     }
 }

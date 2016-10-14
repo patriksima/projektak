@@ -18,8 +18,6 @@ class CreateWorkerMetaTable extends Migration
             $table->string('meta_key', 45);
             $table->text('meta_value');
             $table->timestamps();
-
-            $table->foreign('worker_id')->references('id')->on('workers')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -30,10 +28,6 @@ class CreateWorkerMetaTable extends Migration
      */
     public function down()
     {
-        Schema::table('worker_metas', function (Blueprint $table) {
-            $table->dropForeign(['worker_id']);
-        });
-
         Schema::drop('worker_metas');
     }
 }
