@@ -109,16 +109,16 @@ export default {
          * Helper to keep the chat window scrolled down.
          */
         scrollDown() {
-        var chatWindow = document.querySelector('.chat-messages');
-        chatWindow.scrollTop = chatWindow.scrollHeight;
+            var chatWindow = document.querySelector('.chat-messages');
+            chatWindow.scrollTop = chatWindow.scrollHeight;
         },
 
         /**
          * Toggles the chat window.
          */
         toggleWindow() {
-        this.scrollDown();
-        this.open = ! this.open;
+            this.open = ! this.open;
+            this.scrollDown();
         }
     }
 };
