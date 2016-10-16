@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableClientMeta extends Migration
+class CreateClientsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,12 @@ class CreateTableClientMeta extends Migration
      */
     public function up()
     {
-        Schema::create('client_metas', function (Blueprint $table) {
+        Schema::create('clients', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('client_id')->unsigned();
-            $table->string('meta_key', 45);
-            $table->text('meta_value');
+            $table->string('name', 45);
+            $table->integer('rate');
+            $table->string('currency', 10);
+            $table->string('gdrive');
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateTableClientMeta extends Migration
      */
     public function down()
     {
-        Schema::drop('client_metas');
+        Schema::drop('clients');
     }
 }

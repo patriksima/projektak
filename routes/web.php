@@ -49,13 +49,7 @@ Route::group(['middleware' => ['web', 'auth', 'role:admin|manager']], function (
         Route::get('edit/{id}', 'TaskController@edit');
     });
 
-    Route::group(['prefix' => 'clients'], function () {
-        Route::get('', 'ClientController@index');
-        Route::post('', 'ClientController@store');
-        Route::post('update/{id}', 'ClientController@update');
-        Route::get('delete/{id}', 'ClientController@destroy');
-        Route::get('edit/{id}', 'ClientController@edit');
-    });
+    Route::resource('clients', 'ClientsController');
 
     Route::group(['prefix' => 'projects'], function () {
         Route::get('', 'ProjectController@index');

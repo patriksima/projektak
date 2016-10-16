@@ -2,22 +2,35 @@
 
 namespace App;
 
+use App\Filters\Filterable;
 use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
-    protected $fillable = ['name'];
+    use Filterable;
 
-    public function metas()
-    {
-        return $this->hasMany('App\ClientMeta');
-    }
+    /**
+     * Fillable fields.
+     *
+     * @var array
+     */
+    protected $fillable = ['name', 'rate', 'currency', 'gdrive'];
 
+    /**
+     * Specifies the has many relationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function inboxes()
     {
         return $this->hasMany('App\Inbox');
     }
 
+    /**
+     * Specifies the has many relationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function projects()
     {
         return $this->hasMany('App\Project');

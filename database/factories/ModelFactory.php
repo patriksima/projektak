@@ -16,27 +16,9 @@ use Carbon\Carbon;
 $factory->define(App\Client::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->company(),
-    ];
-});
-
-$factory->defineAs(App\ClientMeta::class, 'rate', function (Faker\Generator $faker) {
-    return [
-        'meta_key' => 'rate',
-        'meta_value' => $faker->numberBetween(100, 1000),
-    ];
-});
-
-$factory->defineAs(App\ClientMeta::class, 'currency', function (Faker\Generator $faker) {
-    return [
-        'meta_key' => 'currency',
-        'meta_value' => $faker->currencyCode(),
-    ];
-});
-
-$factory->defineAs(App\ClientMeta::class, 'gdrive', function (Faker\Generator $faker) {
-    return [
-        'meta_key' => 'gdrive',
-        'meta_value' => $faker->url(),
+        'rate' => $faker->numberBetween(100, 1000),
+        'currency' => $faker->currencyCode(),
+        'gdrive' => $faker->url(),
     ];
 });
 
