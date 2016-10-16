@@ -9,7 +9,7 @@ use App\ProjectStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
-class ProjectController extends Controller
+class _ProjectController extends Controller
 {
     public function index()
     {

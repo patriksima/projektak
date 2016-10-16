@@ -64,7 +64,7 @@ class Project extends Model
     }
 
     /**
-     * Returns the project total duration
+     * Returns the project total duration.
      *
      * @return float
      */
@@ -76,7 +76,7 @@ class Project extends Model
     }
 
     /**
-     * Returns the project total cost
+     * Returns the project total cost.
      *
      * @return float
      */

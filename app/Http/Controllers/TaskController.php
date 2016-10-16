@@ -6,7 +6,6 @@ use App\Task;
 use App\Worker;
 use App\Project;
 use App\TaskStatus;
-use App\Http\Requests;
 use App\Filters\TaskFilter;
 use Illuminate\Http\Request;
 
