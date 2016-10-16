@@ -22,7 +22,6 @@ class CreateTasksTable extends Migration
             $table->text('source_ext');
             $table->decimal('estimate', 5, 2);
             $table->date('deadline')->nullable();
-            $table->dateTime('checked')->nullable();
             $table->timestamps();
         });
     }

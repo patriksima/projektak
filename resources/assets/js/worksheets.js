@@ -28,9 +28,6 @@ dialog.querySelector('.add').addEventListener('click', function() {
 });
 
 document.querySelectorAll('th.sortable').forEach(function(entry) {
-    var asc  = entry.outerHTML.indexOf('sorted-asc');
-    var desc = entry.outerHTML.indexOf('sorted-desc');
-
     entry.addEventListener('click', function() {
         location.href = '/worksheets?' + this.getAttribute('data-orderby') + '=' + this.getAttribute('data-orderdir');
     });

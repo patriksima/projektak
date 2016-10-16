@@ -2,22 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Worker;
+use App\Client;
 use Illuminate\Http\Request;
-use App\Filters\WorkerFilter;
+use App\Filters\ClientFilter;
 
-class WorkersController extends Controller
+class ClientController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param  \App\Filters\ClientFilter  $filter
      * @return \Illuminate\Http\Response
      */
-    public function index(WorkerFilter $filter)
+    public function index(ClientFilter $filter)
     {
-        $workers = Worker::filter($filter)->get();
+        $clients = Client::filter($filter)->get();
 
-        return view('workers.index', compact('workers'));
+        return view('clients.index', compact('clients'));
     }
 
     /**
@@ -27,9 +28,9 @@ class WorkersController extends Controller
      */
     public function store()
     {
-        Worker::create(request()->all());
+        Client::create(request()->all());
 
-        return back()->with('success', 'Worker has been successfully added.');
+        return back();
     }
 
     /**
@@ -46,25 +47,25 @@ class WorkersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Worker  $worker
+     * @param  \App\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function edit(Worker $worker)
+    public function edit(Client $client)
     {
-        return view('workers.edit', compact('worker'));
+        return view('clients.edit', compact('client'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Worker  $worker
+     * @param  \App\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function update(Worker $worker)
+    public function update(Client $client)
     {
-        $worker->update(request()->all());
+        $client->update(request()->all());
 
-        return redirect('/workers')->with('success', 'Worker has been successfully edited.');
+        return redirect('/clients');
     }
 
     /**
@@ -75,14 +76,8 @@ class WorkersController extends Controller
      */
     public function destroy($id)
     {
-        $worker = Worker::find($id);
+        Client::destroy($id);
 
-        if ($worker->worksheets->count() > 0) {
-            return back()->with('danger', 'Worker has worksheets.');
-        }
-
-        $worker->delete();
-
-        return back()->with('success', 'Worker has been deleted.');
+        return back();
     }
 }

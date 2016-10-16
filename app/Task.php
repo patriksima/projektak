@@ -2,79 +2,83 @@
 
 namespace App;
 
-use DB;
+use App\Filters\Filterable;
 use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
-    protected $fillable = ['status_id', 'name', 'description', 'source_int', 'source_ext', 'deadline', 'estimate', 'checked'];
+    use Filterable;
 
+    /**
+     * Fillable fields.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'status_id',
+        'name',
+        'description',
+        'source_int',
+        'source_ext',
+        'deadline',
+        'estimate',
+        'checked',
+    ];
+
+    /**
+     * Dates array.
+     *
+     * @var array
+     */
+    protected $dates = ['deadline', 'created_at', 'updated_at'];
+
+    /**
+     * Specifies the belongs to relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function project()
     {
         return $this->belongsTo(Project::class);
     }
 
+    /**
+     * Specifies the belongs to relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function status()
     {
         return $this->belongsTo(TaskStatus::class);
     }
 
+    /**
+     * Specifies the belongs to many relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function workers()
     {
         return $this->belongsToMany(Worker::class);
     }
 
-    public function tasklogs()
+    /**
+     * Specifies the has many relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function logs()
     {
         return $this->hasMany(TaskLog::class);
     }
 
+    /**
+     * Specifies the has many relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function requests()
     {
         return $this->hasMany(TaskRequest::class);
-    }
-
-    public function scopeWithActivity($query)
-    {
-        return $query->leftJoin('task_logs as tl1', function ($join) {
-            $join->on('tl1.task_id', '=', 'tasks.id')
-                    ->whereNull('tl1.end');
-        })
-        ->addSelect(DB::raw('IF(tl1.id is not null and tl1.end is null, 1, 0) as active'));
-    }
-
-    /**
-     * Return real task duration.
-     */
-    public function scopeWithDuration($query)
-    {
-        return $query->leftJoin('task_logs as tl2', 'tl2.task_id', '=', 'tasks.id')
-            ->addSelect(DB::raw('ROUND(SUM(TIMESTAMPDIFF(SECOND, tl2.`start`, IFNULL(tl2.`end`, CURRENT_TIMESTAMP)))/3600, 2) as duration'))
-            ->addSelect(DB::raw('ROUND(SUM(TIMESTAMPDIFF(SECOND, tl2.`start`, IFNULL(tl2.`end`, CURRENT_TIMESTAMP)))/3600/estimate*100, 2) as ratio'))
-            ->groupBy('tasks.id');
-    }
-
-    public function scopeWithStatus($query)
-    {
-        return $query->leftJoin('task_statuses', 'task_statuses.id', '=', 'tasks.status_id')
-             ->addSelect('task_statuses.name as status')
-             ->where('task_statuses.slug', '<>', 'done');
-    }
-
-    public function scopeWithProject($query)
-    {
-        return $query->leftJoin('projects', 'projects.id', '=', 'tasks.project_id')
-             ->addSelect('projects.name as project');
-    }
-
-    public function scopeWithClient($query)
-    {
-        return $query->leftJoin('clients', 'clients.id', '=', 'projects.client_id')
-             ->addSelect('clients.name as client');
-    }
-
-    public function scopeWithWorker($query)
-    {
-        return $query->join('task_worker', 'task_worker.task_id', '=', 'tasks.id');
     }
 }

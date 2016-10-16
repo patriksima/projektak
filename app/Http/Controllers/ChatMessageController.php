@@ -6,7 +6,7 @@ use App\ChatMessage;
 use App\Events\Chat\MessageSent;
 use Illuminate\Http\Request;
 
-class ChatMessagesController extends Controller
+class ChatMessageController extends Controller
 {
     /**
      * Class constructor.

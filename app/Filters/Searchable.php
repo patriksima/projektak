@@ -28,11 +28,11 @@ trait Searchable
      * Recursively build up the search query.
      *
      * @param  string  $column
-     * @param  array  $args
+     * @param  string  $key
      * @param  string  $last
      * @return void
      */
-    protected function resolveSearch($column, $pattern, $last = '')
+    protected function resolveSearch($column, $key, $last = '')
     {
         if (strpos($column, '.')) {
             $scope = strstr($column, '.', true);
@@ -42,10 +42,10 @@ trait Searchable
             if (! in_array($scope, $this->loaded)) {
                 $this->loaded[] = $scope;
 
-                $this->builder->join($scope, "{$last}.{$singular}_id", "{$scope}.id");
+                $this->builder->leftJoin($scope, "{$last}.{$singular}_id", "{$scope}.id");
             }
 
-            return $this->resolveSearch($next, $pattern, $scope);
+            return $this->resolveSearch($next, $key, $scope);
         }
 
         $this->builder->orWhere("{$last}.{$column}", 'regexp', $pattern);

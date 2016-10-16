@@ -10,7 +10,12 @@
 				    </span>
 				</span>
 				<div class="mdl-step__content">
-					<form id="worksheet-form__import" action="{{ action('WorksheetsController@import') }}" method="post" enctype="multipart/form-data">
+					<form
+                        id="worksheet-form__import"
+                        action="{{ action('WorksheetController@import', ['worksheet' => 1]) }}"
+                        method="post"
+                        enctype="multipart/form-data"
+                    >
 						{{ csrf_field() }}
 						<div class="mdl-textfield mdl-js-textfield mdl-textfield--file">
 							<input class="mdl-textfield__input" placeholder="CSV File" type="text" id="uploadFile" readonly required/>
@@ -46,7 +51,7 @@
 					</span>
 				</span>
 				<div class="mdl-step__content">
-					<form id="worksheet-form__assign" action="{{ action('WorksheetsController@assign') }}" method="post">
+					<form id="worksheet-form__assign" action="{{ action('WorksheetController@assign') }}" method="post">
 						{{ csrf_field() }}
 						<table class="mdl-data-table mdl-js-data-table">
 							<tr v-for="item in unassigned">

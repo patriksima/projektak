@@ -18,6 +18,8 @@ class User extends Authenticatable
         'name', 'email', 'allowed',
     ];
 
+    protected $hidden = ['password', 'remember_token'];
+
     public function roles()
     {
         return $this->belongsToMany(Role::class);

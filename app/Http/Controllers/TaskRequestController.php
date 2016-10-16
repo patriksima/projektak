@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\TaskRequest;
 
-class TaskRequestsController extends Controller
+class TaskRequestController extends Controller
 {
     /**
      * Handles listing of the resource.

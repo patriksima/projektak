@@ -17,18 +17,20 @@ trait Orderable
             return;
         }
 
-        $this->resolveOrder($this->orderable[$method], $args, $this->getTableName());
+        $this->builder->addSelect("{$this->getTableName()}.*");
+
+        $this->resolveOrder($this->orderable[$method], $args[0], $this->getTableName());
     }
 
     /**
      * Recursively build up the order query.
      *
      * @param  string  $column
-     * @param  array  $args
+     * @param  string  $key
      * @param  string  $last
      * @return void
      */
-    protected function resolveOrder($column, $args, $last = '')
+    protected function resolveOrder($column, $key, $last = '')
     {
         if (strpos($column, '.')) {
             $scope = strstr($column, '.', true);
@@ -37,9 +39,9 @@ trait Orderable
 
             $this->builder->join($scope, "{$last}.{$singular}_id", "{$scope}.id");
 
-            return $this->resolveOrder($next, $args, $scope);
+            return $this->resolveOrder($next, $key, $scope);
         }
 
-        $this->builder->orderBy("{$last}.{$column}", $args[0]);
+        $this->builder->orderBy("{$last}.{$column}", $key);
     }
 }

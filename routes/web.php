@@ -12,26 +12,38 @@
 */
 
 // Social Auth
-Route::group(['middleware' => 'web'], function () {
-    Route::auth();
+Route::auth();
 
-    Route::get('auth/{provider}', 'SocialAuthController@redirect');
-    Route::get('auth/{provider}/callback', 'SocialAuthController@callback');
-});
+Route::get('auth/{provider}', 'SocialAuthController@redirect');
+Route::get('auth/{provider}/callback', 'SocialAuthController@callback');
 
-Route::group(['middleware' => ['web', 'auth', 'role:admin|manager']], function () {
+
+Route::group(['middleware' => ['auth', 'role:admin|manager']], function () {
     Route::get('', function () {
         return view('welcome');
     });
 
 
-    Route::resource('clients', 'ClientsController');
 
-    Route::resource('worksheets', 'WorksheetsController');
-    Route::post('import', 'WorksheetsController@import');
-    Route::post('assign', 'WorksheetsController@assign');
 
-    Route::resource('workers', 'WorkersController');
+    Route::resource('clients', 'ClientController');
+
+    Route::resource('worksheets', 'WorksheetController');
+    Route::post('worksheets/{worksheet}/import', 'WorksheetController@import');
+    Route::post('worksheets/{worksheet}/assign', 'WorksheetController@assign');
+
+    Route::resource('workers', 'WorkerController');
+
+    Route::resource('tasks', 'TaskController');
+
+    Route::resource('projects', 'ProjectController');
+
+    Route::group(['prefix' => 'task-requests'], function () {
+        Route::get('', 'TaskRequestController@index');
+        Route::post('{request}/approve', 'TaskRequestsController@approve');
+    });
+
+
 
     Route::group(['prefix' => 'inbox'], function () {
         Route::get('', 'InboxController@index');
@@ -49,23 +61,24 @@ Route::group(['middleware' => ['web', 'auth', 'role:admin|manager']], function (
         Route::get('edit/{id}', 'ControlController@edit');
     });
 
-    Route::group(['prefix' => 'tasks'], function () {
-        Route::get('', 'TaskController@index');
-        Route::get('{task}', 'TaskController@show');
-        Route::post('', 'TaskController@store');
-        Route::post('update/{id}', 'TaskController@update');
-        Route::get('delete/{id}', 'TaskController@destroy');
-        Route::get('edit/{id}', 'TaskController@edit');
-    });
+    // Route::group(['prefix' => 'projects'], function () {
+    //     Route::get('', 'ProjectController@index');
+    //     Route::post('', 'ProjectController@store');
+    //     Route::post('update/{id}', 'ProjectController@update');
+    //     Route::get('delete/{id}', 'ProjectController@destroy');
+    //     Route::get('edit/{id}', 'ProjectController@edit');
+    // });
+
+    // Route::group(['prefix' => 'tasks'], function () {
+    //     Route::get('', 'TaskController@index');
+    //     Route::get('{task}', 'TaskController@show');
+    //     Route::post('', 'TaskController@store');
+    //     Route::post('update/{id}', 'TaskController@update');
+    //     Route::get('delete/{id}', 'TaskController@destroy');
+    //     Route::get('edit/{id}', 'TaskController@edit');
+    // });
 
 
-    Route::group(['prefix' => 'projects'], function () {
-        Route::get('', 'ProjectController@index');
-        Route::post('', 'ProjectController@store');
-        Route::post('update/{id}', 'ProjectController@update');
-        Route::get('delete/{id}', 'ProjectController@destroy');
-        Route::get('edit/{id}', 'ProjectController@edit');
-    });
 
     // Route::group(['prefix' => 'workers'], function () {
     //     Route::get('', 'WorkerController@index');
@@ -81,11 +94,6 @@ Route::group(['middleware' => ['web', 'auth', 'role:admin|manager']], function (
     //     Route::post('import', 'WorksheetController@import');
     //     Route::post('assign', 'WorksheetController@assign');
     // });
-
-    Route::group(['prefix' => 'task-requests'], function () {
-        Route::get('', 'TaskRequestsController@index');
-        Route::post('{request}/approve', 'TaskRequestsController@approve');
-    });
 
     Route::group(['prefix' => 'api'], function () {
         Route::group(['prefix' => 'worksheets'], function () {
