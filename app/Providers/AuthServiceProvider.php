@@ -2,10 +2,7 @@
 
 namespace App\Providers;
 
-use Auth;
 use Illuminate\Support\Facades\Gate;
-use App\Services\Auth\OurGuard;
-use App\Extensions\UserProvider;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider

@@ -41,7 +41,7 @@ class FilterHelper
     }
 
     /**
-     * Inverts order direction
+     * Inverts order direction.
      *
      * @param  string  $name
      * @return string

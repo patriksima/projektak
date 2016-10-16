@@ -17,7 +17,7 @@ class Client extends Model
     protected $fillable = ['name', 'rate', 'currency', 'gdrive'];
 
     /**
-     * Specifies the has many relationship
+     * Specifies the has many relationship.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -27,7 +27,7 @@ class Client extends Model
     }
 
     /**
-     * Specifies the has many relationship
+     * Specifies the has many relationship.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

@@ -2,7 +2,7 @@
 
 if (! function_exists('filter')) {
     /**
-     * The filters helper function
+     * The filters helper function.
      *
      * @return \App\Helpers\Filter
      */

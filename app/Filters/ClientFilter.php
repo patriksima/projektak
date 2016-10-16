@@ -7,7 +7,7 @@ class ClientFilter extends Filter
     use Searchable;
 
     /**
-     * Searchable columns
+     * Searchable columns.
      *
      * @var array
      */

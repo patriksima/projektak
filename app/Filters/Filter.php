@@ -45,7 +45,7 @@ abstract class Filter
             $this->callFilterMethod($name, $value);
         }
 
-        return $this->  builder;
+        return $this->builder;
     }
 
     /**
