@@ -2,7 +2,6 @@
 
 namespace App;
 
-use DB;
 use App\Filters\Filterable;
 use Illuminate\Database\Eloquent\Model;
 

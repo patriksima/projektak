@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use DB;
-use Input;
 use App\Worker;
 use App\Client;
 use App\Project;
@@ -15,12 +14,12 @@ class WorksheetController extends Controller
 {
     public function index()
     {
-
+        //
     }
 
     public function store(Request $request)
     {
-
+        //
     }
 
     public function import(Request $request)

@@ -23,7 +23,7 @@ class Worksheet extends Model
         'tags',
         'amount',
         'currency',
-        'billable'
+        'billable',
     ];
 
     /**
