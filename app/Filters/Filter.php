@@ -7,6 +7,22 @@ use Illuminate\Database\Eloquent\Builder;
 
 abstract class Filter
 {
+    use Searchable, Orderable;
+
+    /**
+     * Searchable columns.
+     *
+     * @var array
+     */
+    protected $searchable = ['name'];
+
+    /**
+     * Orderable columns.
+     *
+     * @var array
+     */
+    protected $orderable = ['name' => 'name'];
+
     /**
      * Request data.
      *
@@ -66,8 +82,16 @@ abstract class Filter
      */
     protected function callFilterMethod($name, $value)
     {
-        if (method_exists($this, $name)) {
-            call_user_func_array([$this, $name], array_filter([$value]));
-        }
+        call_user_func_array([$this, $name], array_filter([$value]));
+    }
+
+    /**
+     * Returns the associated table name.
+     *
+     * @return string
+     */
+    protected function getTableName()
+    {
+        return $this->builder->getModel()->getTable();
     }
 }

@@ -24,6 +24,15 @@ Route::group(['middleware' => ['web', 'auth', 'role:admin|manager']], function (
         return view('welcome');
     });
 
+
+    Route::resource('clients', 'ClientsController');
+
+    Route::resource('worksheets', 'WorksheetsController');
+    Route::post('import', 'WorksheetsController@import');
+    Route::post('assign', 'WorksheetsController@assign');
+
+    Route::resource('workers', 'WorkersController');
+
     Route::group(['prefix' => 'inbox'], function () {
         Route::get('', 'InboxController@index');
         Route::post('', 'InboxController@store');
@@ -49,7 +58,6 @@ Route::group(['middleware' => ['web', 'auth', 'role:admin|manager']], function (
         Route::get('edit/{id}', 'TaskController@edit');
     });
 
-    Route::resource('clients', 'ClientsController');
 
     Route::group(['prefix' => 'projects'], function () {
         Route::get('', 'ProjectController@index');
@@ -59,20 +67,20 @@ Route::group(['middleware' => ['web', 'auth', 'role:admin|manager']], function (
         Route::get('edit/{id}', 'ProjectController@edit');
     });
 
-    Route::group(['prefix' => 'workers'], function () {
-        Route::get('', 'WorkerController@index');
-        Route::post('', 'WorkerController@store');
-        Route::post('update/{id}', 'WorkerController@update');
-        Route::get('delete/{id}', 'WorkerController@destroy');
-        Route::get('edit/{id}', 'WorkerController@edit');
-    });
+    // Route::group(['prefix' => 'workers'], function () {
+    //     Route::get('', 'WorkerController@index');
+    //     Route::post('', 'WorkerController@store');
+    //     Route::post('update/{id}', 'WorkerController@update');
+    //     Route::get('delete/{id}', 'WorkerController@destroy');
+    //     Route::get('edit/{id}', 'WorkerController@edit');
+    // });
 
-    Route::group(['prefix' => 'worksheets'], function () {
-        Route::get('', 'WorksheetController@index');
-        Route::post('', 'WorksheetController@store');
-        Route::post('import', 'WorksheetController@import');
-        Route::post('assign', 'WorksheetController@assign');
-    });
+    // Route::group(['prefix' => 'worksheets'], function () {
+    //     Route::get('', 'WorksheetController@index');
+    //     Route::post('', 'WorksheetController@store');
+    //     Route::post('import', 'WorksheetController@import');
+    //     Route::post('assign', 'WorksheetController@assign');
+    // });
 
     Route::group(['prefix' => 'task-requests'], function () {
         Route::get('', 'TaskRequestsController@index');

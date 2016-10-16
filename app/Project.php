@@ -38,34 +38,34 @@ class Project extends Model
 
     public function client()
     {
-        return $this->belongsTo('App\Client');
+        return $this->belongsTo(Client::class);
     }
 
     public function status()
     {
-        return $this->belongsTo('App\ProjectStatus');
+        return $this->belongsTo(ProjectStatus::class);
     }
 
     public function tasks()
     {
-        return $this->hasMany('App\Task');
+        return $this->hasMany(Task::class);
     }
 
     public function worksheets()
     {
-        return $this->hasMany('App\Worksheet');
+        return $this->hasMany(Worksheet::class);
     }
 
     public function durationSum()
     {
-        return $this->hasOne('App\Worksheet')
+        return $this->hasOne(Worksheet::class)
             ->selectRaw('SUM(duration) as duration, project_id')
             ->groupBy('project_id');
     }
 
     public function costsSum()
     {
-        return $this->hasOne('App\Worksheet')
+        return $this->hasOne(Worksheet::class)
             ->selectRaw('SUM(amount) as costs, project_id')
             ->groupBy('project_id');
     }

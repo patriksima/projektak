@@ -12,26 +12,27 @@
 
     <!-- Add to homescreen for Chrome on Android -->
     <meta name="mobile-web-app-capable" content="yes">
-    <link rel="icon" sizes="192x192" href="{{ elixir('images/android-desktop.png') }}">
+    <link rel="icon" sizes="192x192" href="/images/android-desktop.png">
 
     <!-- Add to homescreen for Safari on iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="@yield('title') - Projekťák">
-    <link rel="apple-touch-icon-precomposed" href="{{ elixir('images/ios-desktop.png') }}">
+    <link rel="apple-touch-icon-precomposed" href="/images/ios-desktop.png">
 
     <!-- Tile icon for Win8 (144x144 + tile color) -->
     <meta name="msapplication-TileColor" content="#3372DF">
 
-    <link rel="shortcut icon" href="{{ elixir('images/favicon.png') }}">
+    <link rel="shortcut icon" href="/images/favicon.png">
 
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
     <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="//code.getmdl.io/1.2.0/material.indigo-pink.min.css">
-    <link rel="stylesheet" href="{{ elixir('css/mdl-selectfield.min.css') }}">
-    <link rel="stylesheet" href="{{ elixir('css/mdl-stepper.min.css') }}">
-    <link rel="stylesheet" href="{{ elixir('css/app.css') }}">
+    <link rel="stylesheet" href="/css/mdl-selectfield.min.css">
+    <link rel="stylesheet" href="/css/mdl-stepper.min.css">
+    <link rel="stylesheet" href="/css/app.css">
 </head>
+
 <body>
     <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
         <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
@@ -92,8 +93,8 @@
     </div>
 
     <script src="//code.getmdl.io/1.2.0/material.min.js"></script>
-    <script src="{{ elixir('js/mdl-selectfield.min.js') }}"></script>
-    <script src="{{ elixir('js/mdl-stepper.min.js') }}"></script>
+    <script src="/js/mdl-selectfield.min.js"></script>
+    <script src="/js/mdl-stepper.min.js"></script>
 
     @if (Session::has('status'))
         <script>

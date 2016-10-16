@@ -20,17 +20,17 @@ class User extends Authenticatable
 
     public function roles()
     {
-        return $this->belongsToMany('App\Role');
+        return $this->belongsToMany(Role::class);
     }
 
     public function socials()
     {
-        return $this->hasMany('App\SocialAccount');
+        return $this->hasMany(SocialAccount::class);
     }
 
     public function workers()
     {
-        return $this->belongsToMany('App\Worker');
+        return $this->belongsToMany(Worker::class);
     }
 
     public function hasRole($name)

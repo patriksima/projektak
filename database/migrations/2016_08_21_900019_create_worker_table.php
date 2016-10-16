@@ -16,6 +16,15 @@ class CreateWorkerTable extends Migration
             $table->bigIncrements('id');
             $table->string('name', 45);
             $table->string('email', 255)->unique();
+            $table->string('address');
+            $table->string('type');
+            $table->string('job', 255);
+            $table->timestamp('birthday');
+            $table->integer('rate');
+            $table->text('note');
+            $table->string('gdrive');
+            $table->string('status');
+            $table->string('bank');
             $table->timestamps();
         });
     }

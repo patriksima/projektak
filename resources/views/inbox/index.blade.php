@@ -38,5 +38,5 @@
 @endsection
 
 @push('scripts')
-<script src="{{ elixir('js/inbox.js') }}"></script>
+<script src="/js/inbox.js"></script>
 @endpush

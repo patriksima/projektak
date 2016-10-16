@@ -45,5 +45,5 @@
 @endsection
 
 @push('scripts')
-<script src="{{ elixir('js/projects.js') }}"></script>
+<script src="/js/projects.js"></script>
 @endpush

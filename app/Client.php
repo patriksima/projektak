@@ -23,7 +23,7 @@ class Client extends Model
      */
     public function inboxes()
     {
-        return $this->hasMany('App\Inbox');
+        return $this->hasMany(Inbox::class);
     }
 
     /**
@@ -33,6 +33,6 @@ class Client extends Model
      */
     public function projects()
     {
-        return $this->hasMany('App\Project');
+        return $this->hasMany(Project::class);
     }
 }

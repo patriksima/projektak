@@ -10,11 +10,11 @@ class TaskLog extends Model
 
     public function task()
     {
-        return $this->belongsTo('App\Task');
+        return $this->belongsTo(Task::class);
     }
 
     public function worker()
     {
-        return $this->belongsTo('App\Worker');
+        return $this->belongsTo(Worker::class);
     }
 }

@@ -11,7 +11,7 @@
 			<label class="mdl-textfield__label">E-mail</label>
 		</div>
 		<div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
-			<select name="meta[type]" class="mdl-selectfield__select">
+			<select name="type" class="mdl-selectfield__select">
 				<option value=""></option>
 				<option value="fulltime">full-time zaměstnanec</option>
 				<option value="parttime">part-time zaměstnanec</option>
@@ -22,35 +22,35 @@
 			<label class="mdl-selectfield__label">Type</label>
 		</div>
 		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-			<input class="mdl-textfield__input" type="text" name="meta[job]" value="" />
+			<input class="mdl-textfield__input" type="text" name="job" value="" />
 			<label class="mdl-textfield__label">Job</label>
 		</div>
 		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-			<input class="mdl-textfield__input" type="number" step="0.01" name="meta[rate]" value="" />
+			<input class="mdl-textfield__input" type="number" step="0.01" name="rate" value="" />
 			<label class="mdl-textfield__label">Rate</label>
 		</div>
 		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-			<input class="mdl-textfield__input" type="date" name="meta[birthday]" value="" />
+			<input class="mdl-textfield__input" type="date" name="birthday" value="" />
 			<label class="mdl-textfield__label">Birthday</label>
 		</div>
 		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-			<input class="mdl-textfield__input" type="text" name="meta[bank]" value="" />
+			<input class="mdl-textfield__input" type="text" name="bank" value="" />
 			<label class="mdl-textfield__label">Bank account</label>
 		</div>
 		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-			<textarea class="mdl-textfield__input" name="meta[address]"></textarea>
+			<textarea class="mdl-textfield__input" name="address"></textarea>
 			<label class="mdl-textfield__label">Address</label>
 		</div>
 		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-			<textarea class="mdl-textfield__input" name="meta[note]"></textarea>
+			<textarea class="mdl-textfield__input" name="note"></textarea>
 			<label class="mdl-textfield__label">Note</label>
 		</div>
 		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-			<input class="mdl-textfield__input" type="text" name="meta[gdrive]" value="" />
+			<input class="mdl-textfield__input" type="text" name="gdrive" value="" />
 			<label class="mdl-textfield__label">Google Drive</label>
 		</div>
 		<div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
-			<select name="meta[status]" class="mdl-selectfield__select">
+			<select name="status" class="mdl-selectfield__select">
 				<option value="active">Active</option>
 				<option value="inactive">Inactive</option>
 			</select>
@@ -62,5 +62,5 @@
 		<button type="button" class="mdl-button add">Add</button>
 	</div>
     {{ csrf_field() }}
-    </form>	
+    </form>
 </dialog>

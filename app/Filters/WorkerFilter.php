@@ -2,14 +2,14 @@
 
 namespace App\Filters;
 
-class ClientFilter extends Filter
+class WorkerFilter extends Filter
 {
     /**
      * Searchable columns.
      *
      * @var array
      */
-    protected $searchable = ['name', 'rate'];
+    protected $searchable = ['name', 'type'];
 
     /**
      * Orderable columns.
@@ -18,6 +18,9 @@ class ClientFilter extends Filter
      */
     protected $orderable = [
         'name' => 'name',
+        'type' => 'type',
+        'job' => 'job',
+        'birthday' => 'type',
         'rate' => 'rate',
     ];
 }

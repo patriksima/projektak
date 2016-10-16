@@ -15,7 +15,7 @@ dialog.querySelector('.close').addEventListener('click', function() {
 
 dialog.querySelector('.add').addEventListener('click', function() {
 	var requiredFields = dialog.querySelectorAll(
-    	"input[required]:not(:disabled):not([readonly]):not([type=hidden])" +  
+    	"input[required]:not(:disabled):not([readonly]):not([type=hidden])" +
     	",select[required]:not(:disabled):not([readonly])"+
     	",textarea[required]:not(:disabled):not([readonly])");
 
@@ -27,72 +27,13 @@ dialog.querySelector('.add').addEventListener('click', function() {
 	dialog.querySelector('#worksheet-form__add').submit();
 });
 
-var sortable = document.querySelectorAll('th.sortable');
-sortable.forEach(function(entry) {
-	var asc  = entry.outerHTML.indexOf('sorted-asc');
-	var desc = entry.outerHTML.indexOf('sorted-desc');
+document.querySelectorAll('th.sortable').forEach(function(entry) {
+    var asc  = entry.outerHTML.indexOf('sorted-asc');
+    var desc = entry.outerHTML.indexOf('sorted-desc');
 
-	entry.addEventListener('click', function() {
-		location.href = '/worksheets?orderBy=' + this.getAttribute('data-orderby') + '&orderDir=' + this.getAttribute('data-orderdir');
-	});
-
-	entry.addEventListener('mouseover', function() {
-		if ( asc == -1 && desc == -1 ) {
-			this.className = this.className.replace(' mdl-data-table__header--sorted-descending', '' );
-			this.className += ' mdl-data-table__header--sorted-descending';
-		}
-		if ( asc == -1 && desc != -1 ) {
-			this.className = this.className.replace(' mdl-data-table__header--sorted-descending', '' );
-			this.className += ' mdl-data-table__header--sorted-ascending';
-		}
-		if ( asc != -1 && desc == -1 ) {
-			this.className = this.className.replace(' mdl-data-table__header--sorted-ascending', '' );
-			this.className += ' mdl-data-table__header--sorted-descending';
-		}
-	});
-
-	entry.addEventListener('mouseout', function() {
-		if ( asc == -1 && desc == -1 ) {
-			this.className = this.className.replace(' mdl-data-table__header--sorted-descending', '' );
-		}
-		if ( asc == -1 && desc != -1 ) {
-			this.className = this.className.replace(' mdl-data-table__header--sorted-ascending', '' );
-			this.className += ' mdl-data-table__header--sorted-descending';
-		}
-		if ( asc != -1 && desc == -1 ) {
-			this.className = this.className.replace(' mdl-data-table__header--sorted-descending', '' );
-			this.className += ' mdl-data-table__header--sorted-ascending';
-		}
-	});
-});
-
-var button2 = document.querySelector('#worksheet_filter');
-var dialog2 = document.querySelector('#worksheets-dialog__filter');
-
-if (! dialog2.showModal) {
-	dialogPolyfill.registerDialog(dialog2);
-}
-
-button2.addEventListener('click', function() {
-	dialog2.showModal();
-});
-
-dialog2.querySelector('.close').addEventListener('click', function() {
-	dialog2.close();
-});
-
-dialog2.querySelector('.add').addEventListener('click', function() {
-	var requiredFields = dialog2.querySelectorAll(
-    	"input[required]:not(:disabled):not([readonly]):not([type=hidden])" +  
-    	",select[required]:not(:disabled):not([readonly])"+
-    	",textarea[required]:not(:disabled):not([readonly])");
-
-	for (var i=0; i<requiredFields.length; i++){
-		if (requiredFields[i].checkValidity() == false) {
-			return;
-		}
-	}
-	dialog2.querySelector('#worksheets-form__filter').submit();
+    entry.addEventListener('click', function() {
+        location.href = '/worksheets?' + this.getAttribute('data-orderby') + '=' + this.getAttribute('data-orderdir');
+    });
 });
 
 var button3 = document.querySelector('#worksheet__import');
@@ -134,7 +75,7 @@ button3.addEventListener('click', function() {
 	stepperElement.querySelector('.mdl-step:nth-child(2)').addEventListener('onstepnext', function (event) {
 		var form = dialog3.querySelector('#worksheet-form__assign');
 		var requiredFields = form.querySelectorAll(
-	    	"input[required]:not(:disabled):not([readonly]):not([type=hidden])" +  
+	    	"input[required]:not(:disabled):not([readonly]):not([type=hidden])" +
 	    	",select[required]:not(:disabled):not([readonly])"+
 	    	",textarea[required]:not(:disabled):not([readonly])");
 
@@ -205,4 +146,4 @@ new Vue({
 });
 
 
-      
+

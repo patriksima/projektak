@@ -11,32 +11,27 @@ class Task extends Model
 
     public function project()
     {
-        return $this->belongsTo('App\Project');
+        return $this->belongsTo(Project::class);
     }
 
     public function status()
     {
-        return $this->belongsTo('App\TaskStatus');
-    }
-
-    public function metas()
-    {
-        return $this->hasMany('App\TaskMeta');
+        return $this->belongsTo(TaskStatus::class);
     }
 
     public function workers()
     {
-        return $this->belongsToMany('App\Worker');
+        return $this->belongsToMany(Worker::class);
     }
 
     public function tasklogs()
     {
-        return $this->hasMany('App\TaskLog');
+        return $this->hasMany(TaskLog::class);
     }
 
     public function requests()
     {
-        return $this->hasMany('App\TaskRequest');
+        return $this->hasMany(TaskRequest::class);
     }
 
     public function scopeWithActivity($query)
