@@ -10,5 +10,4 @@ if (! function_exists('filter')) {
     {
         return app('filter');
     }
-
 }
