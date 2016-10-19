@@ -17,8 +17,6 @@ class FilterTest extends TestCase
 
         // $this->visit('tasks?name=asc');
         // var_dump(request());
-
-
     }
 }
 
