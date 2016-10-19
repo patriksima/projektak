@@ -48,6 +48,6 @@ trait Searchable
             return $this->resolveSearch($next, $key, $scope);
         }
 
-        $this->builder->orWhere("{$last}.{$column}", 'regexp', $pattern);
+        $this->builder->orWhere("{$last}.{$column}", 'regexp', $key);
     }
 }

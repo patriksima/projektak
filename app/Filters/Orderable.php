@@ -17,8 +17,6 @@ trait Orderable
             return;
         }
 
-        $this->builder->addSelect("{$this->getTableName()}.*");
-
         $this->resolveOrder($this->orderable[$method], $args[0], $this->getTableName());
     }
 

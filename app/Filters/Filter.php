@@ -57,6 +57,10 @@ abstract class Filter
     {
         $this->builder = $builder;
 
+        // We need to select all columns from the original
+        // table, since many joins can mess up the selected fields
+        $this->builder->select("{$this->getTableName()}.*");
+
         foreach ($this->filters() as $name => $value) {
             $this->callFilterMethod($name, $value);
         }

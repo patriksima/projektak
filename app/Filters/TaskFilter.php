@@ -9,7 +9,7 @@ class TaskFilter extends Filter
      *
      * @var array
      */
-    protected $searchable = ['name'];
+    protected $searchable = ['name', 'projects.clients.name'];
 
     /**
      * Orderable columns.
