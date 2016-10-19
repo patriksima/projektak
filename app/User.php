@@ -56,7 +56,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Checks whether the user has any of given roles
+     * Checks whether the user has any of given roles.
      *
      * @param  string  $name
      * @return bool

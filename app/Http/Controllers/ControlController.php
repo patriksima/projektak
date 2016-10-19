@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Task;
 use Carbon\Carbon;
-use App\TaskStatus;
 use App\Filters\TaskFilter;
-use Illuminate\Http\Request;
 
 class ControlController extends Controller
 {
@@ -39,7 +37,7 @@ class ControlController extends Controller
     }
 
     /**
-     * Checking given resource
+     * Checking given resource.
      *
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
