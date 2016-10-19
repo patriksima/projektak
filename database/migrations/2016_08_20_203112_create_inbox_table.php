@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableInbox extends Migration
+class CreateInboxTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,13 @@ class CreateTableInbox extends Migration
      */
     public function up()
     {
-        Schema::create('inboxes', function (Blueprint $table) {
+        Schema::create('inbox', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('client_id')->unsigned();
             $table->text('description');
             $table->text('source_int');
             $table->text('source_ext');
-            $table->boolean('done', 0);
+            $table->boolean('done', false);
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateTableInbox extends Migration
      */
     public function down()
     {
-        Schema::drop('inboxes');
+        Schema::drop('inbox');
     }
 }

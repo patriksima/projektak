@@ -19,7 +19,7 @@ class TaskController extends Controller
      */
     public function index(TaskFilter $filter)
     {
-        $tasks = Task::with('project.client', 'workers', 'status')->filter($filter)->get();
+        $tasks = Task::filter($filter)->with('project.client', 'workers', 'status')->get();
 
         $workers = Worker::orderBy('name')->get();
         $projects = Project::orderBy('name')->get();

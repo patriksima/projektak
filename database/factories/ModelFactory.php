@@ -56,7 +56,6 @@ $factory->define(App\Task::class, function (Faker\Generator $faker) {
         'source_ext' => $faker->url(),
         'estimate' => $faker->randomFloat(2, 0, 30),
         'deadline' => $faker->dateTimeThisYear(date('Y').'-12-31'),
-        'checked' => $faker->dateTimeThisYear(),
     ];
 });
 

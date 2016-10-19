@@ -23,14 +23,15 @@ Route::group(['middleware' => ['auth', 'role:admin|manager']], function () {
         return view('welcome');
     });
 
-
-
-
     Route::resource('clients', 'ClientController');
 
     Route::resource('worksheets', 'WorksheetController');
-    Route::post('worksheets/{worksheet}/import', 'WorksheetController@import');
-    Route::post('worksheets/{worksheet}/assign', 'WorksheetController@assign');
+    Route::post('worksheets/import', 'WorksheetController@import');
+    Route::post('worksheets/assign', 'WorksheetController@assign');
+
+    Route::resource('inbox', 'InboxController');
+    Route::patch('inbox/{message}/complete', 'InboxController@complete');
+    Route::post('inbox/{message}/assign', 'InboxController@assign');
 
     Route::resource('workers', 'WorkerController');
 
@@ -43,57 +44,11 @@ Route::group(['middleware' => ['auth', 'role:admin|manager']], function () {
         Route::post('{request}/approve', 'TaskRequestsController@approve');
     });
 
-
-
-    Route::group(['prefix' => 'inbox'], function () {
-        Route::get('', 'InboxController@index');
-        Route::post('', 'InboxController@store');
-        Route::get('delete/{id}', 'InboxController@destroy');
-        Route::get('assign/{id}', 'InboxController@assign');
-        Route::post('assign/{id}', 'InboxController@assignStore');
-        Route::get('done/{id}', 'InboxController@done');
-    });
-
     Route::group(['prefix' => 'control'], function () {
         Route::get('', 'ControlController@index');
-        Route::get('done/{id}', 'ControlController@done');
-        Route::get('check/{id}', 'ControlController@check');
-        Route::get('edit/{id}', 'ControlController@edit');
+        Route::patch('{task}/complete', 'ControlController@complete');
+        Route::patch('{task}/check', 'ControlController@check');
     });
-
-    // Route::group(['prefix' => 'projects'], function () {
-    //     Route::get('', 'ProjectController@index');
-    //     Route::post('', 'ProjectController@store');
-    //     Route::post('update/{id}', 'ProjectController@update');
-    //     Route::get('delete/{id}', 'ProjectController@destroy');
-    //     Route::get('edit/{id}', 'ProjectController@edit');
-    // });
-
-    // Route::group(['prefix' => 'tasks'], function () {
-    //     Route::get('', 'TaskController@index');
-    //     Route::get('{task}', 'TaskController@show');
-    //     Route::post('', 'TaskController@store');
-    //     Route::post('update/{id}', 'TaskController@update');
-    //     Route::get('delete/{id}', 'TaskController@destroy');
-    //     Route::get('edit/{id}', 'TaskController@edit');
-    // });
-
-
-
-    // Route::group(['prefix' => 'workers'], function () {
-    //     Route::get('', 'WorkerController@index');
-    //     Route::post('', 'WorkerController@store');
-    //     Route::post('update/{id}', 'WorkerController@update');
-    //     Route::get('delete/{id}', 'WorkerController@destroy');
-    //     Route::get('edit/{id}', 'WorkerController@edit');
-    // });
-
-    // Route::group(['prefix' => 'worksheets'], function () {
-    //     Route::get('', 'WorksheetController@index');
-    //     Route::post('', 'WorksheetController@store');
-    //     Route::post('import', 'WorksheetController@import');
-    //     Route::post('assign', 'WorksheetController@assign');
-    // });
 
     Route::group(['prefix' => 'api'], function () {
         Route::group(['prefix' => 'worksheets'], function () {
@@ -101,6 +56,32 @@ Route::group(['middleware' => ['auth', 'role:admin|manager']], function () {
         });
         Route::group(['prefix' => 'projects'], function () {
             Route::get('', 'ProjectController@apiIndex');
+        });
+    });
+});
+
+
+// User routes
+
+Route::group(['middleware' => ['auth', 'role:worker'], 'prefix' => 'user'], function () {
+    Route::group(['prefix' => 'tasks'], function () {
+        Route::get('/', 'User\TaskController@index');
+        Route::post('/', 'User\TaskController@store');
+        Route::post('update/{id}', 'User\TaskController@update');
+        Route::get('delete/{id}', 'User\TaskController@destroy');
+        Route::get('edit/{id}', 'User\TaskController@edit');
+    });
+    Route::get('/', 'User\DashboardController@index');
+
+    Route::group(['prefix' => 'api'], function () {
+        Route::group(['prefix' => 'task'], function () {
+            Route::post('/start', 'User\TaskController@apiStart');
+            Route::post('/stop', 'User\TaskController@apiStop');
+            Route::post('/done', 'User\TaskController@apiDone');
+            Route::post('/request', 'User\TaskController@apiRequest');
+        });
+        Route::group(['prefix' => 'tasks'], function () {
+            Route::get('/', 'User\TaskController@apiIndex');
         });
     });
 });

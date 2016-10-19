@@ -18,7 +18,7 @@
 
         <form
             action="/workers/{{ $worker->id }}"
-            class="delete-worker"
+            class="delete-worker-{{ $worker->id }}"
             method="POST"
             style="display: inline;"
         >
@@ -27,7 +27,10 @@
 
             <a
                 class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"
-                onclick="if (confirm('Are you sure?!')) document.querySelector('.delete-worker').submit();"
+                onclick="
+                    if (confirm('Are you sure?!'))
+                        document.querySelector('.delete-worker-{{ $worker->id }}').submit();
+                "
             >
                 <i class="material-icons">delete</i>
             </a>

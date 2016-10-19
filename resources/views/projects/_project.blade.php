@@ -13,7 +13,7 @@
     <td class="mdl-data-table__cell--non-numeric">
         <form
             action="/projects/{{ $project->id }}"
-            class="delete-project"
+            class="delete-project-{{ $project->id }}"
             method="POST"
             style="display: inline;"
         >
@@ -22,7 +22,10 @@
 
             <a
                 class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"
-                onclick="if (confirm('Are you sure?!')) document.querySelector('.delete-project').submit();"
+                onclick="
+                    if (confirm('Are you sure?!'))
+                        document.querySelector('.delete-project-{{ $project->id }}').submit();
+                "
             >
                 <i class="material-icons">delete</i>
             </a>

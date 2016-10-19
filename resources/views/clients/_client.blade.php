@@ -11,7 +11,7 @@
     <td class="mdl-data-table__cell--non-numeric">
         <form
             action="/clients/{{ $client->id }}"
-            class="delete-client"
+            class="delete-client-{{ $client->id }}"
             method="POST"
             style="display: inline;"
         >
@@ -20,7 +20,10 @@
 
             <a
                 class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"
-                onclick="if (confirm('Are you sure?!')) document.querySelector('.delete-client').submit();"
+                onclick="
+                    if (confirm('Are you sure?!'))
+                        document.querySelector('.delete-client-{{ $client->id }}').submit();
+                "
             >
                 <i class="material-icons">delete</i>
             </a>

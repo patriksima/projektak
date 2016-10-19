@@ -57,7 +57,7 @@
     	</div>
 
     	<div class="mdl-dialog__actions">
-    		<button type="submit" class="mdl-button close">Cancel</button>
+    		<button type="button" class="mdl-button close">Cancel</button>
     		<button type="submit" class="mdl-button add">Add</button>
     	</div>
     </form>

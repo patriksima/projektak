@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Inbox Assign')
+@section('title', 'Inbox Show')
 
 @section('content')
 <div class="mdl-cell mdl-cell--12-col">
-	<form id="inbox-form__assign" action="{{ action('InboxController@assignStore', $inbox->id) }}" method="post">
+	<form id="inbox-form__assign" action="/inbox/{{ $inbox->id }}/assign" method="post">
 	    {{ csrf_field() }}
 		<div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
 			<select name="project_id" class="mdl-selectfield__select" required>
@@ -57,7 +57,7 @@
 		</div>
 		<div class="mdl-layout-spacer"></div>
 		<div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
-			<select name="worker_id[]" multiple="multiple" size="10" class="mdl-selectfield__select" required>
+			<select name="worker_ids[]" multiple="multiple" size="10" class="mdl-selectfield__select" required>
 				@foreach ($workers as $worker)
 				<option value="{{ $worker->id }}">{{ $worker->name }}</option>
 				@endforeach

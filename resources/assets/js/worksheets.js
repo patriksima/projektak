@@ -13,20 +13,6 @@ dialog.querySelector('.close').addEventListener('click', function() {
 	dialog.close();
 });
 
-dialog.querySelector('.add').addEventListener('click', function() {
-	var requiredFields = dialog.querySelectorAll(
-    	"input[required]:not(:disabled):not([readonly]):not([type=hidden])" +
-    	",select[required]:not(:disabled):not([readonly])"+
-    	",textarea[required]:not(:disabled):not([readonly])");
-
-	for (var i=0; i<requiredFields.length; i++){
-		if (requiredFields[i].checkValidity() == false) {
-			return;
-		}
-	}
-	dialog.querySelector('#worksheet-form__add').submit();
-});
-
 document.querySelectorAll('th.sortable').forEach(function(entry) {
     entry.addEventListener('click', function() {
         location.href = '/worksheets?' + this.getAttribute('data-orderby') + '=' + this.getAttribute('data-orderdir');

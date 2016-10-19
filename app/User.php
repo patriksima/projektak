@@ -18,42 +18,56 @@ class User extends Authenticatable
         'name', 'email', 'allowed',
     ];
 
+    /**
+     * Specifies hidden fields.
+     *
+     * @var array
+     */
     protected $hidden = ['password', 'remember_token'];
 
+    /**
+     * Specifies the belongs to many relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function roles()
     {
         return $this->belongsToMany(Role::class);
     }
 
+    /**
+     * Specifies the has many relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function socials()
     {
         return $this->hasMany(SocialAccount::class);
     }
 
+    /**
+     * Specifies the belongs to many relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function workers()
     {
         return $this->belongsToMany(Worker::class);
     }
 
+    /**
+     * Checks whether the user has any of given roles
+     *
+     * @param  string  $name
+     * @return bool
+     */
     public function hasRole($name)
     {
-        // TODO: caching
-        if (is_array($name)) {
-            foreach ($name as $roleName) {
-                $hasRole = $this->hasRole($roleName);
-                if ($hasRole) {
-                    return true;
-                }
-            }
-        } else {
-            foreach ($this->roles()->get() as $role) {
-                if ($role->name == $name) {
-                    return true;
-                }
-            }
-        }
+        $name = is_array($name) ? $name : [$name];
 
-        return false;
+        return (bool) array_filter($name, function ($element) {
+            return $this->roles->contains('name', $element);
+        });
     }
 
     public function isAllowed()

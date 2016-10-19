@@ -7,6 +7,7 @@
     @if (isset($search))
         <h6>Výsledek vyhledávání pro výraz: {{ $search }}</h6>
     @endif
+
     <table class="mdl-data-table mdl-js-data-table">
         <thead>
             <tr>

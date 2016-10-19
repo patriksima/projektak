@@ -25,11 +25,6 @@ class CreateLabelHasBankTable extends Migration
      */
     public function down()
     {
-        Schema::table('label_has_banks', function (Blueprint $table) {
-            $table->dropForeign(['bank_id']);
-            $table->dropForeign(['label_id']);
-        });
-
         Schema::drop('label_has_banks');
     }
 }
