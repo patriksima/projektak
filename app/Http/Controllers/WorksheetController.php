@@ -19,7 +19,7 @@ class WorksheetController extends Controller
      */
     public function index(WorksheetFilter $filter)
     {
-        $worksheets = Worksheet::filter($filter)->get();
+        $worksheets = Worksheet::filter($filter)->with('project.client', 'worker')->get();
         $workers = Worker::orderBy('name')->get();
         $clients = Client::orderBy('name')->get();
         $projects = Project::orderBy('name')->get();

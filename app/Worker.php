@@ -50,7 +50,7 @@ class Worker extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function tasklogs()
+    public function taskLogs()
     {
         return $this->hasMany(TaskLog::class);
     }
@@ -76,12 +76,12 @@ class Worker extends Model
     }
 
     /**
-     * Specifies the belongs to many relationship.
+     * Specifies the belongs to relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function users()
+    public function user()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsTo(User::class);
     }
 }

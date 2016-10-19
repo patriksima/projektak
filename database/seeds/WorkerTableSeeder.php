@@ -40,7 +40,7 @@ class WorkerTableSeeder extends Seeder
             }
 
             // user is a worker
-            $worker->users()->attach(1);
+            $worker->user()->associate(1);
         });
     }
 }

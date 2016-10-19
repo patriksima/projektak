@@ -17,7 +17,7 @@ class ProjectController extends Controller
      */
     public function index(ProjectFilter $filter)
     {
-        $projects = Project::filter($filter)->get();
+        $projects = Project::filter($filter)->with('client', 'worksheets', 'status')->get();
         $clients = Client::orderBy('name')->get();
         $statuses = ProjectStatus::orderBy('name')->get();
 

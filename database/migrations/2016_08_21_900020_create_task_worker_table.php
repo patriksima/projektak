@@ -13,8 +13,8 @@ class CreateTaskWorkerTable extends Migration
     public function up()
     {
         Schema::create('task_worker', function (Blueprint $table) {
-            $table->bigInteger('worker_id')->unsigned();
-            $table->bigInteger('task_id')->unsigned();
+            $table->integer('worker_id')->unsigned();
+            $table->integer('task_id')->unsigned();
         });
     }
 

@@ -46,13 +46,13 @@ class User extends Authenticatable
     }
 
     /**
-     * Specifies the belongs to many relationship.
+     * Specifies the has one relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function workers()
+    public function worker()
     {
-        return $this->belongsToMany(Worker::class);
+        return $this->hasOne(Worker::class);
     }
 
     /**

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLabelHasRuleTable extends Migration
+class CreateBankLabelTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,9 @@ class CreateLabelHasRuleTable extends Migration
      */
     public function up()
     {
-        Schema::create('label_has_rules', function (Blueprint $table) {
-            $table->bigInteger('label_id')->unsigned();
-            $table->bigInteger('rule_id')->unsigned();
+        Schema::create('bank_label', function (Blueprint $table) {
+            $table->integer('label_id')->unsigned();
+            $table->integer('bank_id')->unsigned();
         });
     }
 
@@ -25,6 +25,6 @@ class CreateLabelHasRuleTable extends Migration
      */
     public function down()
     {
-        Schema::drop('label_has_rules');
+        Schema::drop('bank_label');
     }
 }

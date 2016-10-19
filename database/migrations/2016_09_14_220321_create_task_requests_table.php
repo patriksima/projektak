@@ -14,9 +14,9 @@ class CreateTaskRequestsTable extends Migration
     public function up()
     {
         Schema::create('task_requests', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('worker_id')->unsigned();
-            $table->bigInteger('task_id')->unsigned();
+            $table->increments('id');
+            $table->integer('worker_id')->unsigned();
+            $table->integer('task_id')->unsigned();
             $table->decimal('estimate', 5, 2)->unsigned();
             $table->string('reason');
             $table->timestamps();

@@ -13,7 +13,7 @@ class CreateLeadReasonTable extends Migration
     public function up()
     {
         Schema::create('lead_reasons', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('name', 45);
             $table->timestamps();
         });

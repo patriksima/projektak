@@ -13,8 +13,8 @@ class CreateInboxTable extends Migration
     public function up()
     {
         Schema::create('inbox', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('client_id')->unsigned();
+            $table->increments('id');
+            $table->integer('client_id')->unsigned();
             $table->text('description');
             $table->text('source_int');
             $table->text('source_ext');

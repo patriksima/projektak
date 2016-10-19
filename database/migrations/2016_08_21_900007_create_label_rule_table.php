@@ -1,10 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserWorkerTable extends Migration
+class CreateLabelRuleTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +12,9 @@ class CreateUserWorkerTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_worker', function (Blueprint $table) {
-            $table->bigInteger('user_id')->unsigned();
-            $table->bigInteger('worker_id')->unsigned();
+        Schema::create('label_rule', function (Blueprint $table) {
+            $table->integer('label_id')->unsigned();
+            $table->integer('rule_id')->unsigned();
         });
     }
 
@@ -26,6 +25,6 @@ class CreateUserWorkerTable extends Migration
      */
     public function down()
     {
-        Schema::drop('user_worker');
+        Schema::drop('label_rule');
     }
 }
