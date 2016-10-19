@@ -17,10 +17,10 @@ class WorkerFilter extends Filter
      * @var array
      */
     protected $orderable = [
-        'name' => 'name',
-        'type' => 'type',
         'job' => 'job',
-        'birthday' => 'type',
+        'name' => 'name',
         'rate' => 'rate',
+        'type' => 'type',
+        'birthday' => 'type',
     ];
 }

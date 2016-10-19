@@ -13,6 +13,16 @@ use Carbon\Carbon;
 |
 */
 
+$factory->define(App\User::class, function (Faker\Generator $faker) {
+    return [
+        'email' => $faker->email,
+        'name' => $faker->name,
+        'allowed' => 1,
+        'password' => 'secret',
+        'api_token' => str_random(60),
+    ];
+});
+
 $factory->define(App\Client::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->company(),

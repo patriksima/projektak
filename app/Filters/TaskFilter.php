@@ -18,9 +18,9 @@ class TaskFilter extends Filter
      */
     protected $orderable = [
         'task' => 'name',
+        'status' => 'status_id',
         'deadline' => 'deadline',
         'project' => 'projects.name',
-        'status' => 'status_id',
         'client' => 'projects.clients.name',
     ];
 }

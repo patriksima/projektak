@@ -10,14 +10,14 @@ abstract class Filter
     use Searchable, Orderable;
 
     /**
-     * Searchable columns.
+     * Default searchable columns.
      *
      * @var array
      */
     protected $searchable = ['name'];
 
     /**
-     * Orderable columns.
+     * Default orderable columns.
      *
      * @var array
      */
@@ -79,7 +79,7 @@ abstract class Filter
     }
 
     /**
-     * Helper function to apply all the filters.
+     * Helper function to call each filter method.
      *
      * @param  string  $name
      * @param  string  $value
