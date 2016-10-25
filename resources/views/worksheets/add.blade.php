@@ -1,8 +1,8 @@
 <dialog id="worksheets-dialog__add" class="mdl-dialog">
 	<h4 class="mdl-dialog__title">Worksheet Add</h4>
-	<div class="mdl-dialog__content">
-		<form id="worksheet-form__add" action="{{ url('worksheets') }}" method="post">
-			{{ csrf_field() }}
+    <form id="worksheet-form__add" action="{{ url('worksheets') }}" method="post">
+        {{ csrf_field() }}
+	   <div class="mdl-dialog__content">
 			<div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
 				<select name="worker_id" class="mdl-selectfield__select" required>
 					<option value=""></option>
@@ -36,11 +36,11 @@
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 				<input class="mdl-textfield__input" type="number" step="0.01" name="duration" value="" required>
 				<label class="mdl-textfield__label">Duration</label>
-			</div>			
-		</form>
-	</div>
-	<div class="mdl-dialog__actions">
-		<button type="button" class="mdl-button close">Cancel</button>
-		<button type="button" class="mdl-button add">Add</button>
-	</div>                  
+			</div>
+    	</div>
+    	<div class="mdl-dialog__actions">
+    		<button type="button" class="mdl-button close">Cancel</button>
+    		<button type="submit" class="mdl-button add">Add</button>
+    	</div>
+    </form>
 </dialog>

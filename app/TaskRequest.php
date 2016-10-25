@@ -20,7 +20,7 @@ class TaskRequest extends Model
      */
     public function task()
     {
-        return $this->belongsTo('App\Task');
+        return $this->belongsTo(Task::class);
     }
 
     /**
@@ -30,7 +30,7 @@ class TaskRequest extends Model
      */
     public function worker()
     {
-        return $this->belongsTo('App\Worker');
+        return $this->belongsTo(Worker::class);
     }
 
     /**

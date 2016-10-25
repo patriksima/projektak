@@ -14,9 +14,9 @@ class CreateTaskLogsTable extends Migration
     public function up()
     {
         Schema::create('task_logs', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('worker_id')->unsigned();
-            $table->bigInteger('task_id')->unsigned();
+            $table->increments('id');
+            $table->integer('worker_id')->unsigned();
+            $table->integer('task_id')->unsigned();
             $table->dateTime('start')->nullable();
             $table->dateTime('end')->nullable();
             $table->boolean('billable')->default(1);

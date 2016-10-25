@@ -130,13 +130,4 @@ class Helper
 
         return $dir;
     }
-
-    public static function getMeta($metas, $key)
-    {
-        foreach ($metas as $meta) {
-            if ($meta->meta_key == $key) {
-                return $meta->meta_value;
-            }
-        }
-    }
 }

@@ -13,8 +13,8 @@ class CreateWorkerLabelHasWorkerTable extends Migration
     public function up()
     {
         Schema::create('worker_label_has_workers', function (Blueprint $table) {
-            $table->bigInteger('worker_label_id')->unsigned();
-            $table->bigInteger('worker_id')->unsigned();
+            $table->integer('worker_label_id')->unsigned();
+            $table->integer('worker_id')->unsigned();
         });
     }
 

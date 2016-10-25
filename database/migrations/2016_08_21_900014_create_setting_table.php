@@ -13,7 +13,7 @@ class CreateSettingTable extends Migration
     public function up()
     {
         Schema::create('settings', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('meta_key', 45)->unique();
             $table->text('meta_value');
             $table->timestamps();

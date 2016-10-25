@@ -6,6 +6,8 @@
 <div class="mdl-cell mdl-cell--12-col">
 	<form id="project-form__edit" action="{{ action('ProjectController@update', $project->id) }}" method="post">
 		{{ csrf_field() }}
+        {!! method_field('PATCH') !!}
+
 		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 			<input class="mdl-textfield__input" type="date" name="deadline" value="{{ $project->deadline }}" />
 			<label class="mdl-textfield__label">Deadline</label>

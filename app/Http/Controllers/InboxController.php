@@ -2,125 +2,131 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
-use App\Client;
-use App\Inbox;
 use App\Task;
-use App\TaskStatus;
+use App\Inbox;
+use App\Client;
 use App\Worker;
 use App\Project;
-use DB;
+use App\TaskStatus;
+use App\Filters\InboxFilter;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Redirect;
 
 class InboxController extends Controller
 {
-    public function index()
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(InboxFilter $filter)
     {
-        $orderBy = Input::get('orderBy', 'created_at');
-        $orderDir = Input::get('orderDir', 'desc');
-        $search = Input::get('s', '');
-
-        $inboxes = Inbox::withClients()
-            ->done(0)
-            ->search($search)
-            ->orderBy($orderBy, $orderDir)
-            ->get();
+        $inbox = Inbox::filter($filter)->with('client')->where('done', false)->get();
 
         $clients = Client::orderBy('name')->get();
 
-        return view('inbox.index', [
-            'orderBy'  => $orderBy,
-            'orderDir' => $orderDir,
-            'inboxes'  => $inboxes,
-            'clients'  => $clients,
-            'search'   => $search,
-        ]);
+        return view('inbox.index', compact('inbox', 'clients'));
     }
 
-    public function store(Request $request)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store()
     {
-        $validator = Validator::make($request->all(), [
-            'description' => 'required',
-            'client_id' => 'required',
-        ]);
+        Client::find(request('client_id'))->inboxes()->create(request()->all());
 
-        if ($validator->fails()) {
-            return Redirect::to('/inbox')
-                ->withInput()
-                ->withErrors($validator);
-        }
-
-        Client::find($request->client_id)->inboxes()->create([
-            'description' => $request->description,
-            'source_int' => $request->source_int,
-            'source_ext' => $request->source_ext,
-            'done' => 0,
-        ]);
-
-        $request->session()->flash('status', 'Inbox has been created.');
-
-        return redirect('/inbox');
+        return redirect('/inbox')->with('success', 'Inbox successfully updated');
     }
 
-    public function destroy(Request $request)
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Inbox  $inbox
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Inbox $inbox)
     {
-        Inbox::destroy($request->id);
-
-        return back();
-    }
-
-    public function assign(Request $request)
-    {
-        $projects = DB::table('projects')
-            ->leftJoin('clients', 'clients.id', '=', 'projects.client_id')
-            ->select('projects.id', DB::raw('CONCAT(clients.name," - ",projects.name) as name'))
-            ->orderBy('name', 'asc')
-            ->get();
-        $statuses = TaskStatus::orderBy('order')->get();
+        $projects = Project::orderBy('name')->get();
+        $statuses = TaskStatus::orderBy('name')->get();
         $workers = Worker::orderBy('name')->get();
 
-        return view('inbox.assign', [
-            'inbox' => Inbox::find($request->id),
-            'projects' => $projects,
-            'statuses' => $statuses,
-            'workers'  => $workers,
-        ]);
+        return view('inbox.show',
+            compact('inbox', 'projects', 'statuses', 'workers')
+        );
     }
 
-    public function assignStore(Request $request)
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
-        DB::transaction(function () use ($request) {
-            $task = new Task;
-            $task->status_id = $request->status_id;
-            $task->name = $request->name;
-            $task->description = $request->description;
-            $task->source_int = $request->source_int;
-            $task->source_ext = $request->source_ext;
-            $task->deadline = $request->deadline;
-            $task->estimate = $request->estimate;
-            $task->checked = Carbon::now();
-
-            Project::find($request->project_id)
-                ->tasks()
-                ->save($task);
-
-            foreach ($request->worker_id as $worker_id) {
-                Worker::find($worker_id)->tasks()->attach($task->id);
-            }
-
-            Inbox::find($request->id)->update(['done' => 1]);
-        });
-
-        return redirect('/inbox');
+        //
     }
 
-    public function done(Request $request)
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
-        Inbox::find($request->id)->update(['done' => 1]);
+        //
+    }
 
-        return back();
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        Inbox::destroy($id);
+
+        return back()->with('success', 'Task has been deleted');
+    }
+
+    /**
+     * Set the completion status to one.
+     *
+     * @param  \App\Inbox  $message
+     * @return \Illuminate\Http\Response
+     */
+    public function assign(Inbox $message)
+    {
+        $message->update(['done' => true]);
+
+        // This code has been copied from TaskController@store
+        // consider extracting a common method or w/e
+        $task = Task::create(request()->all());
+
+        Project::find(request('project_id'))
+            ->tasks()
+            ->save($task);
+
+        foreach (request('worker_ids') as $id) {
+            $task->workers()->attach($id);
+        }
+
+        return back()->with('success', 'Task has been completed');
+    }
+
+    /**
+     * Set the completion status to one.
+     *
+     * @param  \App\Inbox  $message
+     * @return \Illuminate\Http\Response
+     */
+    public function complete(Inbox $message)
+    {
+        $message->update(['done' => true]);
+
+        return back()->with('success', 'Task has been completed');
     }
 }

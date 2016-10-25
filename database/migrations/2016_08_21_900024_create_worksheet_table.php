@@ -13,11 +13,9 @@ class CreateWorksheetTable extends Migration
     public function up()
     {
         Schema::create('worksheets', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('project_id')->unsigned()->nullable()->default(null);
-            $table->bigInteger('worker_id')->unsigned();
-            $table->string('client', 45);
-            $table->string('project', 45);
+            $table->increments('id');
+            $table->integer('project_id')->unsigned();
+            $table->integer('worker_id')->unsigned();
             $table->text('task');
             $table->text('description');
             $table->dateTime('start');
@@ -27,7 +25,6 @@ class CreateWorksheetTable extends Migration
             $table->decimal('amount', 10, 2);
             $table->char('currency', 3);
             $table->boolean('billable');
-            $table->char('hash', 32)->unique();
             $table->timestamps();
         });
     }

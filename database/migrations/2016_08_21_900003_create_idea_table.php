@@ -13,7 +13,7 @@ class CreateIdeaTable extends Migration
     public function up()
     {
         Schema::create('ideas', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->text('description');
             $table->date('closed')->nullable()->default(null);
             $table->integer('priority')->unsigned()->default('50');

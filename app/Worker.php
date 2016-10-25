@@ -2,79 +2,86 @@
 
 namespace App;
 
-use DB;
+use App\Filters\Filterable;
 use Illuminate\Database\Eloquent\Model;
 
 class Worker extends Model
 {
-    protected $fillable = ['name', 'email'];
+    use Filterable;
 
+    /**
+     * Fillable fields.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'email',
+        'job',
+        'rate',
+        'birthday',
+        'bank',
+        'address',
+        'note',
+        'gdrive',
+        'status',
+        'type',
+    ];
+
+    /**
+     * Dates array.
+     *
+     * @var array
+     */
+    protected $dates = ['birthday', 'created_at', 'updated_at'];
+
+    /**
+     * Specifies the belongs to many relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function tasks()
     {
-        return $this->belongsToMany('App\Task');
+        return $this->belongsToMany(Task::class);
     }
 
-    public function tasklogs()
+    /**
+     * Specifies the has many relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function taskLogs()
     {
-        return $this->hasMany('App\TaskLog');
+        return $this->hasMany(TaskLog::class);
     }
 
+    /**
+     * Specifies the has many relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function requests()
     {
-        return $this->hasMany('App\TaskRequest');
+        return $this->hasMany(TaskRequest::class);
     }
 
+    /**
+     * Specifies the has many relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function worksheets()
     {
-        return $this->hasMany('App\Worksheet');
+        return $this->hasMany(Worksheet::class);
     }
 
-    public function users()
+    /**
+     * Specifies the belongs to relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
     {
-        return $this->belongsToMany('App\User');
-    }
-
-    public function metas($key = '')
-    {
-        $metas = $this->hasMany('App\WorkerMeta');
-
-        if ($key) {
-            $metas = $metas->where('meta_key', '=', $key);
-        }
-
-        return $metas;
-    }
-
-    public function scopeSearch($query, $search)
-    {
-        if ($search) {
-            return $query->where('name', 'like', $search);
-        }
-    }
-
-    public function scopeJoinMetas($query)
-    {
-        $keys = ['type', 'job', 'rate', 'birthday', 'bank', 'address', 'note', 'gdrive', 'status'];
-
-        foreach ($keys as $i => $key) {
-            $query = $query->leftJoin("worker_metas as wm$i", function ($join) use ($i, $key) {
-                $join->on('workers.id', '=', "wm$i.worker_id")
-                     ->where("wm$i.meta_key", '=', $key);
-            })
-            ->addSelect(DB::raw("MAX(wm$i.meta_value) as $key"));
-        }
-
-        return $query;
-    }
-
-    public function scopeJoinBanks($query)
-    {
-        return $query
-            ->leftJoin('worker_metas as wm_bank', function ($join) {
-                $join->on('workers.id', '=', 'wm_bank.worker_id')
-                     ->where('wm_bank.meta_key', '=', 'bank');
-            })
-            ->leftJoin('banks', DB::raw('CONCAT(banks.account_num, "/", LPAD(banks.bank_num, 4, "0"))'), '=', 'wm_bank.meta_value')
-            ->addSelect(DB::raw('abs(sum(banks.cash)) as costs'));
+        return $this->belongsTo(User::class);
     }
 }

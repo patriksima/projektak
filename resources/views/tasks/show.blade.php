@@ -12,5 +12,5 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ elixir('js/chat.js') }}"></script>
+    <script src="/js/chat.js"></script>
 @endpush

@@ -2,10 +2,7 @@
 
 namespace App\Providers;
 
-use Auth;
 use Illuminate\Support\Facades\Gate;
-use App\Services\Auth\OurGuard;
-use App\Extensions\UserProvider;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -16,6 +13,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
+        //
     ];
 
     /**
@@ -35,16 +33,6 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('worker-access', function ($user) {
             return $user->hasRole('worker');
-        });
-
-        Auth::extend('our_guard', function ($app, $name, array $config) {
-            $provider = new UserProvider($this->app['hash'], $this->app['config']['auth.providers.'.$config['provider'].'.model']);
-
-            return new OurGuard($name, $provider, $this->app['session.store'], $app->request);
-        });
-
-        Auth::provider('our_provider', function ($app, array $config) {
-            return new UserProvider($this->app['hash'], $config['model']);
         });
     }
 }

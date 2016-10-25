@@ -13,8 +13,8 @@ class CreateTaskMetaTable extends Migration
     public function up()
     {
         Schema::create('task_metas', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('task_id')->unsigned();
+            $table->increments('id');
+            $table->integer('task_id')->unsigned();
             $table->string('meta_key', 45);
             $table->text('meta_value');
             $table->timestamps();
