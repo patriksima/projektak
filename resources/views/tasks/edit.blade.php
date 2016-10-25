@@ -6,6 +6,8 @@
 <div class="mdl-cell mdl-cell--12-col">
 	<form id="task-form__edit" action="{{ action('TaskController@update', $task->id) }}" method="post">
 		{{ csrf_field() }}
+        {!! method_field('PATCH') !!}
+
 		<div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
 			<select name="project_id" class="mdl-selectfield__select" required>
 				<option value=""></option>
@@ -57,9 +59,14 @@
 		</div>
 		<div class="mdl-layout-spacer"></div>
 		<div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
-			<select name="worker_id[]" multiple="multiple" size="10" class="mdl-selectfield__select" required>
+			<select name="worker_ids[]" multiple="multiple" size="10" class="mdl-selectfield__select" required>
 				@foreach ($workers as $worker)
-				<option value="{{ $worker->id }}"@if(in_array($worker->id,$task_workers)) selected @endif>{{ $worker->name }}</option>
+				    <option
+                        value="{{ $worker->id }}"
+                        {{ in_array($worker->id,$task->workers->pluck('id')->toArray()) ? 'selected' : '' }}
+                    >
+                        {{ $worker->name }}
+                    </option>
 				@endforeach
 			</select>
 			<label class="mdl-selectfield__label">Workers</label>

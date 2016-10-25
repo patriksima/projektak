@@ -12,10 +12,6 @@ class ClientTableSeeder extends Seeder
     public function run()
     {
         factory(App\Client::class, 10)->create()->each(function ($u) {
-            $u->metas()->save(factory(App\ClientMeta::class, 'rate')->make());
-            $u->metas()->save(factory(App\ClientMeta::class, 'currency')->make());
-            $u->metas()->save(factory(App\ClientMeta::class, 'gdrive')->make());
-
             for ($i = 0; $i < 5; $i++) {
                 $u->inboxes()->save(factory(App\Inbox::class)->make());
             }

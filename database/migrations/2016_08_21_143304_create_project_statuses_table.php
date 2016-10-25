@@ -14,7 +14,7 @@ class CreateProjectStatusesTable extends Migration
     public function up()
     {
         Schema::create('project_statuses', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('name', 45);
             $table->string('slug', 45);
             $table->smallInteger('order');
@@ -28,7 +28,8 @@ class CreateProjectStatusesTable extends Migration
                 'order' => 10,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
-            ], [
+            ],
+            [
                 'name'  => 'Neaktivní',
                 'slug'  => 'inactive',
                 'order' => 20,

@@ -178,11 +178,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        /*
-         * Custom Service Providers...
-         */
-        App\Providers\HelperServiceProvider::class,
-
     ],
 
     /*
@@ -233,7 +228,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
-        'Helper' => App\Facades\Helper::class,
+        'Helper' => App\Helpers\Helper::class,
 
     ],
 

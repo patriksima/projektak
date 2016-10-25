@@ -8,9 +8,14 @@
 						<span class="mdl-step__title-text">Import</span>
 						<span class="mdl-step__title-message">Import data</span>
 				    </span>
-				</span>			
+				</span>
 				<div class="mdl-step__content">
-					<form id="worksheet-form__import" action="{{ action('WorksheetController@import') }}" method="post" enctype="multipart/form-data">
+					<form
+                        id="worksheet-form__import"
+                        action="{{ action('WorksheetController@import', ['worksheet' => 1]) }}"
+                        method="post"
+                        enctype="multipart/form-data"
+                    >
 						{{ csrf_field() }}
 						<div class="mdl-textfield mdl-js-textfield mdl-textfield--file">
 							<input class="mdl-textfield__input" placeholder="CSV File" type="text" id="uploadFile" readonly required/>
@@ -36,7 +41,7 @@
 				    <button class="mdl-button mdl-js-button mdl-js-ripple-effect" data-stepper-back>
 				      Back
 				    </button>
-				</div>				
+				</div>
 			</li>
 			<li class="mdl-step">
 				<span class="mdl-step__label" @click="this.getAssignments()">
@@ -79,7 +84,7 @@
 				    <button class="mdl-button mdl-js-button mdl-js-ripple-effect" data-stepper-back>
 				      Back
 				    </button>
-				</div>				
+				</div>
 			</li>
 		</ul>
 	</div>

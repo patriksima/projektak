@@ -2,93 +2,88 @@
 
 namespace App;
 
-use DB;
+use App\Filters\Filterable;
 use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
+    use Filterable;
+
+    /**
+     * Fillale fields.
+     *
+     * @var array
+     */
     protected $fillable = ['status_id', 'name', 'type', 'note', 'deadline'];
 
-    protected $appends = ['duration', 'costs'];
+    /**
+     * Dates array.
+     *
+     * @var array
+     */
+    protected $dates = ['deadline', 'created_at', 'updated_at'];
 
-    protected $hidden = ['durationSum', 'costsSum'];
-
-    public function scopeSearch($query, $search)
-    {
-        if ($search) {
-            return $query->where(function ($query) use ($search) {
-                $query->where('projects.name', 'like', $search)
-                      ->orWhere('projects.note', 'like', $search)
-                      ->orWhere('clients.name', 'like', $search);
-            });
-        }
-    }
-
-    public function scopeJoinClients($query)
-    {
-        return $query->leftJoin('clients', 'clients.id', '=', 'projects.client_id')
-                     ->addSelect('clients.name as client_name');
-    }
-
-    public function scopeJoinWorksheets($query)
-    {
-        return $query->leftJoin('worksheets', 'worksheets.project_id', '=', 'projects.id')
-                     ->addSelect(DB::raw('sum(worksheets.duration) as duration'), DB::raw('sum(worksheets.amount) as costs'));
-    }
-
+    /**
+     * Specifies the belongs to relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function client()
     {
-        return $this->belongsTo('App\Client');
+        return $this->belongsTo(Client::class);
     }
 
+    /**
+     * Specifies the belongs to relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function status()
     {
-        return $this->belongsTo('App\ProjectStatus');
+        return $this->belongsTo(ProjectStatus::class);
     }
 
+    /**
+     * Specifies the has many relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function tasks()
     {
-        return $this->hasMany('App\Task');
+        return $this->hasMany(Task::class);
     }
 
+    /**
+     * Specifies the has many relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function worksheets()
     {
-        return $this->hasMany('App\Worksheet');
+        return $this->hasMany(Worksheet::class);
     }
 
-    public function durationSum()
+    /**
+     * Returns the project total duration.
+     *
+     * @return float
+     */
+    public function duration()
     {
-        return $this->hasOne('App\Worksheet')
-            ->selectRaw('SUM(duration) as duration, project_id')
-            ->groupBy('project_id');
+        return array_sum(
+            $this->worksheets->pluck('duration')->toArray()
+        );
     }
 
-    public function costsSum()
+    /**
+     * Returns the project total cost.
+     *
+     * @return float
+     */
+    public function totalCost()
     {
-        return $this->hasOne('App\Worksheet')
-            ->selectRaw('SUM(amount) as costs, project_id')
-            ->groupBy('project_id');
-    }
-
-    public function getDurationAttribute()
-    {
-        if (! array_key_exists('durationSum', $this->relations)) {
-            $this->load('durationSum');
-        }
-
-        $relation = $this->getRelation('durationSum');
-
-        return ($relation) ? $relation->duration : null;
-    }
-
-    public function getCostsAttribute()
-    {
-        if (! array_key_exists('costsSum', $this->relations)) {
-            $this->load('costsSum');
-        }
-
-        $relation = $this->getRelation('costsSum');
-
-        return ($relation) ? $relation->costs : null;
+        return array_sum(
+            $this->worksheets->pluck('amount')->toArray()
+        );
     }
 }

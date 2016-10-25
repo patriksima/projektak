@@ -13,30 +13,22 @@ use Carbon\Carbon;
 |
 */
 
+$factory->define(App\User::class, function (Faker\Generator $faker) {
+    return [
+        'email' => $faker->email,
+        'name' => $faker->name,
+        'allowed' => 1,
+        'password' => 'secret',
+        'api_token' => str_random(60),
+    ];
+});
+
 $factory->define(App\Client::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->company(),
-    ];
-});
-
-$factory->defineAs(App\ClientMeta::class, 'rate', function (Faker\Generator $faker) {
-    return [
-        'meta_key' => 'rate',
-        'meta_value' => $faker->numberBetween(100, 1000),
-    ];
-});
-
-$factory->defineAs(App\ClientMeta::class, 'currency', function (Faker\Generator $faker) {
-    return [
-        'meta_key' => 'currency',
-        'meta_value' => $faker->currencyCode(),
-    ];
-});
-
-$factory->defineAs(App\ClientMeta::class, 'gdrive', function (Faker\Generator $faker) {
-    return [
-        'meta_key' => 'gdrive',
-        'meta_value' => $faker->url(),
+        'rate' => $faker->numberBetween(100, 1000),
+        'currency' => $faker->currencyCode(),
+        'gdrive' => $faker->url(),
     ];
 });
 
@@ -74,7 +66,6 @@ $factory->define(App\Task::class, function (Faker\Generator $faker) {
         'source_ext' => $faker->url(),
         'estimate' => $faker->randomFloat(2, 0, 30),
         'deadline' => $faker->dateTimeThisYear(date('Y').'-12-31'),
-        'checked' => $faker->dateTimeThisYear(),
     ];
 });
 
@@ -82,72 +73,22 @@ $factory->define(App\Worker::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name(),
         'email' => $faker->email(),
+        'address' => $faker->address(),
+        'type' => $faker->word(),
+        'job' => $faker->jobTitle(),
+        'birthday' => $faker->dateTimeThisCentury(),
+        'rate' => $faker->numberBetween(100, 1000),
+        'note' => $faker->text(),
+        'gdrive' => $faker->url(),
+        'status' => $faker->randomElement(['active', 'inactive']),
+        'bank' => $faker->bankAccountNumber().'/'.$faker->randomNumber(4),
     ];
 });
-
-$factory->defineAs(App\WorkerMeta::class, 'type', function (Faker\Generator $faker) {
-    return [
-        'meta_key' => 'type',
-        'meta_value' => $faker->word(),
-    ];
-});
-
-$factory->defineAs(App\WorkerMeta::class, 'job', function (Faker\Generator $faker) {
-    return [
-        'meta_key' => 'job',
-        'meta_value' => $faker->jobTitle(),
-    ];
-});
-
-$factory->defineAs(App\WorkerMeta::class, 'birthday', function (Faker\Generator $faker) {
-    return [
-        'meta_key' => 'birthday',
-        'meta_value' => $faker->dateTimeThisCentury(),
-    ];
-});
-
-$factory->defineAs(App\WorkerMeta::class, 'rate', function (Faker\Generator $faker) {
-    return [
-        'meta_key' => 'rate',
-        'meta_value' => $faker->numberBetween(100, 1000),
-    ];
-});
-
-$factory->defineAs(App\WorkerMeta::class, 'note', function (Faker\Generator $faker) {
-    return [
-        'meta_key' => 'note',
-        'meta_value' => $faker->text(),
-    ];
-});
-
-$factory->defineAs(App\WorkerMeta::class, 'gdrive', function (Faker\Generator $faker) {
-    return [
-        'meta_key' => 'gdrive',
-        'meta_value' => $faker->url(),
-    ];
-});
-
-$factory->defineAs(App\WorkerMeta::class, 'status', function (Faker\Generator $faker) {
-    return [
-        'meta_key' => 'status',
-        'meta_value' => $faker->randomElement(['active', 'inactive']),
-    ];
-});
-
-$factory->defineAs(App\WorkerMeta::class, 'bank', function (Faker\Generator $faker) {
-    return [
-        'meta_key' => 'bank',
-        'meta_value' => $faker->bankAccountNumber().'/'.$faker->randomNumber(4),
-    ];
-});
-
 
 $factory->define(App\Worksheet::class, function (Faker\Generator $faker) {
     $end = $faker->dateTimeThisYear();
 
     return [
-        'client' => $faker->company(),
-        'project' => $faker->text($faker->numberBetween(10, 20)),
         'task' => $faker->text($faker->numberBetween(10, 20)),
         'description' => $faker->text(),
         'start' => $faker->dateTimeThisYear($end),

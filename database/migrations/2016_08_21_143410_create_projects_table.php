@@ -13,9 +13,9 @@ class CreateProjectsTable extends Migration
     public function up()
     {
         Schema::create('projects', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('client_id')->unsigned();
-            $table->bigInteger('status_id')->unsigned();
+            $table->increments('id');
+            $table->integer('client_id')->unsigned();
+            $table->integer('status_id')->unsigned();
             $table->string('name', 45);
             $table->string('type', 45)->nullable();
             $table->text('note')->nullable();
