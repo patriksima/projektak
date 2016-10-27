@@ -21,7 +21,7 @@
 
                 <th
                     class="mdl-data-table__cell--non-numeric sortable {{ filter()->orderClass('email') }}"
-                    data-orderby="type"
+                    data-orderby="email"
                     data-orderdir="{{ filter()->invertOrderDirection('email') }}"
                 >
                     E-mail
@@ -47,7 +47,15 @@
             @each('users._user', $users, 'user')
         </tbody>
     </table>
-    <a href="#" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" id="user__add"><i class="material-icons">add</i></a>
+
+    <a
+        class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
+        href="#"
+        id="user__add"
+    >
+        <i class="material-icons">add</i>
+    </a>
+
     @include('users.add')
 </div>
 @endsection

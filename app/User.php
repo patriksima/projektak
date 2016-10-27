@@ -81,18 +81,4 @@ class User extends Authenticatable
     {
         return $this->socials()->orderBy('updated_at', 'desc')->first();
     }
-
-    public function loadWorker()
-    {
-        $this->setRelation('worker', $this->workers->first());
-    }
-
-    public function getWorkerAttribute()
-    {
-        if (! array_key_exists('worker', $this->relations)) {
-            $this->loadWorker();
-        }
-
-        return $this->getRelation('worker');
-    }
 }
