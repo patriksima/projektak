@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Role;
 use App\User;
-use Illuminate\Http\Request;
 use App\Filters\UserFilter;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -15,9 +17,10 @@ class UserController extends Controller
      */
     public function index(UserFilter $filter)
     {
-        $users = User::filter($filter)->get();
+        $users = User::filter($filter)->with('socials', 'roles')->get();
+        $roles = Role::all();
 
-        return view('users.index', compact('users'));
+        return view('users.index', compact('users', 'roles'));
     }
 
     /**
@@ -27,38 +30,66 @@ class UserController extends Controller
      */
     public function store()
     {
+        $this->validate(request(), [
+            'name' => 'required|min:5',
+            'email' => 'required|email|unique:users,email',
+            'roles.*' => 'required|exists:roles,id',
+        ]);
+
+        $user = User::create(request()->all());
+        $user->roles()->attach(request('roles'));
+
+        return back()->with('success', 'User successfully created');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        $roles = Role::all();
+
+        return view('users.edit', compact('user', 'roles'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(User $user)
     {
-        //
+        $this->validate(request(), [
+            'name' => 'required|min:5',
+            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($user->id)],
+            'roles.*' => 'required|exists:roles,id',
+        ]);
+
+        $user->update(request()->all());
+        $user->roles()->detach();
+        $user->roles()->attach(request('roles'));
+
+        return redirect('/users')->with('success', 'User successfully edited');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
+        if (auth()->id() === $user->id) {
+            return back()->with('danger', 'You cannot delete yourself.');
+        }
+
+        $user->delete();
+
+        return back()->with('success', 'User successfully deleted.');
     }
 }

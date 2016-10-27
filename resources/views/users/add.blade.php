@@ -13,13 +13,15 @@
     			<label class="mdl-textfield__label">E-mail</label>
     		</div>
     		<div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
-    			<select name="type" class="mdl-selectfield__select">
-    				<option value=""></option>
+    			<select name="roles[]" class="mdl-selectfield__select" multiple>
+                    @foreach ($roles as $role)
+        				<option value="{{ $role->id }}">{{ $role->display_name }}</option>
+                    @endforeach
     			</select>
     			<label class="mdl-selectfield__label">Roles</label>
     		</div>
 			<div class="mdl-textfield">
-				<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="detailed">
+				<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="allowed">
 					<input name="allowed" value="1" type="checkbox" id="allowed" class="mdl-checkbox__input">
 					<span class="mdl-checkbox__label">Allowed</span>
 				</label>
