@@ -105,6 +105,16 @@
 
   @endcan
 
+  @can('admin-access')
+      <a class="mdl-navigation__link{{ Request::is('users') ? ' current' : '' }}" href="{{ action  ('UserController@index') }}">
+        <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">
+          people
+        </i>
+
+        Users
+      </a>
+  @endcan
+
   @can('worker-access')
     <a class="mdl-navigation__link{{ Request::is('user') ? ' current' : '' }}" href="{{ action  ('User\DashboardController@index') }}">
       <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">
