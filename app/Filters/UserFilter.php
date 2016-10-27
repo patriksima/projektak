@@ -2,7 +2,7 @@
 
 namespace App\Filters;
 
-class ClientFilter extends Filter
+class UserFilter extends Filter
 {
     /**
      * Searchable columns.

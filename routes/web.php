@@ -17,6 +17,9 @@ Route::auth();
 Route::get('auth/{provider}', 'SocialAuthController@redirect');
 Route::get('auth/{provider}/callback', 'SocialAuthController@callback');
 
+Route::group(['middleware' => ['auth', 'role:admin']], function () {
+    Route::resource('users', 'UserController');
+});
 
 Route::group(['middleware' => ['auth', 'role:admin|manager']], function () {
     Route::get('', function () {
