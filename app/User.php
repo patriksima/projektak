@@ -2,12 +2,14 @@
 
 namespace App;
 
+use App\Filters\Filterable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use Filterable;
 
     /**
      * The attributes that are mass assignable.
@@ -78,19 +80,5 @@ class User extends Authenticatable
     public function getCurrentSocialProvider()
     {
         return $this->socials()->orderBy('updated_at', 'desc')->first();
-    }
-
-    public function loadWorker()
-    {
-        $this->setRelation('worker', $this->workers->first());
-    }
-
-    public function getWorkerAttribute()
-    {
-        if (! array_key_exists('worker', $this->relations)) {
-            $this->loadWorker();
-        }
-
-        return $this->getRelation('worker');
     }
 }

@@ -21,6 +21,7 @@ elixir(function (mix) {
         .webpack('workers.js')
         .webpack('worksheets.js')
         .webpack('chat.js')
+        .webpack('users.js')
         .webpack('tasks.js', 'public/js/user')
 
         .imagemin('resources/assets/images', 'public/images')
