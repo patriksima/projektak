@@ -13,13 +13,11 @@ class CreateTaskMetaTable extends Migration
     public function up()
     {
         Schema::create('task_metas', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('task_id')->unsigned();
+            $table->increments('id');
+            $table->integer('task_id')->unsigned();
             $table->string('meta_key', 45);
             $table->text('meta_value');
             $table->timestamps();
-
-            $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -30,10 +28,6 @@ class CreateTaskMetaTable extends Migration
      */
     public function down()
     {
-        Schema::table('task_metas', function (Blueprint $table) {
-            $table->dropForeign(['task_id']);
-        });
-
         Schema::drop('task_metas');
     }
 }

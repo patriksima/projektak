@@ -13,7 +13,7 @@ class CreateBankTable extends Migration
     public function up()
     {
         Schema::create('banks', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->date('date');
             $table->decimal('cash', 15, 2);
             $table->char('currency', 3);

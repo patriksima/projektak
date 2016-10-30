@@ -12,5 +12,5 @@
 @endsection
 
 @push('scripts')
-<script src="{{ elixir('js/user/tasks.js') }}"></script>
+<script src="/js/user/tasks.js"></script>
 @endpush

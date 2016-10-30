@@ -2,111 +2,88 @@
 
 namespace App\Http\Controllers;
 
-use DB;
-use Input;
 use App\Worker;
-use App\WorkerMeta;
 use Illuminate\Http\Request;
+use App\Filters\WorkerFilter;
 
 class WorkerController extends Controller
 {
-    public function index()
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \App\Filters\WorkerFilter  $filter
+     * @return \Illuminate\Http\Response
+     */
+    public function index(WorkerFilter $filter)
     {
-        $orderBy = Input::get('orderBy', 'lastname');
-        $orderDir = Input::get('orderDir', 'asc');
-        $search = Input::get('s', '');
+        $workers = Worker::filter($filter)->get();
 
-        $workers = Worker::select('workers.*', DB::raw('SUBSTRING_INDEX(SUBSTRING_INDEX(workers.name, " ", 1), " ", -1) as firstname,
-                SUBSTRING_INDEX(SUBSTRING_INDEX(workers.name, " ", 2), " ", -1) as lastname'))
-            ->joinMetas()
-            ->joinBanks()
-            ->search($search)
-            ->groupBy('workers.id');
+        return view('workers.index', compact('workers'));
+    }
 
-/*
-        if ($orderBy == 'birthday') {
-            $workers = $workers->orderBy(DB::raw('MONTH(birthday)'), $orderDir);
-            $workers = $workers->orderBy(DB::raw('DAY(birthday)'), $orderDir);
-        } else {
-            $workers = $workers->orderBy($orderBy, $orderDir);
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store()
+    {
+        Worker::create(request()->all());
+
+        return back()->with('success', 'Worker has been successfully added.');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Worker  $worker
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Worker $worker)
+    {
+        return view('workers.edit', compact('worker'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \App\Worker  $worker
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Worker $worker)
+    {
+        $worker->update(request()->all());
+
+        return redirect('/workers')->with('success', 'Worker has been successfully edited.');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $worker = Worker::find($id);
+
+        if ($worker->worksheets->count() > 0) {
+            return back()->with('danger', 'Worker has worksheets.');
         }
-*/
-        $workers = $workers->orderBy($orderBy, $orderDir);
-        $workers = $workers->get();
 
-        return view('workers.index', [
-            'orderBy'  => $orderBy,
-            'orderDir' => $orderDir,
-            'workers'  => $workers,
-            'search'   => $search,
-        ]);
-    }
+        $worker->delete();
 
-    public function destroy(Request $request)
-    {
-        try {
-            Worker::destroy($request->id);
-            $request->session()->flash('status', 'Worker has been deleted.');
-        } catch (\Illuminate\Database\QueryException $e) {
-            $request->session()->flash('status', 'Worker cannot be deleted because has some worksheets.');
-        }
-
-        return back();
-    }
-
-    public function edit(Request $request)
-    {
-        $worker = Worker::select('workers.*', DB::raw('SUBSTRING_INDEX(SUBSTRING_INDEX(workers.name, " ", 1), " ", -1) as firstname,
-                SUBSTRING_INDEX(SUBSTRING_INDEX(workers.name, " ", 2), " ", -1) as lastname'))
-            ->joinMetas()
-            ->groupBy('workers.id')
-            ->find($request->id);
-
-        return view('workers.edit', [
-            'worker' => $worker,
-        ]);
-    }
-
-    public function update(Request $request)
-    {
-        DB::transaction(function () use ($request) {
-            $worker = Worker::find($request->id);
-            $worker->name = $request->name;
-            $worker->email = $request->email;
-            $worker->metas()->delete();
-            $worker->save();
-
-            foreach ($request->meta as $meta_key => $meta_value) {
-                $meta = new WorkerMeta;
-                $meta->meta_key = $meta_key;
-                $meta->meta_value = $meta_value;
-                $worker->metas()->save($meta);
-            }
-
-            $request->session()->flash('status', 'Worker has been changed.');
-        });
-
-        return redirect('/workers');
-    }
-
-    public function store(Request $request)
-    {
-        DB::transaction(function () use ($request) {
-            $worker = new Worker;
-            $worker->name = $request->name;
-            $worker->email = $request->email;
-            $worker->save();
-
-            foreach ($request->meta as $meta_key => $meta_value) {
-                $meta = new WorkerMeta;
-                $meta->meta_key = $meta_key;
-                $meta->meta_value = $meta_value;
-                $worker->metas()->save($meta);
-            }
-
-            $request->session()->flash('status', 'Worker has been saved.');
-        });
-
-        return back();
+        return back()->with('success', 'Worker has been deleted.');
     }
 }

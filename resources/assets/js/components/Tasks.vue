@@ -231,7 +231,8 @@ export default {
             this.active = false;
         }
     },
-    ready: function() {
+
+    mounted() {
         this.getTasks();
         this.mdlRendering();
         let self = this;

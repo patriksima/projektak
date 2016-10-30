@@ -222,7 +222,7 @@ _:-ms-input-placeholder, :root .demo-graph {
 }
 
 #inbox__add, #task__add, #client__add, #project__add, #worker__add, #worksheet__import, #idea__add, #setting__add, #label__add, #lead__add,
-#rule__add {
+#rule__add, #user__add {
 	position: fixed;
 	display: block;
 	right: 0;
@@ -328,4 +328,36 @@ _:-ms-input-placeholder, :root .demo-graph {
     font-size: 10px;
     width: 15px;
     height: 15px;
+}
+
+.chat {
+    position: fixed;
+    bottom: 0;
+    right: 50px;
+    min-height: 0px;
+}
+
+.chat-messages {
+    height: 250px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-name {
+    padding: 0 7px 0 10px;
+    margin-left: -11px;
+    font-size: 15px;
+    width: auto;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.chat-title {
+    background-color: #37474f;
+    color: white;
+}
+
+.pull-right {
+    float: right;
 }

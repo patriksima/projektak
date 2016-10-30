@@ -2,115 +2,82 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use App\Client;
-use App\ClientMeta;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
+use App\Filters\ClientFilter;
 
 class ClientController extends Controller
 {
-    public function index()
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \App\Filters\ClientFilter  $filter
+     * @return \Illuminate\Http\Response
+     */
+    public function index(ClientFilter $filter)
     {
-        $orderBy = Input::get('orderBy', 'created_at');
-        $orderDir = Input::get('orderDir', 'desc');
-        $search = Input::get('s', '');
+        $clients = Client::filter($filter)->get();
 
-        $clients = DB::table('clients')
-            ->select('clients.*', 'cm1.meta_value as rate', 'cm2.meta_value as gdrive', 'cm3.meta_value as currency')
-            ->leftJoin('client_metas as cm1', function ($join) {
-                $join->on('clients.id', '=', 'cm1.client_id')
-                     ->where('cm1.meta_key', '=', 'rate');
-            })
-            ->leftJoin('client_metas as cm2', function ($join) {
-                $join->on('clients.id', '=', 'cm2.client_id')
-                     ->where('cm2.meta_key', '=', 'gdrive');
-            })
-            ->leftJoin('client_metas as cm3', function ($join) {
-                $join->on('clients.id', '=', 'cm3.client_id')
-                     ->where('cm3.meta_key', '=', 'currency');
-            })
-            ->orderBy($orderBy, $orderDir);
-
-        if ($search) {
-            $clients->where(function ($query) use ($search) {
-                $query->where('name', 'like', $search);
-            });
-        }
-
-        $clients = $clients->get();
-
-        return view('clients.index', [
-            'orderBy'  => $orderBy,
-            'orderDir' => $orderDir,
-            'clients'  => $clients,
-            'search'   => $search,
-        ]);
+        return view('clients.index', compact('clients'));
     }
 
-    public function store(Request $request)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store()
     {
-        DB::transaction(function () use ($request) {
-            $client = Client::create([
-                'name' => $request->name,
-            ]);
-
-            $meta = new ClientMeta;
-            $meta->meta_key = 'rate';
-            $meta->meta_value = $request->meta['rate'];
-            Client::find($client->id)->metas()->save($meta);
-
-            $meta = new ClientMeta;
-            $meta->meta_key = 'currency';
-            $meta->meta_value = $request->meta['currency'];
-            Client::find($client->id)->metas()->save($meta);
-
-            $meta = new ClientMeta;
-            $meta->meta_key = 'gdrive';
-            $meta->meta_value = $request->meta['gdrive'];
-            Client::find($client->id)->metas()->save($meta);
-        });
-
-        return redirect('/clients');
-    }
-
-    public function update(Request $request)
-    {
-        DB::transaction(function () use ($request) {
-            $client = Client::find($request->id);
-            $client->name = $request->name;
-            $client->save();
-
-            $client->metas()->each(function ($m) use ($request) {
-                switch ($m->meta_key) {
-                    case 'rate':
-                        $m->meta_value = $request->meta['rate'];
-                        break;
-                    case 'currency':
-                        $m->meta_value = $request->meta['currency'];
-                        break;
-                    case 'gdrive':
-                        $m->meta_value = $request->meta['gdrive'];
-                        break;
-                }
-                $m->save();
-            });
-        });
-
-        return redirect('/clients');
-    }
-
-    public function destroy(Request $request)
-    {
-        Client::destroy($request->id);
+        Client::create(request()->all());
 
         return back();
     }
 
-    public function edit(Request $request)
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
     {
-        return view('clients.edit', [
-            'client' => Client::find($request->id),
-        ]);
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Client  $client
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Client $client)
+    {
+        return view('clients.edit', compact('client'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \App\Client  $client
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Client $client)
+    {
+        $client->update(request()->all());
+
+        return redirect('/clients');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        Client::destroy($id);
+
+        return back();
     }
 }

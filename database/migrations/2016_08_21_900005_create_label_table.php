@@ -13,7 +13,7 @@ class CreateLabelTable extends Migration
     public function up()
     {
         Schema::create('labels', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('name', 255)->nullable()->default(null);
             $table->char('color', 7)->nullable()->default(null);
             $table->timestamps();

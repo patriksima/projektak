@@ -14,16 +14,13 @@ class CreateTaskLogsTable extends Migration
     public function up()
     {
         Schema::create('task_logs', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('worker_id')->unsigned();
-            $table->bigInteger('task_id')->unsigned();
+            $table->increments('id');
+            $table->integer('worker_id')->unsigned();
+            $table->integer('task_id')->unsigned();
             $table->dateTime('start')->nullable();
             $table->dateTime('end')->nullable();
             $table->boolean('billable')->default(1);
             $table->timestamps();
-
-            $table->foreign('worker_id')->references('id')->on('workers')->onDelete('restrict')->onUpdate('cascade');
-            $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -34,6 +31,6 @@ class CreateTaskLogsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('task_logs');
+        Schema::drop('task_logs');
     }
 }
