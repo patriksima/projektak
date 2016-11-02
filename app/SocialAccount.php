@@ -56,7 +56,7 @@ class SocialAccount extends Model
 
     /**
      * Creates a new social acount and also checks whether is has a user to
-     * be assigned to
+     * be assigned to.
      *
      * @param  \Laravel\Socialite\Contracts\User  $user
      * @param  string  $provider
@@ -64,7 +64,7 @@ class SocialAccount extends Model
      */
     public static function createWithUser(SocialiteUser $socialiteUser, $provider)
     {
-        $account = SocialAccount::create([
+        $account = self::create([
             'provider_user_id' => $socialiteUser->getId(),
             'provider' => $provider,
             'name' => $socialiteUser->getName(),

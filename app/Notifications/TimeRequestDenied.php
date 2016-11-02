@@ -5,7 +5,6 @@ namespace App\Notifications;
 use App\TaskRequest;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
 class TimeRequestDenied extends Notification
@@ -53,8 +52,8 @@ class TimeRequestDenied extends Notification
         return (new MailMessage)
             ->error()
             ->subject('Your time request has been denied')
-            ->greeting('Hello, ' . $this->request->worker->name)
-            ->line('Your time request for the task ' . $this->request->task->name . 'has been denied.')
+            ->greeting('Hello, '.$this->request->worker->name)
+            ->line('Your time request for the task '.$this->request->task->name.'has been denied.')
             ->action('View Task', $url);
     }
 

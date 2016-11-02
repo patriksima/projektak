@@ -73,7 +73,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Determines whether the user is allowed to enter the application
+     * Determines whether the user is allowed to enter the application.
      *
      * @return bool
      */
@@ -83,7 +83,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Returns the most recently used social auth provider
+     * Returns the most recently used social auth provider.
      *
      * @return \App\SocialAccount
      */
@@ -100,7 +100,7 @@ class User extends Authenticatable
      */
     protected function craftFromSocialite(SocialiteUser $user)
     {
-        return User::create([
+        return self::create([
             'email' => $user->getEmail(),
             'name' => $user->getName(),
             'api_token' => str_random(60),

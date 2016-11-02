@@ -34,7 +34,6 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 });
 
 Route::group(['middleware' => ['auth', 'role:admin|manager']], function () {
-
     Route::resource('clients', 'ClientController');
 
     Route::resource('worksheets', 'WorksheetController');

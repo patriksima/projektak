@@ -5,7 +5,6 @@ namespace App\Notifications;
 use App\TaskRequest;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
 class TimeRequestApproved extends Notification
@@ -53,8 +52,8 @@ class TimeRequestApproved extends Notification
         return (new MailMessage)
             ->success()
             ->subject('Your time request has been approved')
-            ->greeting('Hello, ' . $this->request->worker->name)
-            ->line('Your time request for the task ' . $this->request->task->name . 'has been approved!')
+            ->greeting('Hello, '.$this->request->worker->name)
+            ->line('Your time request for the task '.$this->request->task->name.'has been approved!')
             ->action('View Task', $url);
     }
 
