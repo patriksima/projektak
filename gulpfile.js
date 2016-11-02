@@ -4,7 +4,6 @@ require('laravel-elixir-imagemin');
 require('laravel-elixir-sass-compass');
 require('laravel-elixir-vue');
 
-//todo: webpack
 elixir(function (mix) {
     mix
         .copy('resources/assets/sass/mdl-selectfield.min.css', 'public/css/mdl-selectfield.min.css')

@@ -17,7 +17,7 @@ class UserHasRole
     public function handle($request, Closure $next, $roles)
     {
         if (! $request->user()->hasRole(explode('|', $roles))) {
-            abort(403);
+            return back()->with('danger', 'Unauthorized');
         }
 
         return $next($request);

@@ -1,6 +1,7 @@
 <tr class="{{ $user->allowed ? '' : ' mdl-color-text--grey-500' }}">
     <td class="mdl-data-table__cell--non-numeric">{{ $user->name }}</td>
     <td class="mdl-data-table__cell--non-numeric">{{ $user->email }}</td>
+    <td class="mdl-data-table__cell--non-numeric">{{ $user->worker->name or 'Not assigned' }}</td>
     <td class="mdl-data-table__cell--non-numeric">{{ $user->roles->implode('display_name', ', ') }}</td>
     <td class="mdl-data-table__cell--non-numeric">
         {{ $user->socials->first() !== null ? ucfirst($user->socials->first()->provider) : 'None' }}
