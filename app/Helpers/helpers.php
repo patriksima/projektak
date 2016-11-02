@@ -14,7 +14,7 @@ if (! function_exists('filter')) {
 
 if (! function_exists('socialite')) {
     /**
-     * Socialite helper function
+     * Socialite helper function.
      *
      * @param  string  $provider
      * @return \Laravel\Socialite\Contracts\Factory
