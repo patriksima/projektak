@@ -47,4 +47,14 @@ class TaskRequest extends Model
 
         $this->delete();
     }
+
+    /**
+     * Denies given task by simply deleting it from the table.
+     *
+     * @return void
+     */
+    public function deny()
+    {
+        $this->delete();
+    }
 }

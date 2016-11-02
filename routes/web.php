@@ -53,7 +53,8 @@ Route::group(['middleware' => ['auth', 'role:admin|manager']], function () {
 
     Route::group(['prefix' => 'task-requests'], function () {
         Route::get('', 'TaskRequestController@index');
-        Route::post('{request}/approve', 'TaskRequestsController@approve');
+        Route::patch('{request}/approve', 'TaskRequestController@approve');
+        Route::patch('{request}/deny', 'TaskRequestController@deny');
     });
 
     Route::group(['prefix' => 'control'], function () {
