@@ -4,12 +4,12 @@ namespace App;
 
 use App\Filters\Filterable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Socialite\Contracts\User as SocialiteUser;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
-    use Filterable;
+    use Notifiable, Filterable;
 
     /**
      * The attributes that are mass assignable.
@@ -72,13 +72,38 @@ class User extends Authenticatable
         });
     }
 
+    /**
+     * Determines whether the user is allowed to enter the application
+     *
+     * @return bool
+     */
     public function isAllowed()
     {
         return $this->allowed;
     }
 
-    public function getCurrentSocialProvider()
+    /**
+     * Returns the most recently used social auth provider
+     *
+     * @return \App\SocialAccount
+     */
+    public function getSocialAttribute()
     {
         return $this->socials()->orderBy('updated_at', 'desc')->first();
+    }
+
+    /**
+     * Creates a user based on provided info.
+     *
+     * @param  \Laravel\Socialite\Contracts\User  $user
+     * @return \App\User
+     */
+    protected function craftFromSocialite(SocialiteUser $user)
+    {
+        return User::create([
+            'email' => $user->getEmail(),
+            'name' => $user->getName(),
+            'api_token' => str_random(60),
+        ]);
     }
 }

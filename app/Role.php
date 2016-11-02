@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Role extends Model
 {
     /**
-     * Fillale fields.
+     * Fields that are mass assignable.
      *
      * @var array
      */

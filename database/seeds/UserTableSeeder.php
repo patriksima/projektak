@@ -15,7 +15,6 @@ class UserTableSeeder extends Seeder
             'email' => 'patrik@wrongware.cz',
             'name' => 'Patrik',
             'allowed' => 1,
-            'password' => 'secret',
             'api_token' => str_random(60),
         ]);
     }

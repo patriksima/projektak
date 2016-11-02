@@ -3,7 +3,9 @@
 namespace App\Exceptions;
 
 use Exception;
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Auth\AuthenticationException;
+use Laravel\Socialite\Two\InvalidStateException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -44,6 +46,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        // Handling exceptions from social auth. First one is from socialite
+        // and the other is just Guzzle exception.
+        if ($exception instanceof InvalidStateException || $exception instanceof ClientException) {
+            return redirect('login')->with('danger', 'Error while handling the auth request');
+        }
+
         return parent::render($request, $exception);
     }
 

@@ -18,7 +18,6 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'email' => $faker->email,
         'name' => $faker->name,
         'allowed' => 1,
-        'password' => 'secret',
         'api_token' => str_random(60),
     ];
 });

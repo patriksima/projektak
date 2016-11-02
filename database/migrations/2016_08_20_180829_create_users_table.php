@@ -16,10 +16,8 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('email')->unique();
             $table->string('name', 255);
-            $table->string('password', 64);
             $table->string('api_token', 60);
-            $table->boolean('allowed')->default(1);
-            $table->rememberToken();
+            $table->boolean('allowed')->default(0);
             $table->timestamps();
         });
     }

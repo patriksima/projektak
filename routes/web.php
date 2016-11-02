@@ -2,28 +2,38 @@
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| Auth routes
 |--------------------------------------------------------------------------
 |
-| This file is where you may define all of the routes that are handled
-| by your application. Just tell Laravel the URIs it should respond
-| to using a Closure or controller method. Build something great!
+| These few lines specify all the application's authentication routes.
 |
 */
 
-// Social Auth
-Route::auth();
-Route::get('auth/{provider}', 'SocialAuthController@redirect');
-Route::get('auth/{provider}/callback', 'SocialAuthController@callback');
+// auth()->logout();
+// auth()->loginUsingId(1);
+
+Route::get('login', 'Auth\LoginController@show');
+Route::get('auth/{provider}', 'Auth\SocialAuthController@redirect');
+Route::get('auth/{provider}/callback', 'Auth\SocialAuthController@callback');
+
+/*
+|--------------------------------------------------------------------------
+| Miscellaneous routes
+|--------------------------------------------------------------------------
+|
+| Uncategorized routes go here.
+|
+*/
+
+Route::get('', function () {
+    return view('welcome');
+})->middleware('auth');
 
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::resource('users', 'UserController');
 });
 
 Route::group(['middleware' => ['auth', 'role:admin|manager']], function () {
-    Route::get('', function () {
-        return view('welcome');
-    });
 
     Route::resource('clients', 'ClientController');
 
