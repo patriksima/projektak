@@ -19,6 +19,21 @@
         </div>
         <div class="mdl-layout-spacer"></div>
         <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
+            <select name="worker" class="mdl-selectfield__select">
+                <option selected disabled>Select Worker</option>
+                @foreach ($workers as $worker)
+                    <option
+                        {{ $user->worker && $user->worker->id === $worker->id ? 'selected' : '' }}
+                        value="{{ $worker->id }}"
+                    >
+                        {{ $worker->name }}
+                    </option>
+                @endforeach
+            </select>
+            <label class="mdl-selectfield__label">Worker</label>
+        </div>
+        <div class="mdl-layout-spacer"></div>
+        <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
             <select name="roles[]" class="mdl-selectfield__select" multiple>
                 @foreach ($roles as $role)
                     <option

@@ -9,7 +9,7 @@ class ClientFilter extends Filter
      *
      * @var array
      */
-    protected $searchable = ['name', 'email'];
+    protected $searchable = ['name', 'rate'];
 
     /**
      * Orderable columns.
@@ -18,6 +18,6 @@ class ClientFilter extends Filter
      */
     protected $orderable = [
         'name' => 'name',
-        'email' => 'email',
+        'rate' => 'rate',
     ];
 }

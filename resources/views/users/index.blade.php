@@ -27,6 +27,8 @@
                     E-mail
                 </th>
 
+                <th>Worker</th>
+
                 <th
                     class="mdl-data-table__cell--non-numeric"
                 >
