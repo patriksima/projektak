@@ -45,7 +45,7 @@ class SocialAccount extends Model
      * @param  \Laravel\Socialite\Contracts\User  $user
      * @return \App\User
      */
-    public function yield(SocialiteUser $user)
+    public function updateAndGetUser(SocialiteUser $user)
     {
         $this->name = $user->getName();
         $this->avatar = $user->getAvatar();

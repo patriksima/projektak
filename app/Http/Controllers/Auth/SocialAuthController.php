@@ -33,7 +33,7 @@ class SocialAuthController extends Controller
         // user. If not, create the account and further check
         // for existence of the user himself.
         if ($account = SocialAccount::existsFor($rawUser, $provider)->first()) {
-            $user = $account->yield($rawUser);
+            $user = $account->updateAndGetUser($rawUser);
         } else {
             $user = SocialAccount::createWithUser($rawUser, $provider);
         }
