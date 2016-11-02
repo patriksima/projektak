@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\SocialAccount;
 use App\Http\Controllers\Controller;
-use Laravel\Socialite\Facades\Socialite;
 
 class SocialAuthController extends Controller
 {
@@ -16,7 +15,7 @@ class SocialAuthController extends Controller
      */
     public function redirect($provider)
     {
-        return Socialite::driver($provider)->redirect();
+        return socialite($provider)->redirect();
     }
 
     /**
@@ -27,7 +26,7 @@ class SocialAuthController extends Controller
      */
     public function callback($provider)
     {
-        $rawUser = Socialite::driver($provider)->user();
+        $rawUser = socialite($provider)->user();
 
         // We need to check whether the returned user already has this
         // type of social auth active. If yes, update it and return the
