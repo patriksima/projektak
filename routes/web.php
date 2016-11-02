@@ -13,7 +13,6 @@
 
 // Social Auth
 Route::auth();
-
 Route::get('auth/{provider}', 'SocialAuthController@redirect');
 Route::get('auth/{provider}/callback', 'SocialAuthController@callback');
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Role;
 use App\User;
+use App\Worker;
 use App\Filters\UserFilter;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -19,8 +20,9 @@ class UserController extends Controller
     {
         $users = User::filter($filter)->with('socials', 'roles')->get();
         $roles = Role::all();
+        $workers = Worker::all();
 
-        return view('users.index', compact('users', 'roles'));
+        return view('users.index', compact('users', 'roles', 'workers'));
     }
 
     /**
@@ -39,6 +41,9 @@ class UserController extends Controller
         $user = User::create(request()->all());
         $user->roles()->attach(request('roles'));
 
+        $user->worker()->delete();
+        $user->worker()->save(Worker::find(request('worker')));
+
         return back()->with('success', 'User successfully created');
     }
 
@@ -51,8 +56,9 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $roles = Role::all();
+        $workers = Worker::all();
 
-        return view('users.edit', compact('user', 'roles'));
+        return view('users.edit', compact('user', 'roles', 'workers'));
     }
 
     /**
@@ -72,6 +78,9 @@ class UserController extends Controller
         $user->update(request()->all());
         $user->roles()->detach();
         $user->roles()->attach(request('roles'));
+
+        $user->worker()->delete();
+        $user->worker()->save(Worker::find(request('worker')));
 
         return redirect('/users')->with('success', 'User successfully edited');
     }
