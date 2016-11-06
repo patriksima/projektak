@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class BankTableSeeder extends Seeder
+class BanksTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,6 @@ class BankTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Bank::class, 1000)->create();
+        factory(App\Bank::class, 50)->create();
     }
 }

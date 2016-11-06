@@ -1,9 +1,8 @@
 <?php
 
-use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
-class TaskStatusesDefaultSeeder extends Seeder
+class TaskStatusesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -34,22 +33,12 @@ class TaskStatusesDefaultSeeder extends Seeder
             ],
         ];
 
-        $sql = [];
-        $order = 1;
         foreach ($statuses as $type => $slugs) {
             foreach ($slugs as $slug => $name) {
-                $sql[] = [
-                    'name' => $name,
-                    'type' => $type,
-                    'slug' => $slug,
-                    'order' => $order,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ];
-                $order++;
+                factory(App\TaskStatus::class)->create([
+                    'name' => $name, 'slug' => $slug, 'type' => $type, 'order' => @++$order,
+                ]);
             }
         }
-
-        DB::table('task_statuses')->insert($sql);
     }
 }

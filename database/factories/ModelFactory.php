@@ -45,7 +45,6 @@ $factory->define(App\Inbox::class, function (Faker\Generator $faker) {
     ];
 });
 
-
 $factory->define(App\Project::class, function (Faker\Generator $faker) {
     return [
         'status_id' => 1,
@@ -58,7 +57,7 @@ $factory->define(App\Project::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Task::class, function (Faker\Generator $faker) {
     return [
-        'status_id' => $faker->numberBetween(1, 10),
+        'status_id' => $faker->numberBetween(1, 11),
         'name' => $faker->text($faker->numberBetween(10, 20)),
         'description' => $faker->text(),
         'source_int' => $faker->url(),
@@ -165,20 +164,29 @@ $factory->define(App\TaskLog::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->defineAs(App\SocialAccount::class, 'primary', function () {
+$factory->define(App\SocialAccount::class, function (Faker\Generator $faker) {
     return [
-        'provider_user_id' => '595706863941058',
-        'provider' => 'facebook',
-        'name' => 'Patrik Šíma',
-        'avatar' => 'https://graph.facebook.com/v2.6/595706863941058/picture?type=normal',
+        'provider_user_id' => $faker->numberBetween(100000, 999999),
+        'provider' => $faker->word,
+        'name' => $faker->name,
+        'avatar' => $faker->url,
     ];
 });
 
 $factory->define(App\TaskRequest::class, function (Faker\Generator $faker) {
     return [
-        'worker_id' => 1,
-        'task_id' => 1,
+        'worker_id' => rand(1, 10),
+        'task_id' => rand(1, 10),
         'estimate' => rand(1, 5),
         'reason' => $faker->sentence,
+    ];
+});
+
+$factory->define(App\TaskStatus::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->sentence,
+        'type' => $faker->word,
+        'slug' => $faker->slug,
+        'order' => $faker->numberBetween(1, 11),
     ];
 });
