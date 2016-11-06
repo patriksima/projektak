@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class WorkersTableSeeder extends Seeder
 {
@@ -17,8 +16,8 @@ class WorkersTableSeeder extends Seeder
 
             $w->tasks()->sync($ts);
 
-            $ts->each(function ($t) use ($w){
-                factory(App\TaskLog::class, 5)->make()->each(function ($l) use($w, $t) {
+            $ts->each(function ($t) use ($w) {
+                factory(App\TaskLog::class, 5)->make()->each(function ($l) use($w,$t) {
                     $l->task()->associate($t);
                     $w->taskLogs()->save($l);
                 });
