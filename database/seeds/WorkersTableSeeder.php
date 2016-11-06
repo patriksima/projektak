@@ -17,7 +17,7 @@ class WorkersTableSeeder extends Seeder
             $w->tasks()->sync($ts);
 
             $ts->each(function ($t) use ($w) {
-                factory(App\TaskLog::class, 5)->make()->each(function ($l) use($w,$t) {
+                factory(App\TaskLog::class, 5)->make()->each(function ($l) use ($w,$t) {
                     $l->task()->associate($t);
                     $w->taskLogs()->save($l);
                 });
