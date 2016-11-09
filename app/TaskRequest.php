@@ -55,6 +55,8 @@ class TaskRequest extends Model
      */
     public function deny()
     {
+        $this->task->update(['status_id' => 2]);
+
         $this->delete();
     }
 }

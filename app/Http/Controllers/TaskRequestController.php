@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\TaskRequest;
 use App\Notifications\TimeRequestDenied;
 use App\Notifications\TimeRequestApproved;
+use App\Http\Controllers\Behavior\NotifiesUsers;
 
 class TaskRequestController extends Controller
 {
+    use NotifiesUsers;
+
     /**
      * Handles listing of the resource.
      *
@@ -28,9 +31,7 @@ class TaskRequestController extends Controller
      */
     public function approve(TaskRequest $request)
     {
-        $request->worker->user->notify(
-            new TimeRequestApproved($request)
-        );
+        $this->notify($request->worker, new TimeRequestApproved($request));
 
         $request->approve();
 
@@ -45,9 +46,7 @@ class TaskRequestController extends Controller
      */
     public function deny(TaskRequest $request)
     {
-        $request->worker->user->notify(
-            new TimeRequestDenied($request)
-        );
+        $this->notify($request->worker, new TimeRequestDenied($request));
 
         $request->deny();
 
