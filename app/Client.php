@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Filters\Filterable;
+use Koch\Filters\Behavior\Filterable;
 use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
