@@ -2,6 +2,8 @@
 
 namespace App\Filters;
 
+use Koch\Filters\Filter;
+
 class WorksheetFilter extends Filter
 {
     /**

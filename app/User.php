@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Filters\Filterable;
+use Koch\Filters\Behavior\Filterable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Socialite\Contracts\User as SocialiteUser;
 use Illuminate\Foundation\Auth\User as Authenticatable;
