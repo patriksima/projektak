@@ -76,11 +76,12 @@ class UserController extends Controller
         ]);
 
         $user->update(request()->all());
+
         $user->roles()->detach();
         $user->roles()->attach(request('roles'));
 
-        $user->worker()->delete();
-        $user->worker()->save(Worker::find(request('worker')));
+        $user->worker()->dissociate();
+        $user->worker()->associate(Worker::find(request('worker')))->save();
 
         return redirect('/users')->with('success', 'User successfully edited');
     }
