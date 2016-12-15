@@ -41,6 +41,7 @@ install:
   - travis_retry composer self-update
   - travis_retry composer install --no-interaction --no-suggest
   - npm install
+  - npm install gulp
   - npm install -g gulp
 
 script:
