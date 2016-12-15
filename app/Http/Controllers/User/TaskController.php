@@ -2,26 +2,26 @@
 
 namespace App\Http\Controllers\User;
 
-use Illuminate\Http\Request;
-use App\Task;
-use App\TaskLog;
-use App\TaskStatus;
-use App\TaskRequest;
-use App\Worker;
-use App\Project;
 use DB;
 use Auth;
+use App\Task;
+use App\User;
+use App\Worker;
+use App\Project;
+use App\TaskLog;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Redirect;
+use App\TaskStatus;
+use App\TaskRequest;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Notifications\WorkerTaskRequest;
+use Illuminate\Support\Facades\Redirect;
 
 class TaskController extends Controller
 {
     public function index()
     {
-        return view('user.tasks', [
-            'search' => '',
-        ]);
+        return view('user.tasks.index', ['tasks' => auth()->user()->worker->tasks]);
     }
 
     public function store(Request $request)
@@ -168,5 +168,21 @@ class TaskController extends Controller
             ->status()
             ->associate($status)
             ->save();
+    }
+
+    /**
+     * Request a new task.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function request()
+    {
+        User::all()->each(function ($user) {
+            if ($user->hasRole(['manager', 'admin']) && $user->id !== auth()->id()) {
+                $user->notify(new WorkerTaskRequest(auth()->user()));
+            }
+        });
+
+        return back()->with('success', 'Task has been requested');
     }
 }

@@ -33,5 +33,7 @@ class UsersTableSeeder extends Seeder
         $g = factory(App\Role::class, 'guest')->create();
 
         $u->roles()->sync([$a->id, $m->id, $w->id]);
+
+        $u->worker()->associate(1)->save();
     }
 }

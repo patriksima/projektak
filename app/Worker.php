@@ -76,12 +76,12 @@ class Worker extends Model
     }
 
     /**
-     * Specifies the belongs to relationship.
+     * Specifies the has one relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasOne(User::class);
     }
 }

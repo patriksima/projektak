@@ -21,7 +21,7 @@ git:
     submodules: false
 
 before_install:
-  - openssl aes-256-cbc -K $encrypted_952f20a2c959_key -iv $encrypted_952f20a2c959_iv -in travis.enc -out travis -d
+  - echo $KEY > travis
   - chmod 600 travis
   - nvm install 5.1
   - gem update --system
@@ -40,7 +40,8 @@ before_script:
 install:
   - travis_retry composer self-update
   - travis_retry composer install --no-interaction --no-suggest
-  - travis_retry npm install
+  - npm install
+  - npm install gulp
   - npm install -g gulp
 
 script:

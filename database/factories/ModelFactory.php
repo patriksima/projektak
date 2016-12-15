@@ -74,7 +74,7 @@ $factory->define(App\Worker::class, function (Faker\Generator $faker) {
         'address' => $faker->address(),
         'type' => $faker->word(),
         'job' => $faker->jobTitle(),
-        'birthday' => $faker->dateTimeThisCentury(),
+        'birthday' => $faker->dateTimeBetween('-30 years', '-20 years'),
         'rate' => $faker->numberBetween(100, 1000),
         'note' => $faker->text(),
         'gdrive' => $faker->url(),

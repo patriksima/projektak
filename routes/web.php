@@ -72,7 +72,6 @@ Route::group(['middleware' => ['auth', 'role:admin|manager']], function () {
     });
 });
 
-
 // User routes
 
 Route::group(['middleware' => ['auth', 'role:worker'], 'prefix' => 'user'], function () {
@@ -82,7 +81,9 @@ Route::group(['middleware' => ['auth', 'role:worker'], 'prefix' => 'user'], func
         Route::post('update/{id}', 'User\TaskController@update');
         Route::get('delete/{id}', 'User\TaskController@destroy');
         Route::get('edit/{id}', 'User\TaskController@edit');
+        Route::post('request', 'User\TaskController@request');
     });
+
     Route::get('/', 'User\DashboardController@index');
 
     Route::group(['prefix' => 'api'], function () {
