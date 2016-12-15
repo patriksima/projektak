@@ -72,7 +72,6 @@ Route::group(['middleware' => ['auth', 'role:admin|manager']], function () {
     });
 });
 
-
 // User routes
 
 Route::group(['middleware' => ['auth', 'role:worker'], 'prefix' => 'user'], function () {

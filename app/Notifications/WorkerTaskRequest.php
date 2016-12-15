@@ -5,7 +5,6 @@ namespace App\Notifications;
 use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
 class WorkerTaskRequest extends Notification
@@ -15,7 +14,7 @@ class WorkerTaskRequest extends Notification
     /**
      * The user instance.
      *
-     * @var \App\User $user
+     * @var \App\User
      */
     protected $user;
 
