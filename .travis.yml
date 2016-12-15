@@ -40,7 +40,7 @@ before_script:
 install:
   - travis_retry composer self-update
   - travis_retry composer install --no-interaction --no-suggest
-  - travis_wait 30 npm install
+  - npm install
   - npm install -g gulp
 
 script:
