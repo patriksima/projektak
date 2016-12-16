@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
 
 class ChatMessage extends Model
 {
@@ -34,7 +34,7 @@ class ChatMessage extends Model
     {
         $message = new static;
 
-        $message->body = $request->body;
+        $message->body = app('Parsedown')->text($request->body);
         $message->channel = $request->channel;
         $message->sender_id = auth('api')->user()->id;
 

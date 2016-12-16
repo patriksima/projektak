@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "611f3bca7c769409e330a2d3d8b13961",
-    "content-hash": "d633359274abe024fcf127f6dd010144",
+    "hash": "4fcb10485670675082820553b4df50f6",
+    "content-hash": "6c5f41b52ea4eca703ba5de870b6a83c",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -214,6 +214,48 @@
                 "string"
             ],
             "time": "2015-11-06 14:35:42"
+        },
+        {
+            "name": "erusev/parsedown",
+            "version": "1.6.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/erusev/parsedown.git",
+                "reference": "20ff8bbb57205368b4b42d094642a3e52dac85fb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/erusev/parsedown/zipball/20ff8bbb57205368b4b42d094642a3e52dac85fb",
+                "reference": "20ff8bbb57205368b4b42d094642a3e52dac85fb",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Parsedown": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Emanuil Rusev",
+                    "email": "hello@erusev.com",
+                    "homepage": "http://erusev.com"
+                }
+            ],
+            "description": "Parser for Markdown.",
+            "homepage": "http://parsedown.org",
+            "keywords": [
+                "markdown",
+                "parser"
+            ],
+            "time": "2016-11-02 15:56:58"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -1401,50 +1443,6 @@
                 "shell"
             ],
             "time": "2016-03-09 05:03:14"
-        },
-        {
-            "name": "pusher/pusher-php-server",
-            "version": "v2.6.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/pusher/pusher-http-php.git",
-                "reference": "cdc11530c6f97eab76850d8ead6c513eeeccc37a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/pusher/pusher-http-php/zipball/cdc11530c6f97eab76850d8ead6c513eeeccc37a",
-                "reference": "cdc11530c6f97eab76850d8ead6c513eeeccc37a",
-                "shasum": ""
-            },
-            "require": {
-                "ext-curl": "*",
-                "php": ">=5.2"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "lib/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Library for interacting with the Pusher REST API",
-            "homepage": "https://github.com/pusher/pusher-php-server",
-            "keywords": [
-                "events",
-                "php-pusher-server",
-                "publish",
-                "pusher",
-                "realtime",
-                "rest",
-                "trigger"
-            ],
-            "time": "2016-08-23 09:07:29"
         },
         {
             "name": "ramsey/uuid",
@@ -3603,6 +3601,50 @@
                 "xunit"
             ],
             "time": "2015-10-02 06:51:40"
+        },
+        {
+            "name": "pusher/pusher-php-server",
+            "version": "v2.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pusher/pusher-http-php.git",
+                "reference": "cdc11530c6f97eab76850d8ead6c513eeeccc37a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pusher/pusher-http-php/zipball/cdc11530c6f97eab76850d8ead6c513eeeccc37a",
+                "reference": "cdc11530c6f97eab76850d8ead6c513eeeccc37a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Library for interacting with the Pusher REST API",
+            "homepage": "https://github.com/pusher/pusher-php-server",
+            "keywords": [
+                "events",
+                "php-pusher-server",
+                "publish",
+                "pusher",
+                "realtime",
+                "rest",
+                "trigger"
+            ],
+            "time": "2016-08-23 09:07:29"
         },
         {
             "name": "sebastian/comparator",

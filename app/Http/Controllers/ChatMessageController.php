@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\ChatMessage;
-use App\Events\Chat\MessageSent;
 use Illuminate\Http\Request;
 
 class ChatMessageController extends Controller
@@ -39,10 +38,6 @@ class ChatMessageController extends Controller
      */
     public function store(Request $request)
     {
-        $message = ChatMessage::send($request);
-
-        event(new MessageSent($message));
-
-        return 1;
+        return ChatMessage::send($request);
     }
 }

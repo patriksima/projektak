@@ -1,47 +1,62 @@
 <template>
-    <div class="chat mdl-card mdl-shadow--2dp">
-        <div class="chat-title mdl-card__title" @click="toggleWindow()">
-            <h2 class="mdl-card__title-text">Chat</h2>
-        </div>
+    <div style="width: 80%">
+        <div v-for="sentMessage in messages" class="chat-message mdl-card mdl-shadow--2dp">
+            <div class="chat-message-title mdl-card__title mdl-card--border">
 
-    <div class="chat-messages mdl-card__supporting-text mdl-card--expand" v-show="open">
-            <div class="chat-message" v-for="sentMessage in messages">
-
-                <p
-                    class="mdl-chip chat-message"
-                    v-if="sentMessage.sender !== undefined && user.id != sentMessage.sender.id"
-                >
-                    <span class="chat-name mdl-chip__contact mdl-color--teal mdl-color-text--white">
-                        {{ sentMessage.sender.name }}
-                    </span>
-
-                    <span class="mdl-chip__text">{{ sentMessage.body }}</span>
-                </p>
-
-                <p v-else class="mdl-chip chat-message pull-right">
-                    <span class="mdl-chip__text">{{ sentMessage.body }}</span>
-                </p>
+                <h2 class="mdl-card__title-text">
+                    {{ sentMessage.sender.name }}
+                    <small>{{ parseDate(sentMessage.created_at) }}</small>
+                </h2>
             </div>
+
+            <div class="mdl-card__supporting-text" v-html="sentMessage.body"></div>
         </div>
 
-        <div class="mdl-card__actions mdl-card--border" v-show="open">
-            <form action="#" @submit.prevent="sendMessage()">
-                <div class="mdl-textfield mdl-js-textfield">
-                    <input
-                        class="mdl-textfield__input"
-                        placeholder="Type your message"
-                        type="text"
-                        v-model="message"
+        <div class="chat-message mdl-card mdl-shadow--2dp">
+            <div class="chat-message-title mdl-card__title">
+                <h2 class="mdl-card__title-text">Add New Message</h2>
+            </div>
+
+            <div class="mdl-card__actions">
+                <form action="#" @submit.prevent="sendMessage()">
+                    <div class="mdl-textfield mdl-js-textfield" style="width: 100%">
+                        <textarea
+                            class="mdl-textfield__input"
+                            id="message"
+                            rows= "3"
+                            style="width: 100%"
+                            type="text"
+                            v-model="message"
+                        ></textarea>
+
+                        <label class="mdl-textfield__label" for="message">Type in your message</label>
+                    </div>
+
+                    <button
+                        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
                     >
-                    <label class="mdl-textfield__label" for="sample1">Type your message</label>
-                </div>
-            </form>
+                        Send Message
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 </template>
 
+<style>
+    h2 {
+        display: flex;
+        align-items: baseline;
+    }
+
+    h2 small {
+        margin-left: 20px;
+    }
+</style>
+
 <script>
 import UserActions from './../mixins/UserActions';
+import dateFormat from 'dateformat';
 
 export default {
     props: ['channel'],
@@ -53,13 +68,10 @@ export default {
             message: '',
             messages: [],
             user: {},
-            open: false
         };
     },
 
     mounted() {
-        this.listen();
-
         this.loadLoggedUser();
 
         this.loadMessages();
@@ -72,13 +84,10 @@ export default {
         sendMessage() {
             this.$http.post('/api/chat', {
                 channel: this.channel,
-                body: this.message
-            })
+                body: this.message,
+            }).then(({ body }) => this.messages.push(body));
 
-            this.messages.push({ body: this.message });
             this.message = '';
-
-            this.scrollDown();
         },
 
         /**
@@ -90,35 +99,12 @@ export default {
         },
 
         /**
-         * Listening on echo channels.
+         * Method that parses given date
          */
-        listen() {
-            Echo.channel(this.channel)
-                .listen('Chat\\MessageSent', (body) => {
-                    // Now we have to parse the sender back to the
-                    // message. This is worth opening an issue on Laravel
-                    // itself.
-                    body.message.sender = body.sender;
-                    this.messages.push(body.message);
-
-                    this.scrollDown();
-                });
-        },
-
-        /**
-         * Helper to keep the chat window scrolled down.
-         */
-        scrollDown() {
-            var chatWindow = document.querySelector('.chat-messages');
-            chatWindow.scrollTop = chatWindow.scrollHeight;
-        },
-
-        /**
-         * Toggles the chat window.
-         */
-        toggleWindow() {
-            this.open = ! this.open;
-            this.scrollDown();
+        parseDate(date) {
+            return dateFormat(
+                Date.parse(date), 'mmmm dS, H:MM'
+            );
         }
     }
 };

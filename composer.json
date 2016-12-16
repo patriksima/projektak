@@ -9,8 +9,8 @@
         "laravel/framework": "5.3.*",
         "laravel/socialite": "^2.0",
         "barryvdh/laravel-debugbar": "^2.2",
-        "pusher/pusher-php-server": "^2.6",
-        "kouks/laravel-filters": "^1.0"
+        "kouks/laravel-filters": "^1.0",
+        "erusev/parsedown": "^1.6"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
