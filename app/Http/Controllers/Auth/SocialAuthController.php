@@ -40,9 +40,10 @@ class SocialAuthController extends Controller
 
         // Finally we need to check whether the user is
         // allowed to enter our application.
-        if ($user->isAllowed()) {
-            auth()->login($user);
-        }
+        // if ($user->isAllowed()) {
+        //
+        // }
+        auth()->login($user);
 
         return redirect()->intended('/');
     }
