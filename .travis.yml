@@ -42,9 +42,6 @@ install:
 - npm install
 - npm install gulp
 - npm install -g gulp
-- openssl aes-256-cbc -K $encrypted_a6f388dddefc_key -iv $encrypted_a6f388dddefc_iv
-  -in travis.enc -out travis -d
-- chmod 600 travis
 
 script:
 - php artisan migrate --force --seed
@@ -57,3 +54,8 @@ deploy:
   script: /bin/sh ./deploy.sh
   on:
     branch: develop
+
+dd:
+- openssl aes-256-cbc -K $encrypted_a6f388dddefc_key -iv $encrypted_a6f388dddefc_iv
+  -in travis.enc -out travis -d
+- chmod 600 travis
