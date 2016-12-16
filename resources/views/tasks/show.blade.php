@@ -4,13 +4,8 @@
 
 @section('content')
 <div class="mdl-cell mdl-cell--12-col">
-    {{-- <h1>{{ $task->name }}</h1> --}}
-
-    <chat channel="tasks.{{ $task->id }}.chat"></chat>
+    <h1>{{ $task->name }}</h1>
 </div>
 
 @endsection
 
-@push('scripts')
-    <script src="/js/chat.js"></script>
-@endpush

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Parsedown;
 use App\Helpers\FilterHelper;
 use Illuminate\Support\ServiceProvider;
 
@@ -26,6 +27,10 @@ class AppServiceProvider extends ServiceProvider
     {
         app()->singleton('filter', function () {
             return new FilterHelper;
+        });
+
+        app()->singleton('Parsedown', function () {
+            return new Parsedown;
         });
     }
 }

@@ -294,33 +294,11 @@ _:-ms-input-placeholder, :root .demo-graph {
   height: 15px; }
 
 /* line 333, ../../resources/assets/sass/app.scss */
-.chat {
-  position: fixed;
-  bottom: 0;
-  right: 50px;
-  min-height: 0px; }
-
-/* line 340, ../../resources/assets/sass/app.scss */
-.chat-messages {
-  height: 250px;
-  overflow: auto;
-  display: flex;
-  flex-direction: column; }
-
-/* line 347, ../../resources/assets/sass/app.scss */
-.chat-name {
-  padding: 0 7px 0 10px;
-  margin-left: -11px;
-  font-size: 15px;
-  width: auto;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0; }
-
-/* line 356, ../../resources/assets/sass/app.scss */
-.chat-title {
-  background-color: #37474f;
-  color: white; }
-
-/* line 361, ../../resources/assets/sass/app.scss */
 .pull-right {
   float: right; }
+
+/* line 337, ../../resources/assets/sass/app.scss */
+.chat-message {
+  min-height: 0;
+  width: 100%;
+  margin-bottom: 20px; }

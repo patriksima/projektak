@@ -39,10 +39,6 @@ class ChatMessageController extends Controller
      */
     public function store(Request $request)
     {
-        $message = ChatMessage::send($request);
-
-        event(new MessageSent($message));
-
-        return 1;
+        return ChatMessage::send($request);
     }
 }
