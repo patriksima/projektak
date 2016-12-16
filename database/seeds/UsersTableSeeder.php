@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder
         ]);
 
         $sa = factory(App\SocialAccount::class)->make([
-            'provider_user_id' => env('DEFAULT_PROVIDER_ID', 0),
+            'provider_user_id' => env('DEFAULT_SOCIAL_ID', 0),
             'provider' => env('DEFAULT_PROVIDER_NAME', 'facebook'),
             'name' => env('DEFAULT_NAME', 'Jon Doe'),
             'avatar' => env('DEFAULT_AVATAR', ''),
