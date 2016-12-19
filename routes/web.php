@@ -34,7 +34,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 });
 
 Route::group(['middleware' => ['auth', 'role:admin|manager']], function () {
-    Route::get('{resource}/{id}/discussion', 'DiscussionController@public');
+    Route::get('{resource}/{id}/discussion', 'DiscussionController@general');
     Route::get('{resource}/{id}/discussion/internal', 'DiscussionController@internal');
     Route::resource('clients', 'ClientController');
 

@@ -11,7 +11,7 @@ class DiscussionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function public($resource, $id)
+    public function general($resource, $id)
     {
         $channel = $resource.'.'.$id;
 
