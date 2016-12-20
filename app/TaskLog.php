@@ -11,7 +11,14 @@ class TaskLog extends Model
      *
      * @var array
      */
-    protected $fillable = ['start', 'end', 'billable'];
+    protected $fillable = ['start', 'end', 'billable', 'worker_id'];
+
+    /**
+     * The fields that are supposed to be cast to timestamp.
+     *
+     * @var array
+     */
+    public $dates = ['start', 'end', 'created_at', 'updated_at'];
 
     /**
      * Specifies the belongs to relationship.

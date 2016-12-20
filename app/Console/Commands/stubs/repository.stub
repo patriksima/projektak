@@ -1,0 +1,45 @@
+<?php
+
+namespace App\Repositories;
+
+use App\{resource};
+use App\Filters\{resource}Filter;
+
+class {resource}Repository extends Repository
+{
+    /**
+     * Class constructor.
+     *
+     * @param  \App\Filters\{resource}Filter  $filter
+     * @param  \App\Models\{resource}  $model
+     * @return void
+     */
+    public function __construct({resource}Filter $filter, {resource} $model)
+    {
+        parent::__construct($filter, $model);
+    }
+
+    /**
+     * Validation rules for the store action.
+     *
+     * @return array
+     */
+    public function storeRules()
+    {
+        return [
+            //
+        ];
+    }
+
+    /**
+     * Validation rules for the update action.
+     *
+     * @return array
+     */
+    public function updateRules()
+    {
+        return [
+            //
+        ];
+    }
+}

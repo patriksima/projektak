@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Responder\Responder;
+use App\Repositories\{resource}Repository;
+use App\Http\Controllers\Behavior\PerformsCrudOperations;
+
+class {resource}Controller extends Controller
+{
+    use PerformsCrudOperations;
+
+    /**
+     * Class constructor.
+     *
+     * @param  \App\Repositories\{resource}Repository  $repository
+     * @param  \App\Http\Responder\Responder  $responder
+     * @return void
+     */
+    public function __construct({resource}Repository $repository, Responder $responder)
+    {
+        parent::__construct($repository, $responder);
+    }
+}

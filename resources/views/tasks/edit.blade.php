@@ -49,7 +49,8 @@
 		</div>
 		<div class="mdl-layout-spacer"></div>
 		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-			<input class="mdl-textfield__input" type="date" name="deadline" value="{{ $task->deadline }}" />
+			<input class="mdl-textfield__input" type="date" name="deadline"
+                value="{{ $task->deadline->format('Y-m-d') }}" />
 			<label class="mdl-textfield__label">Deadline</label>
 		</div>
 		<div class="mdl-layout-spacer"></div>

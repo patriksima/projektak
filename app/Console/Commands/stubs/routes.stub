@@ -1,0 +1,13 @@
+
+/*
+|--------------------------------------------------------------------------
+| {resource} resource routes
+|--------------------------------------------------------------------------
+|
+| All routes associated with the resource are specified below.
+|
+*/
+
+Route::resource('{resource-lowercase}s', '{resource}Controller', [
+    'except' => ['create', 'edit'],
+]);

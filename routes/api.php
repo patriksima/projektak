@@ -21,3 +21,18 @@ Route::group(['prefix' => 'chat'], function () {
     Route::get('{channel}', 'ChatMessageController@index');
     Route::post('', 'ChatMessageController@store');
 });
+
+/*
+|--------------------------------------------------------------------------
+| Task resource routes
+|--------------------------------------------------------------------------
+|
+| All routes associated with the resource are specified below.
+|
+*/
+
+Route::get('tasks/forUser', 'TaskController@forUser');
+Route::post('tasks/request', 'TaskController@request');
+Route::get('tasks/running', 'TaskController@running');
+Route::put('tasks/{task}/start', 'TaskController@start');
+Route::put('tasks/{task}/stop', 'TaskController@stop');
