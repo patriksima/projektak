@@ -14,6 +14,7 @@ require('../bootstrap');
  */
 
 Vue.component('tasks', require('../components/Tasks.vue'));
+Vue.component('task-log', require('../components/TaskLog.vue'));
 
 const app = new Vue({
     el: 'div.demo-content'

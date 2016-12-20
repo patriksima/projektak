@@ -5,7 +5,7 @@
 
                 <h2 class="mdl-card__title-text">
                     {{ sentMessage.sender.name }}
-                    <small>{{ parseDate(sentMessage.created_at) }}</small>
+                    <small>{{ parseDate(sentMessage.created_at, 'mmmm dS, H:MM') }}</small>
                 </h2>
             </div>
 
@@ -55,13 +55,13 @@
 </style>
 
 <script>
-import UserActions from './../mixins/UserActions';
-import dateFormat from 'dateformat';
+import UserActions from '../mixins/UserActions';
+import Time from '../mixins/DateTime';
 
 export default {
     props: ['channel'],
 
-    mixins: [UserActions],
+    mixins: [UserActions, Time],
 
     data() {
         return {
@@ -96,15 +96,6 @@ export default {
         loadMessages() {
             this.$http.get('/api/chat/' + this.channel)
                 .then(({ body }) => this.messages = body);
-        },
-
-        /**
-         * Method that parses given date
-         */
-        parseDate(date) {
-            return dateFormat(
-                Date.parse(date), 'mmmm dS, H:MM'
-            );
         }
     }
 };
