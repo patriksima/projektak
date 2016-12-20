@@ -1,244 +1,238 @@
 <template>
-    <table v-if="active" class="mdl-data-table mdl-js-data-table" transition="fade">
-        <thead>
-            <tr>
-                <th class="mdl-data-table__cell--non-numeric" colspan="8">Active task</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="entry in data" v-if="entry.active" track-by="id">
-                <td class="mdl-data-table__cell--non-numeric">{{ entry.deadline }}</td>
-                <td class="mdl-data-table__cell--non-numeric">{{ entry.name }}</td>
-                <td class="mdl-data-table__cell--non-numeric">{{ entry.client }}</td>
-                <td class="mdl-data-table__cell--non-numeric">{{ entry.project }}</td>
-                <td>{{ entry.estimate }}</td>
-                <td :class="(entry.ratio > 100) ? 'mdl-color-text--red' : ''">{{ entry.duration }}</td>
-                <td class="mdl-data-table__cell--non-numeric">{{ entry.status }}</td>
-                <td class="mdl-data-table__cell--non-numeric">
-                    <mdl-button @click="timerStop(entry.id)" icon="stop"></mdl-button>
-                    <mdl-button v-if="entry.ratio > 75" @click="requestDialog(entry.id)" icon="restore"></mdl-button>
-                </td>
-            </tr>
-        </tbody>
-    </table><br>
+    <div class="mdl-cell mdl-cell--12-col">
+        <table class="mdl-data-table mdl-js-data-table" v-show="running">
+            <tbody>
+                <tr v-for="task in running">
+                    <td class="mdl-data-table__cell--non-numeric wrappable">{{ elapsed }}</td>
+                    <td class="mdl-data-table__cell--non-numeric wrappable">{{ task.name }}</td>
+                    <td class="mdl-data-table__cell--non-numeric wrappable">{{ task.project.client.name }}</td>
+                    <td class="mdl-data-table__cell--non-numeric wrappable">{{ task.project.name }}</td>
+                    <td class="mdl-data-table__cell--non-numeric">
+                        <a
+                            class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"
+                            :href="task.source_int"
+                            target="_new"
+                            v-show="task.source_int"
+                        >
+                            <i
+                                class="material-icons mdl-badge mdl-badge--overlap"
+                            >
+                                bookmark
+                            </i>
+                        </a>
 
-    <table class="mdl-data-table mdl-js-data-table">
-        <thead>
-            <tr>
-                <th v-for="key in columns" @click="sort(key)" :class="[key.class, key.orderby ? ' sortable' : '']" data-orderby="{{ key.orderby }}" data-orderdir="{{ key.orderdir }}">{{ key.name }}</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="entry in data" track-by="id" v-if="!entry.active">
-                <td class="mdl-data-table__cell--non-numeric">{{ entry.deadline }}</td>
-                <td class="mdl-data-table__cell--non-numeric">{{ entry.name }}</td>
-                <td class="mdl-data-table__cell--non-numeric">{{ entry.client }}</td>
-                <td class="mdl-data-table__cell--non-numeric">{{ entry.project }}</td>
-                <td>{{ entry.estimate }}</td>
-                <td :class="(entry.ratio > 100) ? 'mdl-color-text--red' : ''">{{ entry.duration }}</td>
-                <td class="mdl-data-table__cell--non-numeric">{{ entry.status }}</td>
-                <td class="mdl-data-table__cell--non-numeric">
-                    <mdl-button v-if="entry.ratio <= 100" @click="timerStart(entry.id)" icon="play_arrow"></mdl-button>
-                    <mdl-button v-if="entry.ratio > 75" @click="requestDialog(entry.id)" icon="restore"></mdl-button>
-                    <mdl-button @click="done(entry.id)" icon="check"></mdl-button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <mdl-dialog id="requestDlg" v-ref:requestDlg :data.sync="requestData"><mdl-dialog>
+
+                        <a
+                            class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"
+                            :href="task.source_ext"
+                            target="_new"
+                            v-show="task.source_ext"
+                        >
+                            <i
+                                class="material-icons mdl-badge mdl-badge--overlap"
+                            >
+                                bookmark_border
+                            </i>
+                        </a>
+
+                        <a
+                            class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"
+                            :href="link(task)"
+                        >
+                            <i class="material-icons">help</i>
+                        </a>
+
+                        <a
+                            class="mdl-button mdl-js-button mdl-button--icon mdl-button--accent"
+                            @click="stopTimer(task)"
+                        >
+                            <i class="material-icons">pause</i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <br v-show="running">
+
+        <table class="mdl-data-table mdl-js-data-table" v-if="tasks">
+            <thead>
+                <tr>
+                    <th class="mdl-data-table__cell--non-numeric sortable">
+                        Deadline
+                    </th>
+
+                    <th class="mdl-data-table__cell--non-numeric sortable">
+                        Task
+                    </th>
+
+                    <th class="mdl-data-table__cell--non-numeric sortable">
+                        Client
+                    </th>
+
+                    <th class="mdl-data-table__cell--non-numeric sortable">
+                        Project
+                    </th>
+
+                    <th class="mdl-data-table__cell--non-numeric sortable">
+                        Status
+                    </th>
+
+                    <th class="mdl-data-table__cell--non-numeric">Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr v-for="task in tasks">
+                    <td class="mdl-data-table__cell--non-numeric">{{ parseDate(task.deadline) }}</td>
+                    <td class="mdl-data-table__cell--non-numeric wrappable">{{ task.name }}</td>
+                    <td class="mdl-data-table__cell--non-numeric wrappable">{{ task.project.client.name }}</td>
+                    <td class="mdl-data-table__cell--non-numeric wrappable">{{ task.project.name }}</td>
+                    <td class="mdl-data-table__cell--non-numeric">{{ task.status.name }}</td>
+                    <td class="mdl-data-table__cell--non-numeric">
+                        <a
+                            class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"
+                            :href="task.source_int"
+                            target="_new"
+                            v-show="task.source_int"
+                        >
+                            <i
+                                class="material-icons mdl-badge mdl-badge--overlap"
+                            >
+                                bookmark
+                            </i>
+                        </a>
+
+
+                        <a
+                            class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"
+                            :href="task.source_ext"
+                            target="_new"
+                            v-show="task.source_ext"
+                        >
+                            <i
+                                class="material-icons mdl-badge mdl-badge--overlap"
+                            >
+                                bookmark_border
+                            </i>
+                        </a>
+
+                        <a
+                            class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"
+                            :href="link(task)"
+                        >
+                            <i class="material-icons">help</i>
+                        </a>
+
+                        <a
+                            class="mdl-button mdl-js-button mdl-button--icon mdl-button--accent"
+                            v-show="! running"
+                            @click="startTimer(task)"
+                        >
+                            <i class="material-icons">play_arrow</i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a
+            class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+            @click.once="requestTask()"
+            v-else
+        >
+            Request a task
+        </a>
+    </div>
 </template>
 
 <script>
-import MdlDialog from '../components/Dialog.vue';
-import MdlButton from '../components/Button.vue';
+import Crud from '../mixins/Crud';
+import UserActions from '../mixins/UserActions';
+import dateFormat from 'dateformat';
 
 export default {
-    components: {
-        MdlDialog,
-        MdlButton
-    },
-    data: function() {
+
+    mixins: [Crud, UserActions],
+
+    data() {
         return {
-            active: 0,
-            requestData: {
-                id: 0,
-                name: '',
-                estimate: 1.0,
-                reason: ''
-            },
-            columns: [
-                {
-                    slug: 'deadline',
-                    name: 'Deadline',
-                    class: 'mdl-data-table__cell--non-numeric',
-                    orderby: 'deadline',
-                    orderdir: 'desc'
-                },
-                {
-                    slug: 'name',
-                    name: 'Task',
-                    class: 'mdl-data-table__cell--non-numeric',
-                    orderby: 'name',
-                    orderdir: 'desc'
-                },
-                {
-                    slug: 'client',
-                    name: 'Client',
-                    class: 'mdl-data-table__cell--non-numeric',
-                    orderby: 'client',
-                    orderdir: 'desc'
-                },
-                {
-                    slug: 'project',
-                    name: 'Project',
-                    class: 'mdl-data-table__cell--non-numeric',
-                    orderby: 'project',
-                    orderdir: 'desc'
-                },
-                {
-                    slug: 'estimate',
-                    name: 'Estimate',
-                    class: '',
-                    orderby: 'estimate',
-                    orderdir: 'desc'
-                },
-                {
-                    slug: 'duration',
-                    name: 'Duration',
-                    class: '',
-                    orderby: 'duration',
-                    orderdir: 'desc'
-                },
-                {
-                    slug: 'status',
-                    name: 'Status',
-                    class: 'mdl-data-table__cell--non-numeric',
-                    orderby: 'status',
-                    orderdir: 'desc'
-                },
-                {
-                    slug: 'action',
-                    name: 'Action',
-                    class: 'mdl-data-table__cell--non-numeric',
-                    orderby: '',
-                    orderdir: ''
-                }
-            ],
-            data: [
-            ]
-        }
-    },
-    events: {
-        'request': function() {
-            this.$http.post('/user/api/task/request', this.requestData).then(
-                function(response) {
-                    this.getTasks(this.requestData.id);
-                    this.requestData.id = 0;
-                    this.requestData.name = '';
-                    this.requestData.estimate = 1.0;
-                    this.requestData.reason = '';
-                },
-                function(response) {
-                    console.error(response);
-                }
-            )
-        }
-    },
-    methods: {
-        done(id) {
-            if (confirm('Are you sure?')) {
-                let data = {
-                    task_id: id
-                }
-                this.$http.post('/user/api/task/done', data).then(
-                    function(response) {
-                        this.getTasks();
-                    },
-                    function(response) {
-                        console.error(response);
-                    }
-                );
-            }
-        },
-        requestDialog(id) {
-            this.requestData.id = id;
-            for (let i=0; i<this.data.length; i++) {
-                if (this.data[i].id == id) {
-                    this.requestData.name = this.data[i].name;
-                    break;
-                }
-            }
-            this.$refs.requestdlg.open()
-        },
-        timerStart: function(id) {
-            let data = {
-                task_id: id
-            }
-            this.$http.post('/user/api/task/start', data).then(
-                function(response) {
-                    this.getTasks(id);
-                },
-                function(response) {
-                    console.error(response);
-                }
-            );
-        },
-        timerStop: function(id) {
-            let data = {
-                task_id: id
-            }
-            this.$http.post('/user/api/task/stop', data).then(
-                function(response) {
-                    this.getTasks(id);
-                },
-                function(response) {
-                    console.error(response);
-                }
-            );
-        },
-        getTasks: function(id) {
-            let data = {
-                task_id: id
-            }
-            this.$http.get('/user/api/tasks', data).then(
-                function(response) {
-                    this.data = response.json();
-                },
-                function(response) {
-                    if (response.status == 401) {
-                        location.href = '/login';
-                    }
-                    console.error(response);
-                }
-            );
-        },
-        mdlRendering: function() {
-            setInterval(function() {
-            	componentHandler.upgradeDom();
-            	componentHandler.upgradeAllRegistered();
-          	}, 100);
-        }
-    },
-    watch: {
-        data: function (newVal, oldVal) {
-            // watch active task
-            for (let i=0; i<newVal.length; i++) {
-                if (newVal[i].active) {
-                    this.active = true;
-                    return;
-                }
-            }
-            this.active = false;
-        }
+            tasks: false,
+            user: {},
+            running: false,
+            start: 0,
+            elapsed: 0,
+        };
     },
 
     mounted() {
-        this.getTasks();
-        this.mdlRendering();
-        let self = this;
-        setInterval(function() {
-            self.getTasks();
-        }, 5000);
+        this.loadTasksForUser();
+
+        this.loadLoggedUser();
+
+        window.setInterval(() => this.time(), 1000);
+    },
+
+    methods: {
+        loadTasksForUser() {
+            this.$http.get('/api/tasks/forUser')
+                .then(({ body }) => {
+                    this.tasks = body;
+
+                    this.loadRunningTasks();
+                });
+        },
+
+        loadRunningTasks() {
+            this.$http.get('/api/tasks/running')
+                .then(({ body }) => {
+                    this.running = [body.task];
+                    this.start = Date.parse(body.start);
+
+                    this.tasks = this.tasks.filter(item => item.id !== body.task.id);
+                });
+        },
+
+        parseDate(date) {
+            return dateFormat(
+                Date.parse(date), 'mmmm dS, yyyy'
+            );
+        },
+
+        link(task) {
+            return `tasks/${task.id}`;
+        },
+
+        requestTask() {
+            this.$http.post('/api/tasks/request');
+        },
+
+        startTimer(task) {
+            this.running = [task];
+            this.start = Date.now();
+
+            this.tasks = this.tasks.filter(item => item.id !== task.id);
+
+            this.$http.put(`/api/tasks/${task.id}/start`);
+        },
+
+        stopTimer(task) {
+            this.running = false;
+
+            this.tasks.push(task);
+
+            this.$http.put(`/api/tasks/${task.id}/stop`);
+        },
+
+        time() {
+            this.elapsed = this.getTimeDiff(this.start, Date.now());
+        },
+
+        getTimeDiff(datetime, now) {
+            let diff = now - datetime;
+
+            return `${Math.floor(diff/1000/3600)}:${dateFormat(new Date(diff), 'MM:ss')}`;
+        }
     }
 };
 </script>

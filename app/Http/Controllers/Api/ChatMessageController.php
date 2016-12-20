@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\ChatMessage;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ChatMessageController extends Controller
 {
