@@ -32,7 +32,9 @@ Route::group(['prefix' => 'chat'], function () {
 */
 
 Route::get('tasks/forUser', 'TaskController@forUser');
-Route::post('tasks/request', 'TaskController@request');
+Route::get('tasks/logs', 'TaskController@logs');
 Route::get('tasks/running', 'TaskController@running');
+Route::get('tasks/total/{period}', 'TaskController@total');
+Route::post('tasks/request', 'TaskController@request');
 Route::put('tasks/{task}/start', 'TaskController@start');
 Route::put('tasks/{task}/stop', 'TaskController@stop');

@@ -302,3 +302,7 @@ _:-ms-input-placeholder, :root .demo-graph {
   min-height: 0;
   width: 100%;
   margin-bottom: 20px; }
+
+/* line 343, ../../resources/assets/sass/app.scss */
+.is-fullwidth {
+  width: 100%; }

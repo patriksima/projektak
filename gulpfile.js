@@ -23,5 +23,5 @@ elixir(function (mix) {
         .webpack('users.js')
         .webpack('user/tasks.js', 'public/js/user')
 
-        .imagemin('resources/assets/images', 'public/images')
+        .imagemin('resources/assets/images', 'public/images');
 });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Task;
 use App\User;
+use App\TaskLog;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use App\Notifications\WorkerTaskRequest;
@@ -96,5 +97,46 @@ class TaskController extends Controller
             ->update(['end' => Carbon::now()]);
 
         return response(200);
+    }
+
+    /**
+     * Starts the timer.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function logs()
+    {
+        $logs = TaskLog::where('end', '!=', null)
+            ->where('start', '>', Carbon::now()->startOfMonth())
+            ->where('worker_id', auth()->user()->worker->id)
+            ->orderBy('start', 'desc')
+            ->get()->load('task');
+
+        return $logs;
+    }
+
+    /**
+     * Starts the timer.
+     *
+     * @param  string  $period
+     * @return \Illuminate\Http\Response
+     */
+    public function total($period = 'month')
+    {
+        $period = $period == 'month' ? Carbon::now()->startOfMonth() : Carbon::now()->startOfWeek();
+
+        $logs = TaskLog::where('end', '!=', null)
+            ->where('start', '>=', $period)
+            ->where('worker_id', auth()->user()->worker->id)
+            ->orderBy('start', 'desc')
+            ->get()->load('task');
+
+        $total = 0;
+
+        $logs->each(function ($log) use (&$total) {
+            $total += $log->end->diffInSeconds($log->start);
+        });
+
+        return $total;
     }
 }

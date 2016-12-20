@@ -1,13 +1,18 @@
 <template>
-    <div class="mdl-cell mdl-cell--12-col">
-        <table class="mdl-data-table mdl-js-data-table" v-show="running">
+    <div>
+        <h3>Assigned Tasks</h3>
+
+        <table class="mdl-data-table mdl-js-data-table is-fullwidth" v-show="running">
             <tbody>
                 <tr v-for="task in running">
-                    <td class="mdl-data-table__cell--non-numeric wrappable">{{ elapsed }}</td>
-                    <td class="mdl-data-table__cell--non-numeric wrappable">{{ task.name }}</td>
-                    <td class="mdl-data-table__cell--non-numeric wrappable">{{ task.project.client.name }}</td>
-                    <td class="mdl-data-table__cell--non-numeric wrappable">{{ task.project.name }}</td>
                     <td class="mdl-data-table__cell--non-numeric">
+                        <strong>{{ elapsed }}</strong>
+                    </td>
+
+                    <td class="mdl-data-table__cell--non-numeric">{{ task.name }}</td>
+                    <td class="mdl-data-table__cell--non-numeric">{{ task.project.client.name }}</td>
+                    <td class="mdl-data-table__cell--non-numeric">{{ task.project.name }}</td>
+                    <td>
                         <a
                             class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"
                             :href="task.source_int"
@@ -55,7 +60,7 @@
 
         <br v-show="running">
 
-        <table class="mdl-data-table mdl-js-data-table" v-if="tasks">
+        <table class="mdl-data-table mdl-js-data-table is-fullwidth" v-if="tasks">
             <thead>
                 <tr>
                     <th class="mdl-data-table__cell--non-numeric sortable">
@@ -84,12 +89,14 @@
 
             <tbody>
                 <tr v-for="task in tasks">
-                    <td class="mdl-data-table__cell--non-numeric">{{ parseDate(task.deadline) }}</td>
+                    <td class="mdl-data-table__cell--non-numeric">
+                        {{ parseDate(task.deadline, 'mmmm dS, yyyy') }}
+                    </td>
                     <td class="mdl-data-table__cell--non-numeric wrappable">{{ task.name }}</td>
                     <td class="mdl-data-table__cell--non-numeric wrappable">{{ task.project.client.name }}</td>
                     <td class="mdl-data-table__cell--non-numeric wrappable">{{ task.project.name }}</td>
                     <td class="mdl-data-table__cell--non-numeric">{{ task.status.name }}</td>
-                    <td class="mdl-data-table__cell--non-numeric">
+                    <td>
                         <a
                             class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"
                             :href="task.source_int"
@@ -127,7 +134,7 @@
                         <a
                             class="mdl-button mdl-js-button mdl-button--icon mdl-button--accent"
                             v-show="! running"
-                            @click="startTimer(task)"
+                            @click="startTimerAndRequest(task)"
                         >
                             <i class="material-icons">play_arrow</i>
                         </a>
@@ -148,17 +155,15 @@
 
 <script>
 import Crud from '../mixins/Crud';
-import UserActions from '../mixins/UserActions';
-import dateFormat from 'dateformat';
+import Time from './../mixins/DateTime';
 
 export default {
 
-    mixins: [Crud, UserActions],
+    mixins: [Crud, Time],
 
     data() {
         return {
             tasks: false,
-            user: {},
             running: false,
             start: 0,
             elapsed: 0,
@@ -167,8 +172,6 @@ export default {
 
     mounted() {
         this.loadTasksForUser();
-
-        this.loadLoggedUser();
 
         window.setInterval(() => this.time(), 1000);
     },
@@ -185,33 +188,30 @@ export default {
 
         loadRunningTasks() {
             this.$http.get('/api/tasks/running')
-                .then(({ body }) => {
-                    this.running = [body.task];
-                    this.start = Date.parse(body.start);
-
-                    this.tasks = this.tasks.filter(item => item.id !== body.task.id);
-                });
-        },
-
-        parseDate(date) {
-            return dateFormat(
-                Date.parse(date), 'mmmm dS, yyyy'
-            );
+                .then(({ body }) => this.startTimer(body.task, Date.parse(body.start)));
         },
 
         link(task) {
-            return `tasks/${task.id}`;
+            return `/tasks/${task.id}`;
         },
 
         requestTask() {
             this.$http.post('/api/tasks/request');
         },
 
-        startTimer(task) {
+        startTimer(task, when) {
+            if (task === undefined) {
+                return;
+            }
+
             this.running = [task];
-            this.start = Date.now();
+            this.start = when ? when : Date.now();
 
             this.tasks = this.tasks.filter(item => item.id !== task.id);
+        },
+
+        startTimerAndRequest(task) {
+            this.startTimer(task);
 
             this.$http.put(`/api/tasks/${task.id}/start`);
         },
@@ -225,13 +225,11 @@ export default {
         },
 
         time() {
+            if (! this.running) {
+                return;
+            }
+
             this.elapsed = this.getTimeDiff(this.start, Date.now());
-        },
-
-        getTimeDiff(datetime, now) {
-            let diff = now - datetime;
-
-            return `${Math.floor(diff/1000/3600)}:${dateFormat(new Date(diff), 'MM:ss')}`;
         }
     }
 };
