@@ -96,7 +96,7 @@ class Task extends Model
     }
 
     /**
-     * Starts logging of this task
+     * Starts logging of this task.
      *
      * @return void
      */
@@ -109,7 +109,7 @@ class Task extends Model
     }
 
     /**
-     * Stops logging of this task
+     * Stops logging of this task.
      *
      * @return void
      */

@@ -59,4 +59,3 @@ class TaskLog extends Model
             ->load(['task', 'task.project', 'task.project.client', 'task.status']);
     }
 }
-
