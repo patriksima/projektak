@@ -9,9 +9,6 @@
 |
 */
 
-// auth()->logout();
-// auth()->loginUsingId(1);
-
 Route::get('login', 'Auth\LoginController@show');
 Route::get('auth/{provider}', 'Auth\SocialAuthController@redirect');
 Route::get('auth/{provider}/callback', 'Auth\SocialAuthController@callback');

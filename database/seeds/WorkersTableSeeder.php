@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class WorkersTableSeeder extends Seeder
@@ -11,7 +12,7 @@ class WorkersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Worker::class, 10)->create()->each(function ($w) {
+        factory(App\Worker::class, 5)->create()->each(function ($w) {
             $ts = App\Task::inRandomOrder()->limit(10)->get();
 
             $w->tasks()->sync($ts);
@@ -22,6 +23,10 @@ class WorkersTableSeeder extends Seeder
                     $w->taskLogs()->save($l);
                 });
             });
+
+            $l = factory(App\TaskLog::class)->make(['start' => Carbon::now(), 'end' => null]);
+            $l->task()->associate($ts->first());
+            $w->taskLogs()->save($l);
 
             factory(App\Worksheet::class, 10)->make()->each(function ($ws) use ($w) {
                 $ws->project()->associate(App\Project::inRandomOrder()->first());

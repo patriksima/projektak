@@ -58,7 +58,7 @@ class SocialAccount extends Model
      * Creates a new social acount and also checks whether is has a user to
      * be assigned to.
      *
-     * @param  \Laravel\Socialite\Contracts\User  $user
+     * @param  \Laravel\Socialite\Contracts\User  $socialiteUser
      * @param  string  $provider
      * @return \App\User
      */

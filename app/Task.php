@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Koch\Filters\Behavior\Filterable;
 use Illuminate\Database\Eloquent\Model;
 
@@ -80,5 +81,41 @@ class Task extends Model
     public function requests()
     {
         return $this->hasMany(TaskRequest::class);
+    }
+
+    /**
+     * Returns loggable tasks.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public static function loggable()
+    {
+        return auth()->user()->worker->tasks()->newQuery()
+            ->whereNotIn('status_id', [1, 10])->get()
+            ->load(['project', 'project.client', 'status']);
+    }
+
+    /**
+     * Starts logging of this task
+     *
+     * @return void
+     */
+    public function startLogging()
+    {
+        $this->logs()->create([
+            'start' => Carbon::now(),
+            'worker_id' => auth()->user()->worker->id,
+        ]);
+    }
+
+    /**
+     * Stops logging of this task
+     *
+     * @return void
+     */
+    public function stopLogging()
+    {
+        $this->logs->where('end', null)->first()
+            ->update(['end' => Carbon::now()]);
     }
 }

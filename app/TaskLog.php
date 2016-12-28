@@ -39,4 +39,24 @@ class TaskLog extends Model
     {
         return $this->belongsTo(Worker::class);
     }
+
+    /**
+     * Returns the runnning task log.
+     *
+     * @return \App\TaskLog|int
+     */
+    public static function running()
+    {
+        $taskLog = auth()->user()->worker->taskLogs
+            ->where('end', null)
+            ->first();
+
+        if (! $taskLog) {
+            return 0;
+        }
+
+        return $taskLog
+            ->load(['task', 'task.project', 'task.project.client', 'task.status']);
+    }
 }
+
