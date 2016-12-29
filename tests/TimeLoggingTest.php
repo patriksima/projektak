@@ -2,9 +2,6 @@
 
 use App\Worker;
 use App\TaskLog;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class CrudTraitTest extends TestCase
 {
