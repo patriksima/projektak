@@ -66,7 +66,7 @@ class TaskController extends Controller
     public function start(Task $task)
     {
         if (TaskLog::running()) {
-            return response(403);
+            return abort(403);
         }
 
         $task->startLogging();
