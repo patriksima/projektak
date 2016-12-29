@@ -98,7 +98,7 @@ class User extends Authenticatable
      * @param  \Laravel\Socialite\Contracts\User  $user
      * @return \App\User
      */
-    protected function craftFromSocialite(SocialiteUser $user)
+    public static function craftFromSocialite(SocialiteUser $user)
     {
         return self::create([
             'email' => $user->getEmail(),

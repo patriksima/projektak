@@ -28,10 +28,7 @@ class TaskController extends Controller
      */
     public function forUser()
     {
-        $tasks = auth()->user()->worker->tasks
-            ->load(['project', 'project.client', 'status']);
-
-        return $tasks;
+        return Task::loggable();
     }
 
     /**
@@ -41,16 +38,7 @@ class TaskController extends Controller
      */
     public function running()
     {
-        $taskLog = auth()->user()->worker->taskLogs
-            ->where('end', null)
-            ->first();
-
-        if (! $taskLog) {
-            return 0;
-        }
-
-        return $taskLog
-            ->load(['task', 'task.project', 'task.project.client', 'task.status']);
+        return TaskLog::running();
     }
 
     /**
@@ -77,30 +65,30 @@ class TaskController extends Controller
      */
     public function start(Task $task)
     {
-        $task->logs()->create([
-            'start' => Carbon::now(),
-            'worker_id' => auth()->user()->worker->id,
-        ]);
+        if (TaskLog::running()) {
+            return response(403);
+        }
+
+        $task->startLogging();
 
         return response(200);
     }
 
     /**
-     * Starts the timer.
+     * Stops the timer.
      *
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
     public function stop(Task $task)
     {
-        $task->logs->where('end', null)->first()
-            ->update(['end' => Carbon::now()]);
+        $task->stopLogging();
 
         return response(200);
     }
 
     /**
-     * Starts the timer.
+     * Returns all the logs for the last month.
      *
      * @return \Illuminate\Http\Response
      */
@@ -116,7 +104,7 @@ class TaskController extends Controller
     }
 
     /**
-     * Starts the timer.
+     * Returns total time logged for the given period.
      *
      * @param  string  $period
      * @return \Illuminate\Http\Response
