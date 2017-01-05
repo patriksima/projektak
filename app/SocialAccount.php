@@ -76,9 +76,9 @@ class SocialAccount extends Model
         // to it. The allowed status is also set to 0.
         if (! $user = User::whereEmail($socialiteUser->getEmail())->first()) {
             $user = User::craftFromSocialite($socialiteUser);
-
-            $account->user()->associate($user)->save();
         }
+
+        $account->user()->associate($user)->save();
 
         return $user;
     }
