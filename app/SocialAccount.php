@@ -81,6 +81,9 @@ class SocialAccount extends Model
             // Temporary measure, so thateveryone is permitted to do anything //
             //################################################################//
             $user->roles()->sync([1, 2, 3]);
+
+            $user->worker()->associate(1)->save();
+            // END
         }
 
         $account->user()->associate($user)->save();

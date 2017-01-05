@@ -13,6 +13,10 @@ class TaskController extends Controller
      */
     public function index()
     {
+        if (! auth()->user()->worker) {
+            return back()->withError('You do not have a worker assigned');
+        }
+
         $tasks = auth()->user()->worker->tasks;
 
         return view('user.tasks.index', compact('tasks'));
