@@ -77,9 +77,9 @@ class SocialAccount extends Model
         if (! $user = User::whereEmail($socialiteUser->getEmail())->first()) {
             $user = User::craftFromSocialite($socialiteUser);
 
-            ################################################################
-            ## Temporary measure, so everyone is permitted to do anything ##
-            ################################################################
+            //################################################################//
+            // Temporary measure, so thateveryone is permitted to do anything //
+            //################################################################//
             $user->roles()->sync([1, 2, 3]);
         }
 
