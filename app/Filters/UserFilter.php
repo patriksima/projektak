@@ -11,7 +11,7 @@ class UserFilter extends Filter
      *
      * @var array
      */
-    protected $searchable = ['name', 'email'];
+    protected $searchable = ['email'];
 
     /**
      * Orderable columns.
@@ -19,7 +19,6 @@ class UserFilter extends Filter
      * @var array
      */
     protected $orderable = [
-        'name' => 'name',
         'email' => 'email',
     ];
 }

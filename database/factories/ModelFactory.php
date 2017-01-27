@@ -16,7 +16,6 @@ use Carbon\Carbon;
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
         'email' => $faker->email,
-        'name' => $faker->name,
         'allowed' => 1,
         'api_token' => str_random(60),
     ];

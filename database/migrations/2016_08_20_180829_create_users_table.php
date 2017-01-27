@@ -16,7 +16,6 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->integer('worker_id')->nullable()->unsigned()->index();
             $table->string('email')->unique();
-            $table->string('name', 255);
             $table->string('api_token', 60);
             $table->boolean('allowed')->default(0);
             $table->timestamps();
