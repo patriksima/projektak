@@ -57,7 +57,7 @@
         </div>
 		<div class="mdl-layout-spacer"></div>
 		<div>
-			<a class="mdl-button mdl-js-button" href="{{ url()->previous() }}">Cancel</a>
+			<a class="mdl-button mdl-js-button" href="{{ url('/users/') }}">Cancel</a>
 			<input value="Save" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" />
 		</div>
 	</form>

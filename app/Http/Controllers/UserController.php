@@ -33,16 +33,14 @@ class UserController extends Controller
     public function store()
     {
         $this->validate(request(), [
-            'name' => 'required|min:5',
             'email' => 'required|email|unique:users,email',
             'roles.*' => 'required|exists:roles,id',
+            'worker' => 'exists:workers,id'
         ]);
 
         $user = User::create(request()->all());
         $user->roles()->attach(request('roles'));
-
-        $user->worker()->delete();
-        $user->worker()->save(Worker::find(request('worker')));
+        $user->worker()->associate(Worker::find(request('worker')))->save();
 
         return back()->with('success', 'User successfully created');
     }
@@ -70,12 +68,11 @@ class UserController extends Controller
     public function update(User $user)
     {
         $this->validate(request(), [
-            'name' => 'required|min:5',
             'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($user->id)],
             'roles.*' => 'required|exists:roles,id',
         ]);
 
-        $user->update(request()->all());
+        $user->update(request()->only(['email', 'allowed']));
 
         $user->roles()->detach();
         $user->roles()->attach(request('roles'));
