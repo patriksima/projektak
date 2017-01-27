@@ -2,7 +2,7 @@
 
 namespace App\Notifications;
 
-use App\TaskRequest;
+use App\TimeRequest;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -14,7 +14,7 @@ class TimeRequestApproved extends Notification
     /**
      * Task request that has been updated.
      *
-     * @var \App\TaskRequest
+     * @var \App\TimeRequest
      */
     protected $request;
 
@@ -23,7 +23,7 @@ class TimeRequestApproved extends Notification
      *
      * @return void
      */
-    public function __construct(TaskRequest $request)
+    public function __construct(TimeRequest $request)
     {
         $this->request = $request;
     }

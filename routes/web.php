@@ -49,10 +49,10 @@ Route::group(['middleware' => ['auth', 'role:admin|manager']], function () {
 
     Route::resource('projects', 'ProjectController');
 
-    Route::group(['prefix' => 'task-requests'], function () {
-        Route::get('', 'TaskRequestController@index');
-        Route::patch('{request}/approve', 'TaskRequestController@approve');
-        Route::patch('{request}/deny', 'TaskRequestController@deny');
+    Route::group(['prefix' => 'time-requests'], function () {
+        Route::get('', 'TimeRequestController@index');
+        Route::patch('{request}/approve', 'TimeRequestController@approve');
+        Route::patch('{request}/deny', 'TimeRequestController@deny');
     });
 
     Route::group(['prefix' => 'control'], function () {

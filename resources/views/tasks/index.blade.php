@@ -20,6 +20,14 @@
                 </th>
 
                 <th
+                    class="mdl-data-table__cell--non-numeric sortable {{ filter()->orderClass('estimate') }}"
+                    data-orderby="estimate"
+                    data-orderdir="{{ filter()->invertOrderDirection('estimate') }}"
+                >
+                    Estimate
+                </th>
+
+                <th
                     class="mdl-data-table__cell--non-numeric sortable {{ filter()->orderClass('task') }}"
                     data-orderby="task"
                     data-orderdir="{{ filter()->invertOrderDirection('task') }}"

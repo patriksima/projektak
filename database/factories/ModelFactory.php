@@ -172,7 +172,7 @@ $factory->define(App\SocialAccount::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\TaskRequest::class, function (Faker\Generator $faker) {
+$factory->define(App\TimeRequest::class, function (Faker\Generator $faker) {
     return [
         'worker_id' => rand(1, 10),
         'task_id' => rand(1, 10),
