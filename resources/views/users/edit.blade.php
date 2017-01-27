@@ -8,16 +8,6 @@
 		{{ csrf_field() }}
         {!! method_field('PATCH') !!}
 
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" type="text" name="name" value="{{ $user->name }}" required/>
-            <label class="mdl-textfield__label">Name</label>
-        </div>
-        <div class="mdl-layout-spacer"></div>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" type="text" name="email" value="{{ $user->email }}" required/>
-            <label class="mdl-textfield__label">E-mail</label>
-        </div>
-        <div class="mdl-layout-spacer"></div>
         <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
             <select name="worker" class="mdl-selectfield__select">
                 <option selected disabled>Select Worker</option>
@@ -31,6 +21,11 @@
                 @endforeach
             </select>
             <label class="mdl-selectfield__label">Worker</label>
+        </div>
+        <div class="mdl-layout-spacer"></div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" name="email" value="{{ $user->email }}" required/>
+            <label class="mdl-textfield__label">E-mail</label>
         </div>
         <div class="mdl-layout-spacer"></div>
         <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
@@ -62,7 +57,7 @@
         </div>
 		<div class="mdl-layout-spacer"></div>
 		<div>
-			<a class="mdl-button mdl-js-button" href="{{ url()->previous() }}">Cancel</a>
+			<a class="mdl-button mdl-js-button" href="{{ url('/users/') }}">Cancel</a>
 			<input value="Save" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" />
 		</div>
 	</form>

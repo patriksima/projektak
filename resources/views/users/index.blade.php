@@ -12,14 +12,6 @@
         <thead>
             <tr>
                 <th
-                    class="mdl-data-table__cell--non-numeric sortable {{ filter()->orderClass('name') }}"
-                    data-orderby="name"
-                    data-orderdir="{{ filter()->invertOrderDirection('name') }}"
-                >
-                    Name
-                </th>
-
-                <th
                     class="mdl-data-table__cell--non-numeric sortable {{ filter()->orderClass('email') }}"
                     data-orderby="email"
                     data-orderdir="{{ filter()->invertOrderDirection('email') }}"
