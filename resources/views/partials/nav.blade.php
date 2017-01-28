@@ -56,12 +56,12 @@
       Worksheets
     </a>
 
-    <a class="mdl-navigation__link" href="{{ url('/task-requests') }}">
+    <a class="mdl-navigation__link" href="{{ url('/time-requests') }}">
       <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">
         trending_up
       </i>
 
-      Task Requests
+      Time Requests
     </a>
 
 {{--     <a class="mdl-navigation__link" href="{{ url('/finance') }}">

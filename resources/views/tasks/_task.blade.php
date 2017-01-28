@@ -1,5 +1,6 @@
 <tr class="{{ Helper::getRowClass($task->deadline, $task->status) }}">
     <td class="mdl-data-table__cell--non-numeric">{{ $task->deadline->format('j.n.Y') }}</td>
+    <td class="mdl-data-table__cell--non-numeric">{{ $task->estimate }} hours</td>
     <td class="mdl-data-table__cell--non-numeric wrappable">{{ $task->name }}</td>
     <td class="mdl-data-table__cell--non-numeric wrappable">{{ $task->project->client->name }}</td>
     <td class="mdl-data-table__cell--non-numeric wrappable">{{ $task->project->name }}</td>

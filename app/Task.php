@@ -80,7 +80,7 @@ class Task extends Model
      */
     public function requests()
     {
-        return $this->hasMany(TaskRequest::class);
+        return $this->hasMany(TimeRequest::class);
     }
 
     /**

@@ -11,7 +11,7 @@ class TaskFilter extends Filter
      *
      * @var array
      */
-    protected $searchable = ['name', 'projects.clients.name'];
+    protected $searchable = ['name', 'projects.clients.name', 'estimate'];
 
     /**
      * Orderable columns.
@@ -22,6 +22,7 @@ class TaskFilter extends Filter
         'task' => 'name',
         'status' => 'status_id',
         'deadline' => 'deadline',
+        'estimate' => 'estimate',
         'project' => 'projects.name',
         'client' => 'projects.clients.name',
     ];

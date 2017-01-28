@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TaskRequest extends Model
+class TimeRequest extends Model
 {
     /**
      * Fillable fields.

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\TaskRequest;
+use App\TimeRequest;
 use App\Notifications\TimeRequestDenied;
 use App\Notifications\TimeRequestApproved;
 use App\Http\Controllers\Behavior\NotifiesUsers;
 
-class TaskRequestController extends Controller
+class TimeRequestController extends Controller
 {
     use NotifiesUsers;
 
@@ -18,18 +18,18 @@ class TaskRequestController extends Controller
      */
     public function index()
     {
-        $requests = TaskRequest::with('task', 'worker')->get();
+        $requests = TimeRequest::with('worker', 'task.project.client')->get();
 
-        return view('task-requests.index', compact('requests'));
+        return view('time-requests.index', compact('requests'));
     }
 
     /**
      * Handles approval of given task request.
      *
-     * @param  \App\TaskRequest  $request
+     * @param  \App\TimeRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function approve(TaskRequest $request)
+    public function approve(TimeRequest $request)
     {
         $this->notify($request->worker, new TimeRequestApproved($request));
 
@@ -41,10 +41,10 @@ class TaskRequestController extends Controller
     /**
      * Handles denial of given task request.
      *
-     * @param  \App\TaskRequest  $request
+     * @param  \App\TimeRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function deny(TaskRequest $request)
+    public function deny(TimeRequest $request)
     {
         $this->notify($request->worker, new TimeRequestDenied($request));
 
