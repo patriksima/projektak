@@ -35,7 +35,7 @@ class UserController extends Controller
         $this->validate(request(), [
             'email' => 'required|email|unique:users,email',
             'roles.*' => 'required|exists:roles,id',
-            'worker' => 'exists:workers,id'
+            'worker' => 'exists:workers,id',
         ]);
 
         $user = User::create(request()->all());
