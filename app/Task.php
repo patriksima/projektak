@@ -118,4 +118,24 @@ class Task extends Model
         $this->logs->where('end', null)->first()
             ->update(['end' => Carbon::now()]);
     }
+
+    /**
+     * Gets total time logged for this task.
+     *
+     * @return void
+     */
+    public function getTimeLogged()
+    {
+        $total = 0;
+
+        foreach ($this->logs as $log) {
+            if (! $log->end) {
+                $log->end = Carbon::now();
+            }
+
+            $total += $log->start->diffInSeconds($log->end);
+        }
+
+        return $total / 3600;
+    }
 }

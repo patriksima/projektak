@@ -127,4 +127,34 @@ class TaskController extends Controller
 
         return $total;
     }
+
+    /**
+     * Checks if the task is almost overdue.
+     *
+     * @param  \App\Task
+     * @return \Illuminate\Http\Response
+     */
+    public function checkAlmostOverdue(Task $task)
+    {
+        if ($task->getTimeLogged() * 0.75 > $task->estimate) {
+            return 1;
+        }
+
+        return 0;
+    }
+
+    /**
+     * Checks if the task is completely overdue.
+     *
+     * @param  \App\Task
+     * @return \Illuminate\Http\Response
+     */
+    public function checkTimeIsOut(Task $task)
+    {
+        if ($task->getTimeLogged() > $task->estimate) {
+            return 1;
+        }
+
+        return 0;
+    }
 }
