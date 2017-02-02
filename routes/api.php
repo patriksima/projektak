@@ -38,3 +38,5 @@ Route::get('tasks/total/{period}', 'TaskController@total');
 Route::post('tasks/request', 'TaskController@request');
 Route::put('tasks/{task}/start', 'TaskController@start');
 Route::put('tasks/{task}/stop', 'TaskController@stop');
+Route::get('tasks/{task}/checkAlmostOverdue', 'TaskController@checkAlmostOverdue');
+Route::get('tasks/{task}/checkTimeIsOut', 'TaskController@checkTimeIsOut');

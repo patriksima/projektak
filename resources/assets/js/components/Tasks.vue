@@ -1,10 +1,8 @@
 <template>
     <div>
-        <h3>Assigned Tasks</h3>
-
         <table class="mdl-data-table mdl-js-data-table is-fullwidth" v-show="running">
             <tbody>
-                <tr v-for="task in running">
+                <tr v-for="task in running" class="running-task">
                     <td class="mdl-data-table__cell--non-numeric">
                         <strong>{{ elapsed }}</strong>
                     </td>
@@ -22,7 +20,7 @@
                             <i
                                 class="material-icons mdl-badge mdl-badge--overlap"
                             >
-                                bookmark
+                                link
                             </i>
                         </a>
 
@@ -36,16 +34,16 @@
                             <i
                                 class="material-icons mdl-badge mdl-badge--overlap"
                             >
-                                bookmark_border
+                                link
                             </i>
                         </a>
 
-                        <a
-                            class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"
-                            :href="link(task)"
-                        >
-                            <i class="material-icons">help</i>
-                        </a>
+    <!--                         <a
+                                class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"
+                                :href="link(task)"
+                            >
+                                <i class="material-icons">help</i>
+                            </a> -->
 
                         <a
                             class="mdl-button mdl-js-button mdl-button--icon mdl-button--accent"
@@ -65,6 +63,10 @@
                 <tr>
                     <th class="mdl-data-table__cell--non-numeric sortable">
                         Deadline
+                    </th>
+
+                    <th class="mdl-data-table__cell--non-numeric sortable">
+                        Estimate
                     </th>
 
                     <th class="mdl-data-table__cell--non-numeric sortable">
@@ -90,7 +92,10 @@
             <tbody>
                 <tr v-for="task in tasks">
                     <td class="mdl-data-table__cell--non-numeric">
-                        {{ parseDate(task.deadline, 'mmmm dS, yyyy') }}
+                        {{ parseDate(task.deadline, 'd. m. yyyy') }}
+                    </td>
+                    <td class="mdl-data-table__cell--non-numeric">
+                        {{ task.estimate }} hours
                     </td>
                     <td class="mdl-data-table__cell--non-numeric wrappable">{{ task.name }}</td>
                     <td class="mdl-data-table__cell--non-numeric wrappable">{{ task.project.client.name }}</td>
@@ -106,7 +111,7 @@
                             <i
                                 class="material-icons mdl-badge mdl-badge--overlap"
                             >
-                                bookmark
+                                link
                             </i>
                         </a>
 
@@ -120,16 +125,16 @@
                             <i
                                 class="material-icons mdl-badge mdl-badge--overlap"
                             >
-                                bookmark_border
+                                link
                             </i>
                         </a>
 
-                        <a
+<!--                         <a
                             class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"
                             :href="link(task)"
                         >
                             <i class="material-icons">help</i>
-                        </a>
+                        </a> -->
 
                         <a
                             class="mdl-button mdl-js-button mdl-button--icon mdl-button--accent"
@@ -174,9 +179,40 @@ export default {
         this.loadTasksForUser();
 
         window.setInterval(() => this.time(), 1000);
+
+        window.setInterval(() => this.checkOverdue(), 5000);
     },
 
     methods: {
+        checkOverdue() {
+            if (! this.running) {
+                return;
+            }
+
+            this.checkAlmostOverdue();
+            this.checkTimeIsOut();
+        },
+
+        checkAlmostOverdue() {
+            this.$http.get(`/api/tasks/${this.running[0].id}/checkAlmostOverdue`)
+                .then(({ body }) => {
+                    if (body === 1) {
+                        document.querySelector('.running-task').classList.add('mdl-color--red-100');
+                    }
+                })
+        },
+
+        checkTimeIsOut() {
+            this.$http.get(`/api/tasks/${this.running[0].id}/checkTimeIsOut`)
+                .then(({ body }) => {
+                    if (body === 1) {
+                        alert('Time run out!');
+
+                        this.stopTimer(this.running[0]);
+                    }
+                })
+        },
+
         loadTasksForUser() {
             this.$http.get('/api/tasks/forUser')
                 .then(({ body }) => {
